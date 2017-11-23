@@ -1,0 +1,42 @@
+extends layout
+
+block content
+  #browse-page
+    #browse-left
+      #search-website
+        h2 selected career pages
+        div.search-div        
+      #website-list 
+        .single-website
+          .single-logo
+          .single-name
+            p name        
+          .single-date
+            p new career opportunity
+          .single-monitor      
+        for website in monitored  
+          .single-website
+            .single-logo
+              p #{website.links[0].extension}
+            .single-name
+              p #{website.name}        
+            .single-date            
+              p #{website.storedPage.date}
+            div(class="single-monitor " + website._id)
+              img(src='../img/remove.svg')
+      #profile-premium
+        h2 go premium
+    .right-sidebar        
+      #welcome-user
+        .right-sidebar-title
+          p Hi #{name}!
+          button(onclick="location.href='/logout'") log out
+      .request-website
+        .right-sidebar-title
+          h2 find more career pages 
+        .single-text
+          p 
+        .single-text
+          button(onclick="location.href='/browse'") browse career pages
+          
+    script(type='text/javascript', src='./js/profile.js')

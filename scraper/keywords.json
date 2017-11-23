@@ -1,0 +1,63 @@
+{
+  "role": {
+    "intern": [
+      "intern",
+      "interns",
+      "internship",
+      "placement"
+    ],
+    "professional": [
+      "permanent"
+    ],
+    "voluntary" : [
+      "volunteer",
+      "volunteering",
+      "volunteers"
+    ]
+  },
+  "timeRelated" : {
+    "parttime" : [
+      "parttime",
+      "part-time",
+      "part time"
+    ],
+    "fulltime" : [
+      "full time",
+      "fulltime",
+      "full-time",
+      "36",
+      "37",
+      "38",
+      "39",
+      "40"
+    ]
+  },
+  "generalIndicators": [
+    "career",
+    "careers",
+    "position",
+    "positions",
+    "job",
+    "vacancy",
+    "opportunity",
+    "work",
+    "experience",
+    "expertise",
+    "field",
+    "responsibilities",
+    "skills",
+    "location",
+    "deadline",
+    "team",
+    "understanding",
+    "references",
+    "resume",
+    "cv",
+    "years"
+  ],
+  "skills" : [
+    "teamwork",
+    "responsible",
+    "ambitious"
+  ]
+}

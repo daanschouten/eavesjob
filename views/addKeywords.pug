@@ -1,0 +1,21 @@
+extends layout
+
+block content
+  h1 #{title}
+  form(method='POST' action='/addKeywords')
+    div.form-group
+      label(for='name') Keyword:
+      input#name.form-control(type='text', placeholder='some keyword' name='name')
+    div.form-group Category:
+      select(for='category', name='category') 
+        option(value="intern") intern
+        option(value="professional") professional
+        option(value="voluntary") voluntary
+        option(value="parttime") parttime
+        option(value="fulltime") fulltime 
+        option(value="general") general
+        option(value="skill") skill
+  
+        //- input#email.form-control(type='text', placeholder='some category' name='category')
+    button.btn.btn-primary(type='submit') Add keyword
+    

@@ -1,0 +1,15 @@
+header
+    #logo
+      //- p JobDates
+      a(href='/') Home
+      a(href='/browse') Browse  
+      a(href='/support') Support 
+
+    #menu
+      a(href='/contact') Contact 
+      if !currentUser
+        a#header-sign-up(href='/register') Sign Up  
+        a(href='/login') Login  
+      else if currentUser
+        a(href='/profile') My Profile  
+        

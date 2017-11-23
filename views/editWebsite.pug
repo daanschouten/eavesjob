@@ -1,0 +1,24 @@
+extends layout
+
+block content
+  h1 #{title}
+  form(method='POST' action='/requestWebsite')
+    div.form-group
+      label(for='name') Name:
+      input#name.form-control(type='text', placeholder='website name' name='name')
+    div.form-group
+      label(for='email') Website URL 1:
+      input#email.form-control(type='text', placeholder='www.somecompany.com/careers' name='url1')
+    div.form-group
+      label(for='email') Website URL 2:
+      input#email.form-control(type='text', placeholder='www.somecompany.com/careers' name='url2')        
+    div.form-group
+      label(for='email') Website URL 3:
+      input#email.form-control(type='text', placeholder='www.somecompany.com/careers' name='url3')
+    div.form-group
+      label(for='email') Website URL 4:
+      input#email.form-control(type='text', placeholder='www.somecompany.com/careers' name='url4')
+    div.form-group
+      label(for='email') Website URL 5:
+      input#email.form-control(type='text', placeholder='www.somecompany.com/careers' name='url5')
+    button.btn.btn-primary(type='submit') Add Website

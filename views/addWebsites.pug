@@ -1,0 +1,39 @@
+extends layout
+
+block content 
+  h1 #{title}
+  if websiteName && links
+    form(method='POST' action='/addWebsites')
+        div.form-group
+          label(for='name') Name:
+            input#name.form-control(type='text', placeholder='website name', name='name', value = websiteName )
+        div.form-group
+          label(for='email') Website URL 1:
+            input#email.form-control(type='text', placeholder='www.somecompany.com/careers', name='url1', value = links[0])
+        div.form-group
+          label(for='email') Website URL 2:
+          if links[1]        
+            input#email.form-control(type='text', placeholder='www.somecompany.com/careers', name='url2', value = links[1])    
+          else
+            input#email.form-control(type='text', placeholder='www.somecompany.com/careers', name='url2')    
+        div.form-group
+          label(for='email') Website URL 3:
+          if links[2]
+            input#email.form-control(type='text', placeholder='www.somecompany.com/careers', name='url3', value = links[2])
+          else
+            input#email.form-control(type='text', placeholder='www.somecompany.com/careers', name='url3')
+        div.form-group
+          label(for='email') Website URL 4:
+          if links[3]
+            input#email.form-control(type='text', placeholder='www.somecompany.com/careers', name='url4', value = links[3])
+          else
+            input#email.form-control(type='text', placeholder='www.somecompany.com/careers', name='url4')    
+        div.form-group
+          label(for='email') Website URL 5:
+          if links[4]
+            input#email.form-control(type='text', placeholder='www.somecompany.com/careers', name='url5', value = links[4])
+          else
+            input#email.form-control(type='text', placeholder='www.somecompany.com/careers', name='url5')
+        button.btn.btn-primary(type='submit') Add Website
+  else if !websiteName || !links
+    p There are no more websites to add
