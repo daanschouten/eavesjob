@@ -53,7 +53,7 @@ router.get('/profile', mid.requiresLogin, function(req,res, next) {
   }
 });
 
-router.get('/browse', (req, res, next) => {
+router.get('/browse', mid.requiresLogin, (req, res, next) => {
   User.findById(req.session.userID).exec(function(error, requestedUser) {
     if (error) {
       let err = new Error('Something went wrong retrieving requested user!');
