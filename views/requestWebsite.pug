@@ -1,24 +1,26 @@
 extends layout
 
 block content
-  h1 #{title}
-  form(method='POST' action='/requestWebsite')
-    div.form-group
-      label(for='name') Name:
-      input#name.form-control(type='text', placeholder='website name' name='name')
-    div.form-group
-      label(for='email') Website URL 1:
-      input#email.form-control(type='text', placeholder='www.somecompany.com/careers' name='url1')
-    div.form-group
-      label(for='email') Website URL 2:
-      input#email.form-control(type='text', placeholder='www.somecompany.com/careers' name='url2')        
-    div.form-group
-      label(for='email') Website URL 3:
-      input#email.form-control(type='text', placeholder='www.somecompany.com/careers' name='url3')
-    div.form-group
-      label(for='email') Website URL 4:
-      input#email.form-control(type='text', placeholder='www.somecompany.com/careers' name='url4')
-    div.form-group
-      label(for='email') Website URL 5:
-      input#email.form-control(type='text', placeholder='www.somecompany.com/careers' name='url5')
-    button.btn.btn-primary(type='submit') Add Website
+  #wrapper-single
+    .single-center
+      .form-title-vertical
+        h1 #{title}
+        p Fill in the name of a company, and one or more links to career pages of that company. Check the guidelines for submitting a company #[a(href="/support/guidelines") here].
+    .single-center    
+      form.form-small(method='POST' action='/requestWebsite')
+        .form-group
+          input.big-input(style="margin-bottom: 20px;", type='text', placeholder='Website Name', name='name')
+        .form-group
+          input.big-input(type='text', placeholder='Career Page URL (1)' name='url1')
+        .form-group
+          input.big-input(type='text', placeholder='Career Page URL (2) (optional)' name='url2')
+        .form-group
+          input.big-input(type='text', placeholder='Career Page URL (3) (optional)' name='url3')
+        //- .form-group
+        //-   input.big-input(type='text', placeholder='Career Page URL (4) (optional)' name='url4')
+        //- .form-group
+        //-   input.big-input(type='text', placeholder='Career Page URL (5) (optional)' name='url5')
+        .form-group 
+          p Once the the request comes through, we'll add the company to your subscribes automatically. Keep in mind this might take up to 24 hours.
+        .form-group    
+          button.big-button(type='submit') Submit Website

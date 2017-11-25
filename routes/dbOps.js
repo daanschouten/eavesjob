@@ -40,12 +40,6 @@ const checkInputArray = function(req) {
   if (req.body.url3) {
     linkArray.push(req.body.url3);
   }
-  if (req.body.url4) {
-    linkArray.push(req.body.url4);
-  }
-  if (req.body.url5) {
-    linkArray.push(req.body.url5);
-  }
   return linkArray;
 }
 

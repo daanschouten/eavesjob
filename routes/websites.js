@@ -47,7 +47,7 @@ router.get('/profile', mid.requiresLogin, function(req,res, next) {
           }
         })
       }
-      return res.render('profile', {title: 'my profile', monitored: websites, name: user.name});
+      return res.render('profile', {title: 'my profile', monitored: websites, name: user.firstName});
 
     });
   }
@@ -191,7 +191,7 @@ router.post('/addWebsites', mid.requiresAdmin, (req, res, next) => {
       let fullUrl = urlParse(link);
       fullUrl.robots = fullUrl.origin + "/robots.txt";
       fullUrl.favicon = fullUrl.origin + "/favicon.ico";
-      fullUrl.extension = getExtension(link);
+      fullUrl.extension = getExtension(fullUrl.origin);
       newLinkArray.push(fullUrl);
     })
 

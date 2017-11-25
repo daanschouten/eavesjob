@@ -32,6 +32,14 @@ body {
     src: url(../RobotoCondensed-Regular.ttf);
 }
 
+h1, h2, h3, h4, h5 {
+  font-family: RobotoCondensed;
+}
+
+p {
+  font-family: RobotoLight;
+}
+
 header {
   width: 100%;
   justify-content: space-between;
@@ -121,14 +129,6 @@ header {
   width: 100%;
   padding: 40px 50px;
   justify-content: space-between;
-
-  h1, h2, h3, h4, h5 {
-    font-family: RobotoCondensed;
-  }
-
-  p {
-    font-family: RobotoLight;
-  }
 
   #browse-left {
     width: 70%;
@@ -232,7 +232,7 @@ header {
           width: 55%;
 
           p {
-            
+
           }
         }
       }
@@ -329,7 +329,6 @@ header {
           padding: 10px 20px;
           border: 0px;
           background: @base;
-          color: white;
           border-radius: 5px;
           margin: 10px 0;
           outline: none;
@@ -395,7 +394,6 @@ header {
           padding: 10px 20px;
           border: 0px;
           background: @base;
-          color: white;
           border-radius: 5px;
           margin: 10px 0;
           outline: none;
@@ -423,4 +421,115 @@ header {
 
 
   }
+}
+
+#wrapper-single {
+  width: 100%;
+  justify-content: center;
+  flex-flow: column;
+  align-items: center;
+  padding: 40px;
+
+  .single-center {
+    width: 500px;
+    flex-flow: column;
+    background: #FFFFFF;
+    align-items: center;
+    border: 1px solid #EAEAEA;
+    border-radius: 5px;
+    margin-top: 20px;
+
+    .form-redirect {
+      width: 80%;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 0;
+
+      button {
+        width: 48%;
+      }
+    }
+
+    .form-title {
+      width: 80%;
+      margin: 20px 0;
+      justify-content: flex-start;
+
+      p {
+        font-size: 1.1em;
+      }
+    }
+
+    .form-title-vertical {
+      width: 80%;
+      margin: 20px 0;
+      justify-content: flex-start;
+      flex-flow: column;
+
+      p {
+        margin-top: 10px;
+        font-size: 1.1em;
+      }
+
+      a {
+        color: @base;
+      }
+    }
+
+    .form-small {
+      flex-flow: column;
+      width: 80%;
+      padding: 10px 0;
+
+      .form-group {
+        justify-content: space-between;
+
+        input {
+          width: 100%;
+        }
+
+        input.half {
+          width: 48%;
+        }
+
+        button, p {
+          width: 100%;
+          margin: 15px 0;
+          font-size: 1.1em;
+        }
+
+      }
+    }
+  }
+}
+
+.big-input {
+  height: 45px;
+  padding: 10px;
+  margin-top: 15px;
+  font-size: 1em;
+  background: @dark-grey;
+  border: 1px solid @dark-grey;
+  outline: none;
+  border-radius: 5px;
+}
+
+.big-button {
+  height: 45px;
+  padding: 10px;
+  background: @dark-grey;
+  outline: none;
+  border-radius: 5px;
+  background: @base;
+  font-size: 1.1em;
+  justify-content: center;
+}
+
+button:hover, button:focus {
+  cursor: pointer;
+  color: white;
+}
+
+input:focus, input:hover {
+  border: 1px solid @base;
 }

@@ -9,7 +9,7 @@ const requiresLogin = function(req, res, next) {
   if (req.session && req.session.userID) {
     return next();
   } else {
-    return res.render('register', { title: "Please sign up before accessing this page"});
+    return res.render('register', { title: "Please register first! "});
     // let err = new Error('You are not authorised to see this page');
     // err.status = 401;
     // return next(err);

@@ -1,24 +1,28 @@
 extends layout
 
 block content
-  .main.container.row
-    .col-md-6.col-md-offset-3
-      if title 
-        h1 #{title}
-      else if !title    
-        h1 Sign Up    
+  #wrapper-single
+    .single-center
+      .form-title
+        if title 
+          h1 #{title}
+        else if !title    
+          h1 Register!
+    .single-center    
       // register form
-      form(method='POST' action='/register')
-        div.form-group
-          label(for='name') Name:
-          input#name.form-control(type='text', placeholder='first and last' name='name')
-        div.form-group
-          label(for='email') Email:
-          input#email.form-control(type='email', placeholder='name@email.com' name='email')
-        div.form-group
-          label(for='pw') Password:
-          input#pw.form-control(type='password' name='password')
-        div.form-group
-          label(for='pw2') Confirm Password:
-          input#pw2.form-control(type='password' name='confirmPassword')
-        button.btn.btn-primary(type='submit') Sign up
+      form.form-small(method='POST' action='/register')
+        .form-group
+          //- label(for='name') Name:
+          input.big-input.half(type='text', placeholder='First Name', name='firstName')
+          input.big-input.half(type='text', placeholder='Last Name', name='lastName')
+        .form-group
+          input.big-input(type='email', placeholder='Your Email Address', name='email')
+        .form-group
+          input.big-input.half(type='password', name='password', placeholder='Password')
+          input.big-input.half(type='password', name='confirmPassword', placeholder = 'Confirm Password')
+        .form-group
+          button.big-button(type='submit') Sign up
+    .single-center
+      .form-redirect 
+          h2 Already a Member? 
+          button.big-button(onclick="location.href='/login'") Login

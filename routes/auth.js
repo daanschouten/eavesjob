@@ -10,7 +10,7 @@ router.get('/register', mid.loggedOut, (req, res, next) => {
 });
 
 router.post('/register', (req, res, next) => {
-  if (req.body.email && req.body.name && req.body.password && req.body.confirmPassword) {
+  if (req.body.email && req.body.firstName && req.body.lastName && req.body.password && req.body.confirmPassword) {
     if (req.body.password.length < 6) {
       let err = new Error('Password must consist of more than 5 characters.');
       err.status = 400;
@@ -26,7 +26,8 @@ router.post('/register', (req, res, next) => {
 
     let userData = {
       email: req.body.email,
-      name: req.body.name,
+      firstName: req.body.firstName,
+      lastName: req.body.lastName,
       password: req.body.password,
       subscribedWesbites: [],
       signup: new Date()
@@ -34,7 +35,6 @@ router.post('/register', (req, res, next) => {
 
     User.create(userData, function(error, user) {
       if (error) {
-        console.log("no!");
         return next(error);
       } else {
         req.session.userID = user._id;
