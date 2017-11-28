@@ -21,6 +21,10 @@ router.get('/', (req, res, next) => {
   return res.render('index', { title: "home"});
 });
 
+router.get('/althome', (req, res, next) => {
+  return res.render('indexRegister', { title: "home"});
+});
+
 router.post('/search', mid.requiresLogin, function(req,res, next) {
   let query = req.body.query;
 
