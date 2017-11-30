@@ -5,7 +5,8 @@ module.exports = {
   entry: {
     app: "./public/js/app",
     browse: "./public/js/browse",
-    profile: "./public/js/profile"
+    profile: "./public/js/profile",
+    react: "./public/js/components/app.jsx" 
   },
   output: {
     publicPath: "http://localhost:3000/build/", // Development Server
@@ -19,6 +20,14 @@ module.exports = {
         test: /\.js$/,
         exclude: /node_modules/,
         loader: 'babel-loader'
+      },
+      {
+        test: /.jsx?$/,
+        loader: 'babel-loader',
+        exclude: /node_modules/,
+        query: {
+          presets: ['es2015', 'react']
+        }
       },
       {
         test: /\.less$/,

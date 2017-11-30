@@ -8,9 +8,9 @@ const Website = require('../models/website');
 const Keyword = require('../models/keyword');
 const mid = require('../middleware');
 const moment = require('moment');
-const ren = require('../app.jsx');
-const react = require('react');
-const reactDOM = require('react-dom');
+
+// const React = require('react');
+// const ReactDOM = require('react-dom');
 
 mongoose.Promise = global.Promise;
 mongoose.createConnection("mongodb://127.0.0.1:27017/jupdate");
