@@ -1,8 +1,6 @@
 extends layout
 
 block content
-  //- h1 #{title}
-  //- p #{websites}
   #browse-page
     #browse-left
       #search-website
@@ -77,5 +75,4 @@ block content
           p Came across a careers page not listed here? Tell us about it, and we'll take it from there!
         .single-text
           button(onclick="location.href='/requestWebsite'") request new website
-          
-    script(type='text/javascript', src='./js/browse.js')
+    script(type='text/javascript', src='./build/browse.bundle.js')

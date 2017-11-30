@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', (e) => {
   let setBars = function() {
       Array.prototype.map.call(singleBars, function(singleBar) {
           singleBar.addEventListener('mouseover', function(event) {
-              imgHover = singleBar.getElementsByTagName('img')[0];
+              let imgHover = singleBar.getElementsByTagName('img')[0];
               if (imgHover) {
                   if (imgHover.src.includes('remove.svg')) {
                       imgHover.src = imgHover.src.replace(/remove/, 'removeBlack');
@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', (e) => {
 
       Array.prototype.map.call(singleBars, function(singleBar) {
           singleBar.addEventListener('mouseout', function(event) {
-              imgHover = singleBar.getElementsByTagName('img')[0];
+              let imgHover = singleBar.getElementsByTagName('img')[0];
               if (imgHover) {
                   if (imgHover.src.includes('removeBlack')) {
                       imgHover.src = imgHover.src.replace(/removeBlack/, 'remove');

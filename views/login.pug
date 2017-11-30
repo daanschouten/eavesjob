@@ -1,12 +1,10 @@
 extends layout
 
 block content
-  #wrapper-single
-    .single-center
+  #wrapper-single    
+    .single-center    
       .form-title
         h1 Log in
-    .single-center    
-      // register form
       form.form-small(method='POST' action='/login')
         .form-group
           input.big-input(type='text' id='email' placeholder='Your Email Address' name='email')
