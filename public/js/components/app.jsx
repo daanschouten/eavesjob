@@ -7,7 +7,7 @@ let Header = function(props) {
     <div className="header">
       <h1> {props.title} </h1>
     </div>
-  )
+  );
 }
 
 let Application = function(props) {
@@ -42,29 +42,24 @@ let renderProps = {
   date: 'metoo',
   id: '112312'
 };
-//
-// let createSingle = function() {
-//   let str = ReactDOMServer.renderToString(<Single {...renderProps}/>);
-//   return str;
-// }
-//
-// let Single = function(props) {
-//   return (
-//     <div className= "single-website">
-//       <div className= "single-logo">
-//         <p> {props.extension} </p>
-//       </div>
-//       <div className= "single-name">
-//         <p> {props.name} </p>
-//       </div>
-//       <div className= "single-date">
-//         <p> {props.date} </p>
-//       </div>
-//       <div className= "single-monitor">
-//       </div>
-//     </div>
-//   );
-// }
+
+let Single = function(props) {
+  return (
+    <div className= "single-website">
+      <div className= "single-logo">
+        <p> {props.extension} </p>
+      </div>
+      <div className= "single-name">
+        <p> {props.name} </p>
+      </div>
+      <div className= "single-date">
+        <p> {props.date} </p>
+      </div>
+      <div className= "single-monitor">
+      </div>
+    </div>
+  );
+}
 //
 // Single.propTypes = {
 //   extension: window.PropTypes.string.isRequired,

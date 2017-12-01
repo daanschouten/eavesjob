@@ -1,4 +1,1 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-
-import '../stylesheets/main.less';
+import '../stylesheets/main.less';  

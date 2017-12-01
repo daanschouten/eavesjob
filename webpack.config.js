@@ -1,12 +1,21 @@
 const path = require('path');
-const nodeExternals = require('webpack-node-externals');
+const webpack = require('webpack');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+
+// const config = require('config');
+// const nodeExternals = require('webpack-node-externals');
 
 module.exports = {
   entry: {
     app: "./public/js/app",
     browse: "./public/js/browse",
     profile: "./public/js/profile",
-    react: "./public/js/components/app.jsx" 
+    react: "./public/js/components/app.jsx",
+    vendor: [
+      'react',
+      'react-dom',
+      'prop-types'
+    ]
   },
   output: {
     publicPath: "http://localhost:3000/build/", // Development Server
@@ -14,6 +23,15 @@ module.exports = {
     path: path.resolve(__dirname, 'public/build'),
     filename: '[name].bundle.js'
   },
+  plugins: [
+        new webpack.optimize.CommonsChunkPlugin({ name: 'vendor', filename: 'vendor.bundle.js' }),
+        // new webpack.optimize.OccurrenceOrderPlugin(true),
+        // new HtmlWebpackPlugin({
+        //   chunksSortMode: 'auto',
+        //   filename: '../../views/layout.pug',
+        //   template: __dirname + '/views/layout.pug',
+        // })
+  ],
   module: {
     loaders: [
       {
