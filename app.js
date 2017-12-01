@@ -1,5 +1,8 @@
 const express = require('express');
 const app = express();
+require('babel-register')({
+    presets: ['es2015', 'react']
+});
 const htmlparser = require("htmlparser2");
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');

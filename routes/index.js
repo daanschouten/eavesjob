@@ -9,8 +9,11 @@ const Keyword = require('../models/keyword');
 const mid = require('../middleware');
 const moment = require('moment');
 
-// const React = require('react');
-// const ReactDOM = require('react-dom');
+const React = require('react');
+const ReactDOM = require('react-dom');
+const ReactDOMServer = require('react-dom/server');
+const PropTypes = require('prop-types');
+const C = require('../components/index.jsx');
 
 mongoose.Promise = global.Promise;
 mongoose.createConnection("mongodb://127.0.0.1:27017/jupdate");
@@ -23,6 +26,7 @@ router.get('/', (req, res, next) => {
 
 router.get('/althome', (req, res, next) => {
   return res.render('indexRegister', { title: "home"});
+  // return res.send(ReactDOMServer.renderToString(< C.Header />))
 });
 
 router.post('/search', mid.requiresLogin, function(req,res, next) {
