@@ -1,6 +1,28 @@
 const React = require('react');
 const PropTypes = require('prop-types');
 
+class MyComponent extends React.Component {
+  render () {
+    return(
+      <div className="header">
+          <h1> {this.props.title} </h1>
+      </div>
+    );
+  }
+}
+
+let Head = (props) => {
+  return(
+    <div className="header">
+        <h1> {props.title} </h1>
+    </div>
+  );
+}
+
+Head.defaultProps = {
+  title: "EavesJob"
+};
+
 let Header = (props) => {
   return(
     <div className="header">
@@ -63,7 +85,9 @@ Single.propTypes = {
 };
 
 module.exports = {
+    MyComponent: MyComponent,
     Application: Application,
+    Head: Head,
     Header: Header,
     Single: Single
 };

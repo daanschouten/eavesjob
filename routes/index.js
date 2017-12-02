@@ -25,8 +25,13 @@ router.get('/', (req, res, next) => {
 });
 
 router.get('/althome', (req, res, next) => {
-  return res.render('indexRegister', { title: "home"});
-  // return res.send(ReactDOMServer.renderToString(< C.Header />))
+  let MyComponent = React.createFactory(C.MyComponent);
+  res.render('indexRegister', {
+    react: ReactDOMServer.renderToString(MyComponent({title: "John"}))
+  })
+  // Head = ReactDOMServer.renderToString(Head);
+  // return res.render('indexRegister', { title: "home"});
+  // return res.send(Head);
 });
 
 router.post('/search', mid.requiresLogin, function(req,res, next) {

@@ -1,6 +1,8 @@
 extends layout
 
 block content
+  #my-div
+    != react
   #front(style="margin-top: 15vh") 
     #front-top  
       #banner-left
@@ -23,5 +25,6 @@ block content
             .form-group
               button.big-button(type='submit') Sign up
     #front-bottom
-                
+    script(type='text/javascript', src='./build/react.bundle.js')
+        
     

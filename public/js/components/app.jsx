@@ -1,65 +1,70 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
+const components = require('../../../components/index.jsx');
 
-let Header = function(props) {
-  return(
-    <div className="header">
-      <h1> {props.title} </h1>
-    </div>
-  );
-}
+let MyComponent = components.MyComponent;
 
-let Application = function(props) {
-  return (
-    <div className="application">
-      <Header title= {props.title}/>
-      <div className="players">
-        <div className="player">
-          <div className="player-name">
-          </div>
-          <div className="player-score">
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-}
+ReactDOM.hydrate(<MyComponent title="John"/>, document.getElementById("my-div"));
 
-Application.propTypes = {
-  title: PropTypes.string,
-};
-
-Application.defaultProps = {
-  title: "Scoreboard"
-}
-
-ReactDOM.render(<Application/>, document.getElementById('container'));
-
-let renderProps = {
-  extension: 'uk',
-  name: 'europol',
-  date: 'metoo',
-  id: '112312'
-};
-
-let Single = function(props) {
-  return (
-    <div className= "single-website">
-      <div className= "single-logo">
-        <p> {props.extension} </p>
-      </div>
-      <div className= "single-name">
-        <p> {props.name} </p>
-      </div>
-      <div className= "single-date">
-        <p> {props.date} </p>
-      </div>
-      <div className= "single-monitor">
-      </div>
-    </div>
-  );
-}
+// let Header = function(props) {
+//   return(
+//     <div className="header">
+//       <h1> {props.title} </h1>
+//     </div>
+//   );
+// }
+//
+// let Application = function(props) {
+//   return (
+//     <div className="application">
+//       <Header title= {props.title}/>
+//       <div className="players">
+//         <div className="player">
+//           <div className="player-name">
+//           </div>
+//           <div className="player-score">
+//           </div>
+//         </div>
+//       </div>
+//     </div>
+//   );
+// }
+//
+// Application.propTypes = {
+//   title: PropTypes.string,
+// };
+//
+// Application.defaultProps = {
+//   title: "Scoreboard"
+// }
+//
+// ReactDOM.render(<Application/>, document.getElementById('container'));
+//
+// let renderProps = {
+//   extension: 'uk',
+//   name: 'europol',
+//   date: 'metoo',
+//   id: '112312'
+// };
+//
+// let Single = function(props) {
+//   return (
+//     <div className= "single-website">
+//       <div className= "single-logo">
+//         <p> {props.extension} </p>
+//       </div>
+//       <div className= "single-name">
+//         <p> {props.name} </p>
+//       </div>
+//       <div className= "single-date">
+//         <p> {props.date} </p>
+//       </div>
+//       <div className= "single-monitor">
+//       </div>
+//     </div>
+//   );
+// }
 //
 // Single.propTypes = {
 //   extension: window.PropTypes.string.isRequired,
