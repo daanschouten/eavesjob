@@ -3,11 +3,15 @@ const PropTypes = require('prop-types');
 
 const A = require('./auth');
 const Login = A.Login;
-const Register = A.Register;
+
+const H = require('./home');
+const Home = H.Home;
+const RegisterHome = H.RegisterHome;
 
 module.exports = {
-  Register: Register,
-  Login: Login
+  RegisterHome: RegisterHome,
+  Login: Login,
+  Home: Home
 };
 
 // let Application = function(props) {

@@ -12,9 +12,10 @@ const moment = require('moment');
 const React = require('react');
 const ReactDOMServer = require('react-dom/server');
 const C = require('../components/index.jsx');
-
 // const PropTypes = require('prop-types');
 // const ReactDOM = require('react-dom');
+
+const index = 'newLayout';
 
 mongoose.Promise = global.Promise;
 mongoose.createConnection("mongodb://127.0.0.1:27017/jupdate");
@@ -26,15 +27,23 @@ const getLoggedIn = function(user) {
 }
 
 router.get('/', (req, res, next) => {
-  return res.render('index', { title: "home"});
+  let Home = React.createFactory(C.Home);
+  let loggedIn = getLoggedIn(req.session.userID);
+
+  res.render(index, {
+    react: ReactDOMServer.renderToString(Home({
+      loggedIn: loggedIn
+    }))
+  })
+  // return res.render('index', { title: "home"});
 });
 
 router.get('/althome', (req, res, next) => {
-  let Register = React.createFactory(C.Register);
+  let RegisterHome = React.createFactory(C.RegisterHome);
   let loggedIn = getLoggedIn(req.session.userID);
 
-  res.render('newLayout', {
-    react: ReactDOMServer.renderToString(Register({
+  res.render(index, {
+    react: ReactDOMServer.renderToString(RegisterHome({
       loggedIn: loggedIn
     }))
   })

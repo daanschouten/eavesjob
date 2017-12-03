@@ -31,54 +31,36 @@ class Login extends React.Component {
   }
 }
 
-class Register extends React.Component {
+class RegisterForm extends React.Component {
   render() {
     return (
-      <div id="react-main">
-      <Header loggedIn={this.props.loggedIn}/>
-      <div id="front">
-        <div id="front-top">
-          <div id="banner-left">
-            <h2>We monitor career pages,<br/>
-              so you don't have to.</h2>
-            <p style={{
-                maxWidth: '400px'
-              }}>Checking for new vacancies can be a hassle. With EavesJob, you simply select the career pages of organisations you're interested in. Whenever career opportunities appear, we'll shoot you an email.</p>
-          </div>
-          <div id="register-right">
-            <div className="single-center" style={{ marginTop: '0' }}>
-              <div className="form-title">
-                <h1>Join us!
-                </h1>
-              </div>
-              <form method="POST" action="/register" className="form-small">
-                <div className="form-group">
-                  <input type="text" placeholder="First Name" name="firstName" className="big-input half"/>
-                  <input type="text" placeholder="Last Name" name="lastName" className="big-input half"/>
-                </div>
-                <div className="form-group">
-                  <input type="email" placeholder="Your Email Address" name="email" className="big-input"/>
-                </div>
-                <div className="form-group">
-                  <input type="password" name="password" placeholder="Password" className="big-input half"/>
-                  <input type="password" name="confirmPassword" placeholder="Confirm Password" className="big-input half"/>
-                </div>
-                <div className="form-group">
-                  <button type="submit" className="big-button">Sign up</button>
-                </div>
-              </form>
-            </div>
-          </div>
+      <div className="single-center" style={{ marginTop: '0' }}>
+        <div className="form-title">
+          <h1>Join us!
+          </h1>
         </div>
+        <form method="POST" action="/register" className="form-small">
+          <div className="form-group">
+            <input type="text" placeholder="First Name" name="firstName" className="big-input half"/>
+            <input type="text" placeholder="Last Name" name="lastName" className="big-input half"/>
+          </div>
+          <div className="form-group">
+            <input type="email" placeholder="Your Email Address" name="email" className="big-input"/>
+          </div>
+          <div className="form-group">
+            <input type="password" name="password" placeholder="Password" className="big-input half"/>
+            <input type="password" name="confirmPassword" placeholder="Confirm Password" className="big-input half"/>
+          </div>
+          <div className="form-group">
+            <button type="submit" className="big-button">Sign up</button>
+          </div>
+        </form>
       </div>
-      <div id="front-bottom">
-      </div>
-    </div>
-    );
+    )
   }
 }
 
 module.exports = {
-  Register: Register,
+  RegisterForm: RegisterForm,
   Login: Login
 }
