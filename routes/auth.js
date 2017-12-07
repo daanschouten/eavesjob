@@ -5,8 +5,25 @@ const mongo = require('mongodb');
 const mongoose = require('mongoose');
 const User = require('../models/user');
 
+const React = require('react');
+const ReactDOMServer = require('react-dom/server');
+const C = require('../components/index.jsx');
+
+const getLoggedIn = function(user) {
+  return (user) ? true : false;
+}
+const index = 'newLayout';
+
 router.get('/register', mid.loggedOut, (req, res, next) => {
-  return res.render('register', { title: "Sign Up!"});
+  let Register = React.createFactory(C.Register);
+  let loggedIn = getLoggedIn(req.session.userID);
+
+  res.render(index, {
+    react: ReactDOMServer.renderToString(Register({
+      loggedIn: loggedIn
+    }))
+  })
+  // return res.render('register', { title: "Sign Up!"});
 });
 
 router.post('/register', (req, res, next) => {
@@ -50,7 +67,14 @@ router.post('/register', (req, res, next) => {
 });
 
 router.get('/login', mid.loggedOut, function(req,res,next) {
-  return res.render('login', { title: 'Log In'});
+  let Login = React.createFactory(C.Login);
+
+  return res.render('newLayout', {
+    react: ReactDOMServer.renderToString(Login({
+
+    }))
+  })
+  // return res.render('login', { title: 'Log In'});
 })
 
 router.post('/login', function(req,res,next) {

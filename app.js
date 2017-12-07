@@ -1,5 +1,8 @@
 const express = require('express');
 const app = express();
+require('babel-register')({
+    presets: ['es2015', 'react']
+});
 const htmlparser = require("htmlparser2");
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
@@ -44,6 +47,7 @@ app.use(function(req, res, next) {
 });
 
 app.use(lessMiddleware(__dirname + '/public'));
+
 app.use(express.static('public'));
 app.use(bodyParser.urlencoded({ extended: false}));
 // app.use(bodyParser.json({ }));

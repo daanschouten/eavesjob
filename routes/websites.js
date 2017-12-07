@@ -10,6 +10,21 @@ const dbOps = require('./dbOps');
 const urlParse = require('url-parse');
 const moment = require('moment');
 
+const React = require('react');
+const ReactDOMServer = require('react-dom/server');
+const C = require('../components/index.jsx');
+
+const index = 'newLayout';
+
+router.get('/altbrowse', mid.requiresLogin, (req, res, next) => {
+  let Browse = React.createFactory(C.Browse);
+  res.render(index, {
+    react: ReactDOMServer.renderToString(Browse({
+      available: "this works, sorta"
+    }))
+  })
+});
+
 router.get('/editWebsite', mid.requiresLogin, function(req, res, next) {
   return res.render('editWebsite');
 })

@@ -4,7 +4,7 @@ html(lang="en")
     title Eavesjob | #{title}
     script(type='text/javascript', src='./build/vendor.bundle.js')
     script(type='text/javascript', src='./build/app.bundle.js')
-    script(type='text/javascript', src='./build/react.bundle.js')
   body
-    include includes/header.pug    
-    block content
+    #app
+      != react
+  script(type='text/javascript', src='./build/react.bundle.js')

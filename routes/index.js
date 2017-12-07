@@ -8,21 +8,45 @@ const Website = require('../models/website');
 const Keyword = require('../models/keyword');
 const mid = require('../middleware');
 const moment = require('moment');
-const ren = require('../app.jsx');
-const react = require('react');
-const reactDOM = require('react-dom');
+
+const React = require('react');
+const ReactDOMServer = require('react-dom/server');
+const C = require('../components/index.jsx');
+// const PropTypes = require('prop-types');
+// const ReactDOM = require('react-dom');
+
+const index = 'newLayout';
 
 mongoose.Promise = global.Promise;
 mongoose.createConnection("mongodb://127.0.0.1:27017/jupdate");
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 
+const getLoggedIn = function(user) {
+  return (user) ? true : false;
+}
+
 router.get('/', (req, res, next) => {
-  return res.render('index', { title: "home"});
+  let Home = React.createFactory(C.Home);
+  let loggedIn = getLoggedIn(req.session.userID);
+
+  res.render(index, {
+    react: ReactDOMServer.renderToString(Home({
+      loggedIn: loggedIn
+    }))
+  })
+  // return res.render('index', { title: "home"});
 });
 
 router.get('/althome', (req, res, next) => {
-  return res.render('indexRegister', { title: "home"});
+  let RegisterHome = React.createFactory(C.RegisterHome);
+  let loggedIn = getLoggedIn(req.session.userID);
+
+  res.render(index, {
+    react: ReactDOMServer.renderToString(RegisterHome({
+      loggedIn: loggedIn
+    }))
+  })
 });
 
 router.post('/search', mid.requiresLogin, function(req,res, next) {
