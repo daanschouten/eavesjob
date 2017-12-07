@@ -5,7 +5,7 @@ const s = require('../retrieve');
 const Available = s.Available;
 const Monitored = s.Monitored;
 
-// load dangerouslySetInnerHTML before bundle, for some reason.
+// load dangerouslySetInnerHTML before bundle js
 
 class Browse extends React.Component {
   constructor(props) {
