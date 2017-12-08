@@ -390,11 +390,17 @@ function _inherits(subClass, superClass) {
 var React = __webpack_require__(0);
 var PropTypes = __webpack_require__(2);
 var Header = __webpack_require__(8).Header;
+
 var s = __webpack_require__(47);
 var Available = s.Available;
 var Monitored = s.Monitored;
+var Search = s.Search;
+// load dangerouslySetInnerHTML before bundle js
 
-// load dangerouslySetInnerHTML before bundle, for some reason.
+// set conditional for map function, necessary?
+// set different output if !results
+// let plus/minus depend on component orr
+// switch icons entirely?
 
 var Browse = function (_React$Component) {
   _inherits(Browse, _React$Component);
@@ -406,7 +412,8 @@ var Browse = function (_React$Component) {
 
     _this.state = {
       loggedIn: true,
-      available: _this.props.available
+      available: _this.props.available,
+      monitored: _this.props.monitored
     };
     return _this;
   }
@@ -414,7 +421,7 @@ var Browse = function (_React$Component) {
   _createClass(Browse, [{
     key: 'render',
     value: function render() {
-      return React.createElement('div', { id: 'react-main' }, React.createElement(Header, { loggedIn: this.state.loggedIn }), React.createElement('p', null, ' ', this.state.available, ' '), React.createElement('script', { dangerouslySetInnerHTML: {
+      return React.createElement('div', { id: 'react-main' }, React.createElement(Header, { loggedIn: this.state.loggedIn }), React.createElement('div', { id: 'browse-page' }, React.createElement('div', { id: 'browse-left' }, React.createElement(Search, null), React.createElement(Available, { available: this.state.available })), React.createElement('div', { className: 'right-sidebar' }, React.createElement(Monitored, { monitored: this.state.monitored }))), React.createElement('script', { dangerouslySetInnerHTML: {
           __html: 'window.PROPS=' + JSON.stringify(this.props)
         } }));
     }
@@ -468,24 +475,73 @@ function _inherits(subClass, superClass) {
 var React = __webpack_require__(0);
 var PropTypes = __webpack_require__(2);
 
-var Monitored = function (_React$Component) {
-  _inherits(Monitored, _React$Component);
+var Search = function (_React$Component) {
+  _inherits(Search, _React$Component);
+
+  function Search(props) {
+    _classCallCheck(this, Search);
+
+    var _this = _possibleConstructorReturn(this, (Search.__proto__ || Object.getPrototypeOf(Search)).call(this, props));
+
+    _this.state = {};
+    return _this;
+  }
+
+  _createClass(Search, [{
+    key: 'render',
+    value: function render() {
+      return React.createElement('div', { id: 'search-website' }, React.createElement('h2', null, 'Browse Career Pages'), React.createElement('div', { className: 'search-div' }, React.createElement('form', { className: 'search-form' }, React.createElement('div', { className: 'search-bar' }, React.createElement('input', { id: 'search-input', type: 'text', placeholder: 'organisation / company name', name: 'name' }), React.createElement('button', { disabled: 'disabled' }, React.createElement('img', { src: '../img/search.svg' }))))));
+    }
+  }]);
+
+  return Search;
+}(React.Component);
+
+var Single = function (_React$Component2) {
+  _inherits(Single, _React$Component2);
+
+  function Single(props) {
+    _classCallCheck(this, Single);
+
+    var _this2 = _possibleConstructorReturn(this, (Single.__proto__ || Object.getPrototypeOf(Single)).call(this, props));
+
+    _this2.state = {
+      website: _this2.props.website
+    };
+    return _this2;
+  }
+
+  _createClass(Single, [{
+    key: 'render',
+    value: function render() {
+      return React.createElement('div', { className: 'single-website' }, React.createElement('div', { className: 'single-logo' }, React.createElement('p', null, ' ', this.state.website.links[0].extension, ' ')), React.createElement('div', { className: 'single-name' }, React.createElement('p', null, ' ', this.state.website.name, ' ')), React.createElement('div', { className: 'single-date' }, React.createElement('p', null, ' ', this.state.website.storedPage.date)), React.createElement('div', { className: 'single-monitor ' }, React.createElement('img', { src: '../img/plus.svg' })));
+    }
+  }]);
+
+  return Single;
+}(React.Component);
+
+var Monitored = function (_React$Component3) {
+  _inherits(Monitored, _React$Component3);
 
   function Monitored(props) {
     _classCallCheck(this, Monitored);
 
-    var _this = _possibleConstructorReturn(this, (Monitored.__proto__ || Object.getPrototypeOf(Monitored)).call(this, props));
+    var _this3 = _possibleConstructorReturn(this, (Monitored.__proto__ || Object.getPrototypeOf(Monitored)).call(this, props));
 
-    _this.state = {
-      monitored: _this.props.monitored
+    _this3.state = {
+      monitored: _this3.props.monitored
     };
-    return _this;
+    return _this3;
   }
 
   _createClass(Monitored, [{
     key: 'render',
     value: function render() {
-      return React.createElement('div', null, React.createElement('p', null, ' '));
+      return React.createElement('div', { id: 'monitored-websites' }, React.createElement('div', { className: 'right-sidebar-title' }, React.createElement('h2', null, 'subscribed career pages')), this.state.monitored.map(function (website) {
+        return React.createElement(Single, { website: website });
+        // check whether exists first
+      }));
     }
   }]);
 
@@ -496,24 +552,27 @@ Monitored.propTypes = {
   monitored: PropTypes.array.isRequired
 };
 
-var Available = function (_React$Component2) {
-  _inherits(Available, _React$Component2);
+var Available = function (_React$Component4) {
+  _inherits(Available, _React$Component4);
 
   function Available(props) {
     _classCallCheck(this, Available);
 
-    var _this2 = _possibleConstructorReturn(this, (Available.__proto__ || Object.getPrototypeOf(Available)).call(this, props));
+    var _this4 = _possibleConstructorReturn(this, (Available.__proto__ || Object.getPrototypeOf(Available)).call(this, props));
 
-    _this2.state = {
-      available: _this2.props.available
+    _this4.state = {
+      available: _this4.props.available
     };
-    return _this2;
+    return _this4;
   }
 
   _createClass(Available, [{
     key: 'render',
     value: function render() {
-      return React.createElement('div', null, React.createElement('p', null, ' '));
+      return React.createElement('div', { id: 'website-list' }, React.createElement('div', { className: 'single-website' }, React.createElement('div', { className: 'single-logo' }), React.createElement('div', { className: 'single-name' }, React.createElement('p', null, ' name ')), React.createElement('div', { className: 'single-date' }, React.createElement('p', null, ' new career opportunity ')), React.createElement('div', { className: 'single-monitor' })), this.state.available.map(function (website) {
+        return React.createElement(Single, { website: website });
+        // check whether exists first
+      }));
     }
   }]);
 
@@ -525,6 +584,7 @@ Available.propTypes = {
 };
 
 module.exports = {
+  Search: Search,
   Monitored: Monitored,
   Available: Available
 };

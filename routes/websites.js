@@ -18,11 +18,61 @@ const index = 'newLayout';
 
 router.get('/altbrowse', mid.requiresLogin, (req, res, next) => {
   let Browse = React.createFactory(C.Browse);
-  res.render(index, {
-    react: ReactDOMServer.renderToString(Browse({
-      available: "this works, sorta"
-    }))
-  })
+
+  User.findById(req.session.userID).exec(function(error, requestedUser) {
+    if (error) {
+      let err = new Error('Something went wrong retrieving requested user!');
+      err.status = 400;
+      next(err);
+  } else if (requestedUser) {
+      retrieveWebsites(requestedUser.subscribedWebsites);
+    }
+  });
+
+  const retrieveWebsites = function(monitoredSites) {
+    let monitored = [];
+    Website.find({}).select({
+      "name": 1,
+      "storedPage.date": 1,
+      "links": 1
+    }).exec(function(error, websites) {
+      if (error) {
+        let err = new Error('Something went wrong retrieving requested website!');
+        err.status = 400;
+        next(err);
+      } else {
+        let currentDate = new Date();
+        let positions = [];
+        websites.map(function(website){
+          if (website.storedPage.date) {
+            website.storedPage.date = moment(website.storedPage.date, "YYYYMMDD").fromNow();
+          } else {
+            website.storedPage.date = "new arrival";
+          }
+          // think about pagination
+          monitoredSites.map(function(monSite){
+            if (monSite == website._id) {
+              monitored.push(website);
+            }
+          });
+        });
+
+        monitored.map(function(monitor){
+          // use reduce function
+          let position = websites.indexOf(monitor);
+          websites.splice(position, 1);
+        });
+
+        return res.render(index, {
+          react: ReactDOMServer.renderToString(Browse({
+            monitored: websites,
+            available: monitored
+          }))
+        })
+      }
+    });
+  }
+
 });
 
 router.get('/editWebsite', mid.requiresLogin, function(req, res, next) {
