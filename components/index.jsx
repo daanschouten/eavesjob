@@ -12,6 +12,8 @@ const Register = require('./register').Register;
 
 const Browse = require('./browse').Browse;
 
+const Toggle = require('./toggle').Toggle;
+
 module.exports = {
   Browse: Browse,
   Register: Register,

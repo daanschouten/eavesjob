@@ -1,5 +1,6 @@
 const React = require('react');
 const PropTypes = require('prop-types');
+const WebsiteForm = require('../forms').WebsiteForm;
 
 class Search extends React.Component {
   constructor(props) {
@@ -67,10 +68,13 @@ class Monitored extends React.Component {
         <div className="right-sidebar-title">
           <h2>subscribed career pages</h2>
         </div>
-        {this.state.monitored.map(function(website){
-          return <Single website={website} />
-          // check whether exists first
-        })}
+        {this.state.monitored.length > 0 ?
+          this.state.monitored.map(function(website){
+            return <Single website={website} key={website._id}/>
+          })
+        :
+          <div> No results div here </div>
+        }
       </div>
     )
   }
@@ -102,10 +106,13 @@ class Available extends React.Component {
           <div className= "single-monitor">
           </div>
         </div>
-        {this.state.available.map(function(website){
-          return <Single website={website} />
-          // check whether exists first
-        })}
+        {this.state.available.length > 0 ?
+          this.state.available.map(function(website){
+            return <Single website={website} key={website._id}/>
+          })
+        :
+          <WebsiteForm action="/requestWebsite" />
+        }
       </div>
     )
   }

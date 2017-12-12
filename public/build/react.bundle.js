@@ -1,4 +1,4 @@
-webpackJsonp([1],{
+webpackJsonp([0],{
 
 /***/ 11:
 /***/ (function(module, exports, __webpack_require__) {
@@ -146,6 +146,8 @@ var RegisterHome = H.RegisterHome;
 var Register = __webpack_require__(45).Register;
 
 var Browse = __webpack_require__(46).Browse;
+
+var Toggle = __webpack_require__(49).Toggle;
 
 module.exports = {
   Browse: Browse,
@@ -474,6 +476,7 @@ function _inherits(subClass, superClass) {
 
 var React = __webpack_require__(0);
 var PropTypes = __webpack_require__(2);
+var WebsiteForm = __webpack_require__(48).WebsiteForm;
 
 var Search = function (_React$Component) {
   _inherits(Search, _React$Component);
@@ -538,10 +541,9 @@ var Monitored = function (_React$Component3) {
   _createClass(Monitored, [{
     key: 'render',
     value: function render() {
-      return React.createElement('div', { id: 'monitored-websites' }, React.createElement('div', { className: 'right-sidebar-title' }, React.createElement('h2', null, 'subscribed career pages')), this.state.monitored.map(function (website) {
-        return React.createElement(Single, { website: website });
-        // check whether exists first
-      }));
+      return React.createElement('div', { id: 'monitored-websites' }, React.createElement('div', { className: 'right-sidebar-title' }, React.createElement('h2', null, 'subscribed career pages')), this.state.monitored.length > 0 ? this.state.monitored.map(function (website) {
+        return React.createElement(Single, { website: website, key: website._id });
+      }) : React.createElement('div', null, ' No results div here '));
     }
   }]);
 
@@ -569,10 +571,9 @@ var Available = function (_React$Component4) {
   _createClass(Available, [{
     key: 'render',
     value: function render() {
-      return React.createElement('div', { id: 'website-list' }, React.createElement('div', { className: 'single-website' }, React.createElement('div', { className: 'single-logo' }), React.createElement('div', { className: 'single-name' }, React.createElement('p', null, ' name ')), React.createElement('div', { className: 'single-date' }, React.createElement('p', null, ' new career opportunity ')), React.createElement('div', { className: 'single-monitor' })), this.state.available.map(function (website) {
-        return React.createElement(Single, { website: website });
-        // check whether exists first
-      }));
+      return React.createElement('div', { id: 'website-list' }, React.createElement('div', { className: 'single-website' }, React.createElement('div', { className: 'single-logo' }), React.createElement('div', { className: 'single-name' }, React.createElement('p', null, ' name ')), React.createElement('div', { className: 'single-date' }, React.createElement('p', null, ' new career opportunity ')), React.createElement('div', { className: 'single-monitor' })), this.state.available.length > 0 ? this.state.available.map(function (website) {
+        return React.createElement(Single, { website: website, key: website._id });
+      }) : React.createElement(WebsiteForm, { action: '/requestWebsite' }));
     }
   }]);
 
@@ -587,6 +588,145 @@ module.exports = {
   Search: Search,
   Monitored: Monitored,
   Available: Available
+};
+
+/***/ }),
+
+/***/ 48:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+var _createClass = function () {
+  function defineProperties(target, props) {
+    for (var i = 0; i < props.length; i++) {
+      var descriptor = props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if ("value" in descriptor) descriptor.writable = true;Object.defineProperty(target, descriptor.key, descriptor);
+    }
+  }return function (Constructor, protoProps, staticProps) {
+    if (protoProps) defineProperties(Constructor.prototype, protoProps);if (staticProps) defineProperties(Constructor, staticProps);return Constructor;
+  };
+}();
+
+function _classCallCheck(instance, Constructor) {
+  if (!(instance instanceof Constructor)) {
+    throw new TypeError("Cannot call a class as a function");
+  }
+}
+
+function _possibleConstructorReturn(self, call) {
+  if (!self) {
+    throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
+  }return call && ((typeof call === "undefined" ? "undefined" : _typeof(call)) === "object" || typeof call === "function") ? call : self;
+}
+
+function _inherits(subClass, superClass) {
+  if (typeof superClass !== "function" && superClass !== null) {
+    throw new TypeError("Super expression must either be null or a function, not " + (typeof superClass === "undefined" ? "undefined" : _typeof(superClass)));
+  }subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } });if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
+}
+
+var React = __webpack_require__(0);
+var PropTypes = __webpack_require__(2);
+
+var WebsiteForm = function (_React$Component) {
+  _inherits(WebsiteForm, _React$Component);
+
+  function WebsiteForm(props) {
+    _classCallCheck(this, WebsiteForm);
+
+    var _this = _possibleConstructorReturn(this, (WebsiteForm.__proto__ || Object.getPrototypeOf(WebsiteForm)).call(this, props));
+
+    _this.state = {};
+    return _this;
+  }
+
+  _createClass(WebsiteForm, [{
+    key: 'render',
+    value: function render() {
+      return (
+        // <div className="form-title-vertical">
+        //   <p>Fill in the name of a company, and one or more links to career pages of that company. Check the guidelines for submitting a company <a href="/support/guidelines">here</a>.</p>
+        // </div>
+        React.createElement('div', { id: 'wrapper-single' }, React.createElement('div', { className: 'single-center' }, React.createElement('form', { method: 'POST', action: this.props.action, className: 'form-small' }, React.createElement('div', { className: 'form-group' }, React.createElement('input', { style: { marginBottom: "20px" }, type: 'text', placeholder: 'Website Name', name: 'name', className: 'big-input' })), React.createElement('div', { className: 'form-group' }, React.createElement('input', { type: 'text', placeholder: 'Career Page URL (1)', name: 'url1', className: 'big-input' })), React.createElement('div', { className: 'form-group' }, React.createElement('input', { type: 'text', placeholder: 'Career Page URL (2) (optional)', name: 'url2', className: 'big-input' })), React.createElement('div', { className: 'form-group' }, React.createElement('input', { type: 'text', placeholder: 'Career Page URL (3) (optional)', name: 'url3', className: 'big-input' })), React.createElement('div', { className: 'form-group' }, React.createElement('p', null, 'Once the the request comes through, we\'ll add the company to your subscribes automatically. Keep in mind this might take up to 24 hours.')), React.createElement('div', { className: 'form-group' }, React.createElement('button', { type: 'submit', className: 'big-button' }, 'Submit Website')))))
+      );
+    }
+  }]);
+
+  return WebsiteForm;
+}(React.Component);
+
+module.exports = {
+  WebsiteForm: WebsiteForm
+};
+
+/***/ }),
+
+/***/ 49:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+var _createClass = function () {
+  function defineProperties(target, props) {
+    for (var i = 0; i < props.length; i++) {
+      var descriptor = props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if ("value" in descriptor) descriptor.writable = true;Object.defineProperty(target, descriptor.key, descriptor);
+    }
+  }return function (Constructor, protoProps, staticProps) {
+    if (protoProps) defineProperties(Constructor.prototype, protoProps);if (staticProps) defineProperties(Constructor, staticProps);return Constructor;
+  };
+}();
+
+function _classCallCheck(instance, Constructor) {
+  if (!(instance instanceof Constructor)) {
+    throw new TypeError("Cannot call a class as a function");
+  }
+}
+
+function _possibleConstructorReturn(self, call) {
+  if (!self) {
+    throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
+  }return call && ((typeof call === "undefined" ? "undefined" : _typeof(call)) === "object" || typeof call === "function") ? call : self;
+}
+
+function _inherits(subClass, superClass) {
+  if (typeof superClass !== "function" && superClass !== null) {
+    throw new TypeError("Super expression must either be null or a function, not " + (typeof superClass === "undefined" ? "undefined" : _typeof(superClass)));
+  }subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } });if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
+}
+
+var React = __webpack_require__(0);
+var PropTypes = __webpack_require__(2);
+
+var Toggle = function (_React$Component) {
+  _inherits(Toggle, _React$Component);
+
+  function Toggle(props) {
+    _classCallCheck(this, Toggle);
+
+    var _this = _possibleConstructorReturn(this, (Toggle.__proto__ || Object.getPrototypeOf(Toggle)).call(this, props));
+
+    _this.state = {};
+    return _this;
+  }
+
+  _createClass(Toggle, [{
+    key: 'render',
+    value: function render() {
+      return React.createElement('label', { 'class': 'switch', role: 'switch' }, React.createElement('input', { 'class': 'switch__toggle', type: 'checkbox', unchecked: true }), React.createElement('span', { 'class': 'switch__label' }));
+    }
+  }]);
+
+  return Toggle;
+}(React.Component);
+
+module.exports = {
+  Toggle: Toggle
 };
 
 /***/ }),

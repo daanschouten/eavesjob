@@ -65,8 +65,8 @@ router.get('/altbrowse', mid.requiresLogin, (req, res, next) => {
 
         return res.render(index, {
           react: ReactDOMServer.renderToString(Browse({
-            monitored: websites,
-            available: monitored
+            monitored: monitored,
+            available: websites
           }))
         })
       }
