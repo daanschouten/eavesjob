@@ -94,7 +94,74 @@ module.exports = {
 
 /***/ }),
 
-/***/ 30:
+/***/ 19:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+var _createClass = function () {
+  function defineProperties(target, props) {
+    for (var i = 0; i < props.length; i++) {
+      var descriptor = props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if ("value" in descriptor) descriptor.writable = true;Object.defineProperty(target, descriptor.key, descriptor);
+    }
+  }return function (Constructor, protoProps, staticProps) {
+    if (protoProps) defineProperties(Constructor.prototype, protoProps);if (staticProps) defineProperties(Constructor, staticProps);return Constructor;
+  };
+}();
+
+function _classCallCheck(instance, Constructor) {
+  if (!(instance instanceof Constructor)) {
+    throw new TypeError("Cannot call a class as a function");
+  }
+}
+
+function _possibleConstructorReturn(self, call) {
+  if (!self) {
+    throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
+  }return call && ((typeof call === "undefined" ? "undefined" : _typeof(call)) === "object" || typeof call === "function") ? call : self;
+}
+
+function _inherits(subClass, superClass) {
+  if (typeof superClass !== "function" && superClass !== null) {
+    throw new TypeError("Super expression must either be null or a function, not " + (typeof superClass === "undefined" ? "undefined" : _typeof(superClass)));
+  }subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } });if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
+}
+
+var React = __webpack_require__(0);
+var PropTypes = __webpack_require__(2);
+
+var Toggle = function (_React$Component) {
+  _inherits(Toggle, _React$Component);
+
+  function Toggle(props) {
+    _classCallCheck(this, Toggle);
+
+    var _this = _possibleConstructorReturn(this, (Toggle.__proto__ || Object.getPrototypeOf(Toggle)).call(this, props));
+
+    _this.state = {};
+    return _this;
+  }
+
+  _createClass(Toggle, [{
+    key: 'render',
+    value: function render() {
+      return React.createElement('label', { className: 'switch', role: 'switch' }, React.createElement('input', { className: 'switch__toggle', type: 'checkbox' }), React.createElement('span', { className: 'switch__label' }));
+    }
+  }]);
+
+  return Toggle;
+}(React.Component);
+
+module.exports = {
+  Toggle: Toggle
+};
+
+/***/ }),
+
+/***/ 31:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -114,7 +181,7 @@ var _propTypes2 = _interopRequireDefault(_propTypes);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var C = __webpack_require__(43);
+var C = __webpack_require__(44);
 
 var Login = C.Login;
 var RegisterHome = C.RegisterHome;
@@ -127,7 +194,7 @@ _reactDom2.default.hydrate(_react2.default.createElement(Browse, props), documen
 
 /***/ }),
 
-/***/ 43:
+/***/ 44:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -139,15 +206,15 @@ var PropTypes = __webpack_require__(2);
 var A = __webpack_require__(11);
 var Login = A.Login;
 
-var H = __webpack_require__(44);
+var H = __webpack_require__(45);
 var Home = H.Home;
 var RegisterHome = H.RegisterHome;
 
-var Register = __webpack_require__(45).Register;
+var Register = __webpack_require__(46).Register;
 
-var Browse = __webpack_require__(46).Browse;
+var Browse = __webpack_require__(47).Browse;
 
-var Toggle = __webpack_require__(49).Toggle;
+var Toggle = __webpack_require__(19).Toggle;
 
 module.exports = {
   Browse: Browse,
@@ -159,7 +226,7 @@ module.exports = {
 
 /***/ }),
 
-/***/ 44:
+/***/ 45:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -276,7 +343,7 @@ module.exports = {
 
 /***/ }),
 
-/***/ 45:
+/***/ 46:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -353,7 +420,7 @@ module.exports = {
 
 /***/ }),
 
-/***/ 46:
+/***/ 47:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -393,15 +460,13 @@ var React = __webpack_require__(0);
 var PropTypes = __webpack_require__(2);
 var Header = __webpack_require__(8).Header;
 
-var s = __webpack_require__(47);
+var s = __webpack_require__(48);
 var Available = s.Available;
 var Monitored = s.Monitored;
 var Search = s.Search;
 // load dangerouslySetInnerHTML before bundle js
 
 // set conditional for map function, necessary?
-// set different output if !results
-// let plus/minus depend on component orr
 // switch icons entirely?
 
 var Browse = function (_React$Component) {
@@ -438,7 +503,7 @@ module.exports = {
 
 /***/ }),
 
-/***/ 47:
+/***/ 48:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -476,7 +541,12 @@ function _inherits(subClass, superClass) {
 
 var React = __webpack_require__(0);
 var PropTypes = __webpack_require__(2);
-var WebsiteForm = __webpack_require__(48).WebsiteForm;
+
+var _require = __webpack_require__(49),
+    WebsiteForm = _require.WebsiteForm;
+
+var _require2 = __webpack_require__(19),
+    Toggle = _require2.Toggle;
 
 var Search = function (_React$Component) {
   _inherits(Search, _React$Component);
@@ -517,7 +587,7 @@ var Single = function (_React$Component2) {
   _createClass(Single, [{
     key: 'render',
     value: function render() {
-      return React.createElement('div', { className: 'single-website' }, React.createElement('div', { className: 'single-logo' }, React.createElement('p', null, ' ', this.state.website.links[0].extension, ' ')), React.createElement('div', { className: 'single-name' }, React.createElement('p', null, ' ', this.state.website.name, ' ')), React.createElement('div', { className: 'single-date' }, React.createElement('p', null, ' ', this.state.website.storedPage.date)), React.createElement('div', { className: 'single-monitor ' }, React.createElement('img', { src: '../img/plus.svg' })));
+      return React.createElement('div', { className: 'single-website' }, React.createElement('div', { className: 'single-logo' }, React.createElement('p', null, ' ', this.state.website.links[0].extension, ' ')), React.createElement('div', { className: 'single-name' }, React.createElement('p', null, ' ', this.state.website.name, ' ')), React.createElement('div', { className: 'single-date' }, React.createElement('p', null, ' ', this.state.website.storedPage.date)), React.createElement('div', { className: 'single-monitor ' }, React.createElement(Toggle, null)));
     }
   }]);
 
@@ -592,7 +662,7 @@ module.exports = {
 
 /***/ }),
 
-/***/ 48:
+/***/ 49:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -660,73 +730,6 @@ var WebsiteForm = function (_React$Component) {
 
 module.exports = {
   WebsiteForm: WebsiteForm
-};
-
-/***/ }),
-
-/***/ 49:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-
-var _createClass = function () {
-  function defineProperties(target, props) {
-    for (var i = 0; i < props.length; i++) {
-      var descriptor = props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if ("value" in descriptor) descriptor.writable = true;Object.defineProperty(target, descriptor.key, descriptor);
-    }
-  }return function (Constructor, protoProps, staticProps) {
-    if (protoProps) defineProperties(Constructor.prototype, protoProps);if (staticProps) defineProperties(Constructor, staticProps);return Constructor;
-  };
-}();
-
-function _classCallCheck(instance, Constructor) {
-  if (!(instance instanceof Constructor)) {
-    throw new TypeError("Cannot call a class as a function");
-  }
-}
-
-function _possibleConstructorReturn(self, call) {
-  if (!self) {
-    throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
-  }return call && ((typeof call === "undefined" ? "undefined" : _typeof(call)) === "object" || typeof call === "function") ? call : self;
-}
-
-function _inherits(subClass, superClass) {
-  if (typeof superClass !== "function" && superClass !== null) {
-    throw new TypeError("Super expression must either be null or a function, not " + (typeof superClass === "undefined" ? "undefined" : _typeof(superClass)));
-  }subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } });if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
-}
-
-var React = __webpack_require__(0);
-var PropTypes = __webpack_require__(2);
-
-var Toggle = function (_React$Component) {
-  _inherits(Toggle, _React$Component);
-
-  function Toggle(props) {
-    _classCallCheck(this, Toggle);
-
-    var _this = _possibleConstructorReturn(this, (Toggle.__proto__ || Object.getPrototypeOf(Toggle)).call(this, props));
-
-    _this.state = {};
-    return _this;
-  }
-
-  _createClass(Toggle, [{
-    key: 'render',
-    value: function render() {
-      return React.createElement('label', { 'class': 'switch', role: 'switch' }, React.createElement('input', { 'class': 'switch__toggle', type: 'checkbox', unchecked: true }), React.createElement('span', { 'class': 'switch__label' }));
-    }
-  }]);
-
-  return Toggle;
-}(React.Component);
-
-module.exports = {
-  Toggle: Toggle
 };
 
 /***/ }),
@@ -841,4 +844,4 @@ module.exports = {
 
 /***/ })
 
-},[30]);
+},[31]);

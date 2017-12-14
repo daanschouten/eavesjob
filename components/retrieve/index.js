@@ -1,6 +1,7 @@
 const React = require('react');
 const PropTypes = require('prop-types');
-const WebsiteForm = require('../forms').WebsiteForm;
+const { WebsiteForm } = require('../forms');
+const { Toggle } = require('../toggle');
 
 class Search extends React.Component {
   constructor(props) {
@@ -48,7 +49,7 @@ class Single extends React.Component {
           <p> {this.state.website.storedPage.date}</p>
         </div>
         <div className="single-monitor ">
-          <img src="../img/plus.svg"/>
+          <Toggle />
         </div>
       </div>
     )

@@ -9,8 +9,6 @@ const Search = s.Search;
 // load dangerouslySetInnerHTML before bundle js
 
 // set conditional for map function, necessary?
-// set different output if !results
-// let plus/minus depend on component orr
 // switch icons entirely?
 
 class Browse extends React.Component {
