@@ -133,6 +133,8 @@ function _inherits(subClass, superClass) {
 var React = __webpack_require__(0);
 var PropTypes = __webpack_require__(2);
 
+// set checked value of checkbox and attach onchange handler or sth
+
 var Toggle = function (_React$Component) {
   _inherits(Toggle, _React$Component);
 
@@ -141,14 +143,29 @@ var Toggle = function (_React$Component) {
 
     var _this = _possibleConstructorReturn(this, (Toggle.__proto__ || Object.getPrototypeOf(Toggle)).call(this, props));
 
-    _this.state = {};
+    _this.state = {
+      monitored: false
+    };
+    _this.handleChange = _this.handleChange.bind(_this);
     return _this;
   }
 
   _createClass(Toggle, [{
+    key: 'handleChange',
+    value: function handleChange(event) {
+      this.setState({ monitored: this.state.monitored ? false : true });
+      console.log(event.target.value);
+    }
+  }, {
     key: 'render',
+
+    // handleSubmit(event) {
+    //   alert('A name was submitted: ' + this.state.value);
+    //   event.preventDefault();
+    // }
+
     value: function render() {
-      return React.createElement('label', { className: 'switch', role: 'switch' }, React.createElement('input', { className: 'switch__toggle', type: 'checkbox' }), React.createElement('span', { className: 'switch__label' }));
+      return React.createElement('label', { className: 'switch', role: 'switch' }, React.createElement('input', { className: 'switch__toggle', type: 'checkbox', checked: this.state.monitored, onChange: this.handleChange }), React.createElement('span', { className: 'switch__label' }));
     }
   }]);
 
