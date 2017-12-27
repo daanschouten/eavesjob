@@ -204,10 +204,14 @@ var Login = C.Login;
 var RegisterHome = C.RegisterHome;
 var Register = C.Register;
 var Browse = C.Browse;
+var Home = C.Home;
 
 var props = window.PROPS;
 
-_reactDom2.default.hydrate(_react2.default.createElement(Browse, props), document.getElementById('app'));
+// ReactDOM.hydrate(
+//   React.createElement(Home, props),
+//   document.getElementById('react-main')
+// );
 
 /***/ }),
 
@@ -284,6 +288,10 @@ var PropTypes = __webpack_require__(2);
 var Header = __webpack_require__(8).Header;
 var RegisterForm = __webpack_require__(11).RegisterForm;
 
+var App = function App() {
+  return React.createElement('div', { className: 'container' }, React.createElement('p', null, ' Hello '));
+};
+
 var Home = function (_React$Component) {
   _inherits(Home, _React$Component);
 
@@ -296,7 +304,7 @@ var Home = function (_React$Component) {
   _createClass(Home, [{
     key: 'render',
     value: function render() {
-      return React.createElement('div', { id: 'react-main' }, React.createElement(Header, { loggedIn: this.props.loggedIn }), React.createElement('div', { id: 'front' }, React.createElement('div', { id: 'front-top' }, React.createElement('div', { id: 'banner' }, React.createElement('h1', null, 'We monitor career pages,', React.createElement('br', null), ' so you don\'t have to.'), React.createElement('p', null, 'Checking for new vacancies can be a hassle. ', React.createElement('br', null), ' With EavesJob, you simply select the career pages of organisations you\'re interested in. Whenever career opportunities appear, we\'ll shoot you an email.  '), React.createElement('div', { id: 'front-buttons' }, React.createElement('button', { onClick: { 'location.href': '/register' } }, 'Sign Up Free'), React.createElement('button', { onClick: { 'location.href': '/support' } }, 'Read More'))))));
+      return React.createElement('div', { id: 'react-main' }, React.createElement('div', { id: 'front' }, React.createElement('div', { id: 'front-top' }, React.createElement('div', { id: 'banner' }, React.createElement('h1', null, 'We monitor career pages,', React.createElement('br', null), ' so you don\'t have to.'), React.createElement('p', null, 'Checking for new vacancies can be a hassle. ', React.createElement('br', null), ' With EavesJob, you simply select the career pages of organisations you\'re interested in. Whenever career opportunities appear, we\'ll shoot you an email.  '), React.createElement('div', { id: 'front-buttons' }, React.createElement('button', { onClick: { 'location.href': '/register' } }, 'Sign Up Free'), React.createElement('button', { onClick: { 'location.href': '/support' } }, 'Read More'))))));
     }
   }]);
 
@@ -329,32 +337,9 @@ var RegisterHome = function (_React$Component2) {
   return RegisterHome;
 }(React.Component);
 
-var Browse = function (_React$Component3) {
-  _inherits(Browse, _React$Component3);
-
-  function Browse(props) {
-    _classCallCheck(this, Browse);
-
-    var _this3 = _possibleConstructorReturn(this, (Browse.__proto__ || Object.getPrototypeOf(Browse)).call(this, props));
-
-    _this3.state = {
-      loggedIn: _this3.props.loggedIn
-    };
-    return _this3;
-  }
-
-  _createClass(Browse, [{
-    key: 'render',
-    value: function render() {
-      return React.createElement('div', { id: 'react-main' });
-    }
-  }]);
-
-  return Browse;
-}(React.Component);
-
 module.exports = {
   Home: Home,
+  App: App,
   RegisterHome: RegisterHome
 };
 

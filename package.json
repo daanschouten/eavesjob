@@ -2,7 +2,7 @@
   "name": "jupdate",
   "version": "1.0.0",
   "description": "",
-  "main": "app.js",
+  "main": "./server/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "webpack --progress",
@@ -38,6 +38,7 @@
     "pug": "^2.0.0-rc.3",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
+    "react-router-dom": "^4.2.2",
     "request": "^2.79.0",
     "robots": "^0.10.1",
     "robots-parser": "^1.0.1",

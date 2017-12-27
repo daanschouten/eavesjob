@@ -3,19 +3,22 @@ const app = express();
 require('babel-register')({
     presets: ['es2015', 'react']
 });
-const htmlparser = require("htmlparser2");
+const htmlparser = require('htmlparser2');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const less = require('less');
 const lessMiddleware = require('less-middleware');
-const startScraping = require('./scraper/index.js');
 const session = require('express-session');
 const MongoStore = require('connect-mongo')(session);
 const mongoose = require('mongoose');
-const User = require('./models/user');
-const dbUpdates = require('./databOps/bulkUpdates');
 
-startScraping.start();
+const startScraping = require('../scraper/index.js');
+const User = require('../models/user');
+const dbUpdates = require('../databOps/bulkUpdates');
+
+const { router } = require('./router');
+
+// startScraping.start();
 
 // execute with care, major updates to DB
 // dbUpdates.start();
@@ -55,13 +58,15 @@ app.use(cookieParser());
 
 app.set('view engine', 'pug');
 
-const mainRoutes = require('./routes');
-const authRoutes = require('./routes/auth');
-const websitesRoutes = require('./routes/websites');
+// const mainRoutes = require('./routes');
+// const authRoutes = require('./routes/auth');
+// const websitesRoutes = require('./routes/websites');
+//
+// app.use(mainRoutes);
+// app.use(authRoutes);
+// app.use(websitesRoutes);
 
-app.use(mainRoutes);
-app.use(authRoutes);
-app.use(websitesRoutes);
+app.get('*', router);
 
 app.use((err, req, res, next) => {
   res.locals.error = err;
@@ -71,6 +76,10 @@ app.use((err, req, res, next) => {
   res.render('error');
 });
 
-app.listen(3000, () => {
-  console.log("The server has started");
+app.listen(3000, (error) => {
+  if (error) {
+    console.error(error)
+  } else {
+    console.info('==> 🌎  Listening on port 3000. Open up http://localhost:3000/ in your browser.')
+  }
 });

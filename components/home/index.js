@@ -3,11 +3,16 @@ const PropTypes = require('prop-types');
 const Header = require('../header').Header;
 const RegisterForm = require('../auth').RegisterForm;
 
+const App = () => (
+  <div className="container">
+    <p> Hello </p>
+  </div>
+)
+
 class Home extends React.Component {
   render() {
     return (
       <div id="react-main">
-        <Header loggedIn={this.props.loggedIn}/>
         <div id="front">
           <div id="front-top">
             <div id="banner">
@@ -57,23 +62,8 @@ class RegisterHome extends React.Component {
   }
 }
 
-class Browse extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      loggedIn: this.props.loggedIn
-    };
-  }
-
-  render() {
-    return (
-      <div id="react-main">
-      </div>
-    )
-  }
-}
-
 module.exports = {
   Home: Home,
+  App: App,
   RegisterHome: RegisterHome
 }
