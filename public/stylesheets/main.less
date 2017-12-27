@@ -1,6 +1,7 @@
 @base: #619B8A;
 @body: rgb(245,245,245);
 @dark-grey: rgb(230,230,230);
+@switchSize: 40px;
 
 body, div, h1, h2, h3, p, header {
   margin: 0;
@@ -235,6 +236,7 @@ header {
         width: 100%;
         border-bottom: 0.5px solid #EAEAEA;
         justify-content: space-between;
+        align-items: center;
         padding: 12px 5%;
         font-size: 1.1em;
 
@@ -272,7 +274,8 @@ header {
       }
 
       .single-website:nth-child(even) {
-        background: @dark-grey;
+        // background: @dark-grey;
+        background: linear-gradient(to right, @dark-grey, #FFFFFF);
       }
 
       .single-website:hover {
@@ -378,6 +381,7 @@ header {
         width: 100%;
         border-bottom: 0.5px solid #EAEAEA;
         justify-content: space-between;
+        align-items: center;
         padding: 12px 5%;
         font-size: 1.1em;
 
@@ -386,7 +390,8 @@ header {
         }
 
         .single-monitor  {
-          justify-content: center;
+          width: 30%;
+          justify-content: flex-end;
 
           img {
             height: 20px;
@@ -404,14 +409,6 @@ header {
 
         .single-name {
         }
-        // img {
-        //   width: 20px;
-        //   height: 20px;
-        // }
-        //
-        // img:hover {
-        //   background: white;
-        // }
       }
 
       .single-text {
@@ -440,7 +437,7 @@ header {
       }
 
       .single-website:nth-child(even) {
-        background: @dark-grey;
+        background: linear-gradient(to right, @dark-grey, #FFFFFF 90%);
       }
 
       .single-website:hover {
@@ -574,4 +571,75 @@ button:hover, button:focus {
 
 input:focus, input:hover {
   border: 1px solid @base;
+}
+
+.switch{
+  display: inline-block;
+  position: relative;
+  cursor: pointer;
+  width: @switchSize;
+  height: calc(@switchSize / 2);
+  border-radius: 60px;
+  background-color: @base;
+
+  .switch__toggle{
+    width: 0;
+    height: 0;
+    opacity: 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+
+  .switch__toggle:checked ~ .switch__label:before{
+    transform: scale(0);
+    opacity: .7;
+  }
+
+  .switch__toggle:checked ~ .switch__label:after{
+    transform: translate3d(100%, -50%, 0);
+  }
+
+  .switch__toggle:checked ~ .switch__label {
+    box-shadow: 0 0 0 1px white;
+  }
+
+  .switch__label{
+    display: block;
+    width: 100%;
+    height: 100%;
+    border-radius: 60px;
+    box-shadow: 0 0 0 1px @base;
+    // somehow creates border;
+  }
+
+  .switch__label:before, .switch__label:after{
+    content: "";
+    cursor: pointer;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: @body;
+  }
+
+  .switch__label:before{
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+    border-radius: 60px;
+    transition: opacity .2s ease-out .1s, transform .2s ease-out .1s;
+    transform: scale(1);
+    opacity: 1;
+  }
+
+  .switch__label:after{
+    top: 50%;
+    z-index: 3;
+    transition: transform .4s cubic-bezier(0.44,-0.12, 0.07, 1.15);
+    width: calc(@switchSize / 2);
+    height: calc(@switchSize / 2);
+    transform: translate3d(0, -50%, 0);
+    border-radius: 100%;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, .3);
+  }
 }

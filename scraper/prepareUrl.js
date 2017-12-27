@@ -16,7 +16,7 @@ const retrieveURL = function(robots) {
         } else {
             websites.map(function(website) {
                 if (website.robotsAllow !== true && robots === false) {
-                    console.log("robots disallow");
+                  console.log("robots disallow");
                 } else if (robots === true) {
                   checkRobots.start(website);
                   // doesn't matter which link is picked
