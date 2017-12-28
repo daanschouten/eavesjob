@@ -6,19 +6,20 @@ import {
     Switch
 } from 'react-router-dom';
 
-const { Home } = require('../home');
+const { RegisterHome } = require('../home');
+const { Header } = require('../header');
 
-export default function App() {
+export default function App(props) {
+
+    const { information } = props;
+    const { loggedIn } = props;
+
     return (
-        <div>
+        <div id="main">
             <Switch>
-                <Route path="/" exact component={Home} />
-                <Route path="/browse" component={Home} />
+              <Route path="/" render={(loggedIn) => (<Header loggedIn={loggedIn}/>)} />
+              <Route path="/browse" exact render={(information) => (<RegisterHome information = {information}/>)} />
             </Switch>
         </div>
     )
 };
-
-
-// <Route path="/pokemon" exact render={() => (<Redirect to="/pokemon/ability/telepathy" />)} />
-// <Route path="/pokemon/ability/:ability" render={(location) => (<List pokemon={pokemon.list} location={location} />)} />

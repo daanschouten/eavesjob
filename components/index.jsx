@@ -13,8 +13,13 @@ const Register = require('./register').Register;
 const Browse = require('./browse').Browse;
 
 const Toggle = require('./toggle').Toggle;
+const { Header } = require('./header');
+
+import App from './App';
 
 module.exports = {
+  Header: Header,
+  App: App,
   Browse: Browse,
   Register: Register,
   RegisterHome: RegisterHome,

@@ -27,13 +27,16 @@ let router = function(req, res) {
 
   try {
     const context = {}
+    const data = {
+      loggedIn: true
+    }
 
     const html = renderToString(
       <StaticRouter context={context} location={req.url} >
-          <App />
+          <App data = {data} />
       </StaticRouter>
     )
-    return res.send(FullPage(html));
+    return res.send(FullPage(html, data));
 
   } catch (e) {
     console.log(e);
