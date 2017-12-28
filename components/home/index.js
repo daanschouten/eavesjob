@@ -3,12 +3,6 @@ const PropTypes = require('prop-types');
 const Header = require('../header').Header;
 const RegisterForm = require('../auth').RegisterForm;
 
-const App = () => (
-  <div className="container">
-    <p> Hello </p>
-  </div>
-)
-
 class Home extends React.Component {
   render() {
     return (
@@ -39,23 +33,18 @@ class RegisterHome extends React.Component {
   }
   render () {
     return(
-      <div id="react-main">
-        <Header loggedIn={this.state.loggedIn}/>
-        <div id="front">
-          <div id="front-top">
-            <div id="banner-left">
-              <h2>We monitor career pages,<br/>
-                so you don't have to.</h2>
-              <p style={{
-                  maxWidth: '400px'
-                }}>Checking for new vacancies can be a hassle. With EavesJob, you simply select the career pages of organisations you're interested in. Whenever career opportunities appear, we'll shoot you an email.</p>
-            </div>
-            <div id="register-right">
-            <RegisterForm marginTop={0}/>
-            </div>
+      <div id="front">
+        <div id="front-top">
+          <div id="banner-left">
+            <h2>We monitor career pages,<br/>
+              so you don't have to.</h2>
+            <p style={{
+                maxWidth: '400px'
+              }}>Checking for new vacancies can be a hassle. With EavesJob, you simply select the career pages of organisations you're interested in. Whenever career opportunities appear, we'll shoot you an email.</p>
           </div>
-        </div>
-        <div id="front-bottom">
+          <div id="register-right">
+          <RegisterForm marginTop={0}/>
+          </div>
         </div>
       </div>
     )
@@ -64,6 +53,5 @@ class RegisterHome extends React.Component {
 
 module.exports = {
   Home: Home,
-  App: App,
   RegisterHome: RegisterHome
 }

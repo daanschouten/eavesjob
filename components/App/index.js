@@ -11,15 +11,17 @@ const { Header } = require('../header');
 
 export default function App(props) {
 
-    const { information } = props;
-    const { loggedIn } = props;
+    const { loggedIn } = props.data;
 
     return (
         <div id="main">
+            <Header loggedIn={loggedIn} />
             <Switch>
-              <Route path="/" render={(loggedIn) => (<Header loggedIn={loggedIn}/>)} />
-              <Route path="/browse" exact render={(information) => (<RegisterHome information = {information}/>)} />
+              <Route path="/" exact render={() => (<RegisterHome/>)} />
+              <Route component = {Header}/>
             </Switch>
         </div>
     )
 };
+
+// last route matches when no other does
