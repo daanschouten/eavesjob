@@ -1,26 +1,22 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-class RedirectMember extends React.Component {
+export default class Redirect extends React.Component {
   constructor(props) {
     super(props);
-    this.redirectMember = this.redirectMember.bind(this);
+    this.redirect = this.redirect.bind(this);
   }
-  redirectMember() {
-    location.href = '/login';
+  redirect() {
+    location.href = this.props.destination;
   }
   render() {
     return (
       <div className="single">
           <div className="form-redirect">
-            <h2>Already a Member? </h2>
-            <button onClick= {this.redirectMember} className="big-button">Login</button>
+            <h2> {this.props.title} </h2>
+            <button onClick= {this.redirect} className="big-button"> {this.props.message}</button>
           </div>
       </div>
     )
   }
-}
-
-module.exports = {
-  RedirectMember: RedirectMember
 }
