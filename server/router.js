@@ -16,11 +16,11 @@ let router = function(req, res) {
     exact: true
   }) || acc, null);
 
-  if (!match) {
-    res.status(404).send('page not found');
-    // page not found nice beautiftul page
-    return;
-  }
+  // if (!match) {
+  //   res.status(404).send('page not found');
+  //   // page not found nice beautiftul page
+  //   return;
+  // }
 
   try {
     const context = {}

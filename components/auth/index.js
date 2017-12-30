@@ -1,18 +1,19 @@
 const React = require('react');
 const PropTypes = require('prop-types');
-const Header = require('../header').Header;
+
+const { RedirectMember } = require('../Redirect');
 
 class Login extends React.Component {
   render() {
     return (
       <div className="container-single">
         <div className="container-center">
-            <div className="single">
-              <div className="form-title">
-                <h1>Log in</h1>
-              </div>
-              <LoginForm />
+          <div className="single">
+            <div className="form-title">
+              <h1>Log in</h1>
             </div>
+            <LoginForm />
+          </div>
         </div>
       </div>
     );
@@ -40,14 +41,15 @@ class LoginForm extends React.Component {
 class Register extends React.Component {
   render() {
     return (
-      <div className = "container-single">
-        <div className = "container-center">
-          <div className = "single">
+      <div className ="container-single">
+        <div className ="container-center">
+          <div className ="single">
             <div className="form-title">
               <h1>Join us! </h1>
             </div>
             <RegisterForm/>
           </div>
+          <RedirectMember/>
         </div>
       </div>
     )

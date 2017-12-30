@@ -7,7 +7,7 @@ const User = require('../models/user');
 
 const React = require('react');
 const ReactDOMServer = require('react-dom/server');
-const C = require('../components/index.jsx');
+
 
 const getLoggedIn = function(user) {
   return (user) ? true : false;

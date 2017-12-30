@@ -5,8 +5,12 @@ export default class NotFound extends React.Component {
     return (
       <div className="container-single">
         <div className="container-center">
-          <p> 404: Page not Found </p>
+          <div className="single">
+          <div className="form-title">
+            <h1>404: Page not Found</h1>
+          </div>
           <p> Go to the Home Page </p>
+          </div>
         </div>
       </div>
     )
