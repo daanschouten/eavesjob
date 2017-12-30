@@ -12,7 +12,6 @@ export default function renderFullPage(html, preloadedState) {
             </script>
             <script type="text/javascript" src="/build/vendor.bundle.js"></script>
             <script type="text/javascript" src="/build/app.bundle.js"></script>
-            <script type="text/javascript" src="/build/react.bundle.js"></script>
         </body>
         </html>
     `

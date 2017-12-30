@@ -11,6 +11,7 @@ const { RegisterHome } = require('../home');
 const { Header } = require('../header');
 import NotFound from '../404';
 const { Login } = require('../auth');
+const { Register } = require('../auth');
 
 export default function App(props) {
 
@@ -18,11 +19,12 @@ export default function App(props) {
 
     return (
         <div id="main">
-            <Header loggedIn={loggedIn} />
+            <Header loggedIn={ loggedIn } />
             <Switch>
               <Route path="/" exact render={() => (<Home/>)} />
-              <Route path="/login" exact render={() => (<Login/>)} />
-              <Route component = {NotFound}/>
+              <Route path="/login" render={() => (<Login/>)} />
+              <Route path="/register" render={() => (<Register/>)} />
+              <Route component = { NotFound }/>
             </Switch>
         </div>
     )
