@@ -7,9 +7,6 @@ import { renderToString } from 'react-dom/server';
 import routes from './routes';
 import FullPage from './renderFullPage.js';
 
-// import App from '../components/App';
-// let { Home }  = require('../components/home');
-
 import App from '../components/App';
 
 let router = function(req, res) {

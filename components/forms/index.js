@@ -10,9 +10,6 @@ class WebsiteForm extends React.Component {
   }
   render() {
     return(
-        // <div className="form-title-vertical">
-        //   <p>Fill in the name of a company, and one or more links to career pages of that company. Check the guidelines for submitting a company <a href="/support/guidelines">here</a>.</p>
-        // </div>
         <div id="wrapper-single">
           <div className="single-center">
             <form method="POST" action={this.props.action} className="form-small">

@@ -11,8 +11,6 @@ class Login extends React.Component {
   }
   render() {
     return (
-      <div id="react-main">
-        <Header loggedIn= {this.state.loggedIn} />
         <div id="wrapper-single">
           <div className="single-center">
             <div className="form-title">
@@ -32,7 +30,6 @@ class Login extends React.Component {
             </form>
           </div>
         </div>
-      </div>
     );
   }
 }
