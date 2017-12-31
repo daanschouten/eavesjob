@@ -1,6 +1,6 @@
 const express = require('express');
 const app = express();
-require('babel-register')({
+const babel = require('babel-register')({
     presets: ['es2015', 'react']
 });
 const htmlparser = require('htmlparser2');
@@ -21,7 +21,6 @@ const { router } = require('./router');
 
 // startScraping.start();
 // execute with care, major updates to DB
-
 
 // dbUpdates.start();
 // start scraper function
@@ -57,7 +56,7 @@ app.use(function(req, res, next) {
 // use this to properly channel AJAX requests
 
 app.use(lessMiddleware(__dirname + '/public'));
-// use for LESS, not necessary after complete conversion
+// use for LESS conversion to CSS
 
 app.use(express.static('public'));
 // set public folder as root for public routes; access public files inside public from '/'
@@ -79,4 +78,4 @@ app.listen(3000, (error) => {
     console.info('==> 🌎  Listening on port 3000. Open up http://localhost:3000/ in your browser.')
   }
 });
-// setup server
+// start server

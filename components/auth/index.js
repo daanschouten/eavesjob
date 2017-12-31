@@ -3,7 +3,7 @@ const PropTypes = require('prop-types');
 
 const { RegisterForm } = require('../Forms');
 const { LoginForm } = require('../Forms');
-import Redirect from '../Redirect';
+import HandleRedirect from '../Redirect';
 
 class Login extends React.Component {
   render() {
@@ -33,7 +33,7 @@ class Register extends React.Component {
             </div>
             <RegisterForm/>
           </div>
-          <Redirect destination ='/login' title='Already a Member?' message='Login' />
+          <HandleRedirect destination ='/login' title='Already a Member?' message='Login' />
         </div>
       </div>
     )

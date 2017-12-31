@@ -15,10 +15,6 @@ class Toggle extends React.Component {
     this.setState({monitored: this.state.monitored ? false : true});
     console.log(event.target.value);
   };
-  // handleSubmit(event) {
-  //   alert('A name was submitted: ' + this.state.value);
-  //   event.preventDefault();
-  // }
 
   render() {
     return(

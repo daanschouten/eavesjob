@@ -31,7 +31,10 @@ const Menu = function(props) {
   return <MenuNotLoggedIn/>;
 }
 
-class Header extends React.Component {
+export default class Header extends React.Component {
+  constructor(props) {
+    super(props);
+  }
   render() {
     return (
       <header>
@@ -44,8 +47,4 @@ class Header extends React.Component {
       </header>
     )
   }
-}
-
-module.exports = {
-  Header: Header
 }

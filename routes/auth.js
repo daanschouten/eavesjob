@@ -14,18 +14,6 @@ const getLoggedIn = function(user) {
 }
 const index = 'newLayout';
 
-router.get('/register', mid.loggedOut, (req, res, next) => {
-  let Register = React.createFactory(C.Register);
-  let loggedIn = getLoggedIn(req.session.userID);
-
-  res.render(index, {
-    react: ReactDOMServer.renderToString(Register({
-      loggedIn: loggedIn
-    }))
-  })
-  // return res.render('register', { title: "Sign Up!"});
-});
-
 router.post('/register', (req, res, next) => {
   if (req.body.email && req.body.firstName && req.body.lastName && req.body.password && req.body.confirmPassword) {
     if (req.body.password.length < 6) {
