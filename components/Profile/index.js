@@ -1,19 +1,12 @@
 const React = require('react');
 const PropTypes = require('prop-types');
+const { Link } = require('react-router-dom');
 
 const { Available } = require('../Retrieve');
 
 export default class Profile extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      available: this.props.available,
-      monitored: this.props.monitored
-    };
-    this.logout = this.logout.bind(this);
-  }
-  logout() {
-
   }
   render() {
     return (
@@ -21,29 +14,29 @@ export default class Profile extends React.Component {
         <div id="browse-left">
           <div id="search-website">
             <h2>selected career pages</h2>
-            <div class="search-div">  </div>
+            <div className="search-div">  </div>
           </div>
-          <Available />
+
           <div id="profile-premium">
             <h2>go premium</h2>
           </div>
         </div>
-        <div class="right-sidebar">
+        <div className="right-sidebar">
           <div id="welcome-user">
-            <div class="right-sidebar-title">
+            <div className="right-sidebar-title">
               <p>Hi !</p>
-              <button onclick="location.href='/logout'">log out</button>
+              <button className="big-button" onClick = {this.props.handleLogout}> Log out </button>
             </div>
           </div>
-          <div class="request-website">
-            <div class="right-sidebar-title">
+          <div className="request-website">
+            <div className="right-sidebar-title">
               <h2>find more career pages </h2>
             </div>
-            <div class="single-text">
+            <div className="single-text">
               <p> </p>
             </div>
-            <div class="single-text">
-              <button onclick="location.href='/browse'">browse career pages</button>
+            <div className="single-text">
+              <button className="big-button"><Link to='/browse'>browse career pages</Link></button>
             </div>
           </div>
         </div>
@@ -51,3 +44,5 @@ export default class Profile extends React.Component {
     )
   }
 }
+
+// <Available />
