@@ -3,7 +3,8 @@ import {
     BrowserRouter as Router,
     Redirect,
     Route,
-    Switch
+    Switch,
+    withRouter
 } from 'react-router-dom';
 
 const { Home } = require('../Home');
@@ -20,9 +21,10 @@ const { Register } = require('../Auth');
 
 const { WebsiteForm } = require('../Forms');
 
-export default class App extends React.Component {
-    constructor(props) {
-      super(props);
+class App extends React.Component {
+
+    constructor(props, context) {
+      super(props, context);
       this.state = {
         loggedIn: this.props.data.loggedIn
       }
@@ -44,14 +46,17 @@ export default class App extends React.Component {
         </div>
       )
     }
+    //  last route matches when no other does
     onLogout() {
       if (this.state.loggedIn) {
         this.setState({
           loggedIn: false
         });
       }
+      console.log(this.props);
+      this.props.history.push('/');
     }
 
 };
 
-//  last route matches when no other does
+export default withRouter(App);
