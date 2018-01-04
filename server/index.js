@@ -65,9 +65,6 @@ app.use(bodyParser.urlencoded({ extended: false}));
 // app.use(bodyParser.json({ }));
 app.use(cookieParser());
 
-app.set('view engine', 'pug');
-// not necessary after complete conversion
-
 app.get('*', router);
 // redirect all GET requests to REACT router imported above
 

@@ -368,26 +368,26 @@ function _inherits(subClass, superClass) {
 var React = __webpack_require__(0);
 var PropTypes = __webpack_require__(1);
 
-var WebsiteForm = function (_React$Component) {
-  _inherits(WebsiteForm, _React$Component);
+var RequestWebsiteForm = function (_React$Component) {
+  _inherits(RequestWebsiteForm, _React$Component);
 
-  function WebsiteForm(props) {
-    _classCallCheck(this, WebsiteForm);
+  function RequestWebsiteForm(props) {
+    _classCallCheck(this, RequestWebsiteForm);
 
-    var _this = _possibleConstructorReturn(this, (WebsiteForm.__proto__ || Object.getPrototypeOf(WebsiteForm)).call(this, props));
+    var _this = _possibleConstructorReturn(this, (RequestWebsiteForm.__proto__ || Object.getPrototypeOf(RequestWebsiteForm)).call(this, props));
 
     _this.state = {};
     return _this;
   }
 
-  _createClass(WebsiteForm, [{
+  _createClass(RequestWebsiteForm, [{
     key: 'render',
     value: function render() {
-      return React.createElement('div', { id: 'wrapper-single' }, React.createElement('div', { className: 'single-center' }, React.createElement('form', { method: 'POST', action: this.props.action, className: 'form-small' }, React.createElement('div', { className: 'form-group' }, React.createElement('input', { style: { marginBottom: "20px" }, type: 'text', placeholder: 'Website Name', name: 'name', className: 'big-input' })), React.createElement('div', { className: 'form-group' }, React.createElement('input', { type: 'text', placeholder: 'Career Page URL (1)', name: 'url1', className: 'big-input' })), React.createElement('div', { className: 'form-group' }, React.createElement('input', { type: 'text', placeholder: 'Career Page URL (2) (optional)', name: 'url2', className: 'big-input' })), React.createElement('div', { className: 'form-group' }, React.createElement('input', { type: 'text', placeholder: 'Career Page URL (3) (optional)', name: 'url3', className: 'big-input' })), React.createElement('div', { className: 'form-group' }, React.createElement('p', null, 'Once the the request comes through, we\'ll add the company to your subscribes automatically. Keep in mind this might take up to 24 hours.')), React.createElement('div', { className: 'form-group' }, React.createElement('button', { type: 'submit', className: 'big-button' }, 'Submit Website')))));
+      return React.createElement('form', { method: 'POST', action: this.props.action, className: 'form-small' }, React.createElement('div', { className: 'form-group' }, React.createElement('input', { style: { marginBottom: "20px" }, type: 'text', placeholder: 'Website Name', name: 'name', className: 'big-input' })), React.createElement('div', { className: 'form-group' }, React.createElement('input', { type: 'text', placeholder: 'Career Page URL (1)', name: 'url1', className: 'big-input' })), React.createElement('div', { className: 'form-group' }, React.createElement('input', { type: 'text', placeholder: 'Career Page URL (2) (optional)', name: 'url2', className: 'big-input' })), React.createElement('div', { className: 'form-group' }, React.createElement('input', { type: 'text', placeholder: 'Career Page URL (3) (optional)', name: 'url3', className: 'big-input' })), React.createElement('div', { className: 'form-group' }, React.createElement('p', null, 'Once the the request comes through, we\'ll add the company to your subscribes automatically. Keep in mind this might take up to 24 hours.')), React.createElement('div', { className: 'form-group' }, React.createElement('button', { type: 'submit', className: 'big-button' }, 'Submit Website')));
     }
   }]);
 
-  return WebsiteForm;
+  return RequestWebsiteForm;
 }(React.Component);
 
 var RegisterForm = function (_React$Component2) {
@@ -429,7 +429,7 @@ var LoginForm = function (_React$Component3) {
 }(React.Component);
 
 module.exports = {
-  WebsiteForm: WebsiteForm,
+  RequestWebsiteForm: RequestWebsiteForm,
   LoginForm: LoginForm,
   RegisterForm: RegisterForm
 };
@@ -1750,7 +1750,7 @@ var Login = function (_React$Component) {
   _createClass(Login, [{
     key: 'render',
     value: function render() {
-      return React.createElement('div', { className: 'container-single' }, React.createElement('div', { className: 'container-center' }, React.createElement('div', { className: 'single' }, React.createElement('div', { className: 'form-title' }, React.createElement('h1', null, 'Log in')), React.createElement(LoginForm, null))));
+      return React.createElement('div', { className: 'container-single' }, React.createElement('div', { className: 'container-center' }, React.createElement('div', { className: 'single' }, React.createElement('div', { className: 'form-title' }, React.createElement('h1', null, 'Log in')), React.createElement(LoginForm, null)), React.createElement(_Redirect2.default, { destination: '/register', title: 'Not yet Member?', message: 'Sign Up' })));
     }
   }]);
 
@@ -5554,19 +5554,20 @@ var _require3 = __webpack_require__(39),
 var _require4 = __webpack_require__(39),
     Register = _require4.Register;
 
-var _require5 = __webpack_require__(11),
-    WebsiteForm = _require5.WebsiteForm;
+var _require5 = __webpack_require__(95),
+    RequestWebsite = _require5.RequestWebsite;
 
 var App = function (_React$Component) {
   _inherits(App, _React$Component);
 
-  function App(props, context) {
+  function App(props) {
     _classCallCheck(this, App);
 
-    var _this = _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).call(this, props, context));
+    var _this = _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).call(this, props));
 
     _this.state = {
-      loggedIn: _this.props.data.loggedIn
+      loggedIn: _this.props.data.loggedIn,
+      userID: _this.props.data.userID
     };
     _this.onLogout = _this.onLogout.bind(_this);
     return _this;
@@ -5586,7 +5587,7 @@ var App = function (_React$Component) {
         } }), _react2.default.createElement(_reactRouterDom.Route, { path: '/register', render: function render() {
           return _react2.default.createElement(Register, null);
         } }), _react2.default.createElement(_reactRouterDom.Route, { path: '/requestwebsite', render: function render() {
-          return _react2.default.createElement(WebsiteForm, null);
+          return _react2.default.createElement(RequestWebsite, null);
         } }), _react2.default.createElement(_reactRouterDom.Route, { component: _2.default })), _react2.default.createElement(_Footer2.default, { loggedIn: this.state.loggedIn }));
     }
     //  last route matches when no other does
@@ -5599,7 +5600,6 @@ var App = function (_React$Component) {
           loggedIn: false
         });
       }
-      console.log(this.props);
       this.props.history.push('/');
     }
   }]);
@@ -5921,13 +5921,22 @@ var Profile = function (_React$Component) {
   function Profile(props) {
     _classCallCheck(this, Profile);
 
-    return _possibleConstructorReturn(this, (Profile.__proto__ || Object.getPrototypeOf(Profile)).call(this, props));
+    var _this = _possibleConstructorReturn(this, (Profile.__proto__ || Object.getPrototypeOf(Profile)).call(this, props));
+
+    _this.state = {
+      monitoredWebsites: [],
+      userName: ""
+    };
+    return _this;
   }
 
   _createClass(Profile, [{
+    key: 'componentDidMount',
+    value: function componentDidMount() {}
+  }, {
     key: 'render',
     value: function render() {
-      return React.createElement('div', { id: 'browse-page' }, React.createElement('div', { id: 'browse-left' }, React.createElement('div', { id: 'search-website' }, React.createElement('h2', null, 'selected career pages'), React.createElement('div', { className: 'search-div' }, '  ')), React.createElement('div', { id: 'profile-premium' }, React.createElement('h2', null, 'go premium'))), React.createElement('div', { className: 'right-sidebar' }, React.createElement('div', { id: 'welcome-user' }, React.createElement('div', { className: 'right-sidebar-title' }, React.createElement('p', null, 'Hi !'), React.createElement('button', { className: 'big-button', onClick: this.props.handleLogout }, ' Log out '))), React.createElement('div', { className: 'request-website' }, React.createElement('div', { className: 'right-sidebar-title' }, React.createElement('h2', null, 'find more career pages ')), React.createElement('div', { className: 'single-text' }, React.createElement('p', null, ' ')), React.createElement('div', { className: 'single-text' }, React.createElement('button', { className: 'big-button' }, React.createElement(Link, { to: '/browse' }, 'browse career pages'))))));
+      return React.createElement('div', { id: 'browse-page' }, React.createElement('div', { id: 'browse-left' }, React.createElement('div', { id: 'search-website' }, React.createElement('h2', null, 'selected career pages'), React.createElement('div', { className: 'search-div' }, '  ')), React.createElement('div', { id: 'profile-premium' }, React.createElement('h2', null, 'go premium'))), React.createElement('div', { className: 'right-sidebar' }, React.createElement('div', { id: 'welcome-user' }, React.createElement('div', { className: 'right-sidebar-title' }, React.createElement('p', null, 'Hi ', this.state.userName, '!'), React.createElement('button', { className: 'big-button', onClick: this.props.handleLogout }, ' Log out '))), React.createElement('div', { className: 'request-website' }, React.createElement('div', { className: 'right-sidebar-title' }, React.createElement('h2', null, 'find more career pages ')), React.createElement('div', { className: 'single-text' }, React.createElement('p', null, ' ')), React.createElement('div', { className: 'single-text' }, React.createElement('button', { className: 'big-button' }, React.createElement(Link, { to: '/browse' }, 'browse career pages'))))));
     }
   }]);
 
@@ -6172,6 +6181,84 @@ var Toggle = function (_React$Component) {
 
 module.exports = {
   Toggle: Toggle
+};
+
+/***/ }),
+/* 95 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+var _createClass = function () {
+  function defineProperties(target, props) {
+    for (var i = 0; i < props.length; i++) {
+      var descriptor = props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if ("value" in descriptor) descriptor.writable = true;Object.defineProperty(target, descriptor.key, descriptor);
+    }
+  }return function (Constructor, protoProps, staticProps) {
+    if (protoProps) defineProperties(Constructor.prototype, protoProps);if (staticProps) defineProperties(Constructor, staticProps);return Constructor;
+  };
+}();
+
+function _classCallCheck(instance, Constructor) {
+  if (!(instance instanceof Constructor)) {
+    throw new TypeError("Cannot call a class as a function");
+  }
+}
+
+function _possibleConstructorReturn(self, call) {
+  if (!self) {
+    throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
+  }return call && ((typeof call === "undefined" ? "undefined" : _typeof(call)) === "object" || typeof call === "function") ? call : self;
+}
+
+function _inherits(subClass, superClass) {
+  if (typeof superClass !== "function" && superClass !== null) {
+    throw new TypeError("Super expression must either be null or a function, not " + (typeof superClass === "undefined" ? "undefined" : _typeof(superClass)));
+  }subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } });if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
+}
+
+var React = __webpack_require__(0);
+var PropTypes = __webpack_require__(1);
+
+var _require = __webpack_require__(11),
+    RequestWebsiteForm = _require.RequestWebsiteForm;
+
+// class Contact extends React.Component {
+//   constructor(props) {
+//     super(props);
+//   }
+//   render() {
+//     return (
+//  
+//     )
+//   }
+// }
+
+var RequestWebsite = function (_React$Component) {
+  _inherits(RequestWebsite, _React$Component);
+
+  function RequestWebsite(props) {
+    _classCallCheck(this, RequestWebsite);
+
+    return _possibleConstructorReturn(this, (RequestWebsite.__proto__ || Object.getPrototypeOf(RequestWebsite)).call(this, props));
+  }
+
+  _createClass(RequestWebsite, [{
+    key: 'render',
+    value: function render() {
+      return React.createElement('div', { className: 'container-single' }, React.createElement('div', { className: 'container-center' }, React.createElement('div', { className: 'single' }, React.createElement('div', { className: 'form-title' }, React.createElement('h1', null, 'Request a New Career Page')), React.createElement(RequestWebsiteForm, null))));
+    }
+  }]);
+
+  return RequestWebsite;
+}(React.Component);
+
+module.exports = {
+  // Contact: Contact,
+  RequestWebsite: RequestWebsite
 };
 
 /***/ })

@@ -16,6 +16,7 @@ class Login extends React.Component {
             </div>
             <LoginForm />
           </div>
+          <HandleRedirect destination ='/register' title='Not yet Member?' message='Sign Up' />
         </div>
       </div>
     );

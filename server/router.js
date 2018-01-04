@@ -25,7 +25,8 @@ let router = function(req, res) {
   try {
     const context = {};
     const data = {
-      loggedIn: res.locals.currentUser ? true : false
+      loggedIn: res.locals.currentUser ? true : false,
+      userID: res.locals.currentUser
     }
 
     const html = renderToString(

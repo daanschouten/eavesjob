@@ -19,14 +19,15 @@ import Profile from '../Profile';
 const { Login } = require('../Auth');
 const { Register } = require('../Auth');
 
-const { WebsiteForm } = require('../Forms');
+const { RequestWebsite } = require('../Contact');
 
 class App extends React.Component {
 
-    constructor(props, context) {
-      super(props, context);
+    constructor(props) {
+      super(props);
       this.state = {
-        loggedIn: this.props.data.loggedIn
+        loggedIn: this.props.data.loggedIn,
+        userID: this.props.data.userID
       }
       this.onLogout = this.onLogout.bind(this);
     }
@@ -39,7 +40,7 @@ class App extends React.Component {
               <Route path="/login" render={() => (<Login/>)} />
               <Route path="/profile" render={props => <Profile handleLogout = {this.onLogout}/> } />
               <Route path="/register" render={() => (<Register/>)} />
-              <Route path="/requestwebsite" render={() => (<WebsiteForm/>)} />
+              <Route path="/requestwebsite" render={() => (<RequestWebsite/>)} />
               <Route component = { NotFound }/>
             </Switch>
             <Footer loggedIn={ this.state.loggedIn } />
@@ -53,7 +54,6 @@ class App extends React.Component {
           loggedIn: false
         });
       }
-      console.log(this.props);
       this.props.history.push('/');
     }
 
