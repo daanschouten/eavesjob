@@ -2,12 +2,6 @@ const React = require('react');
 const PropTypes = require('prop-types');
 
 class RequestWebsiteForm extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-
-    };
-  }
   render() {
     return(
         <form method="POST" action={this.props.action} className="form-small">
@@ -75,7 +69,32 @@ class LoginForm extends React.Component {
   }
 }
 
+class KeywordForm extends React.Component {
+  render() {
+    return (
+      <form method="POST" action="/addKeywords" className="form-small">
+        <div className="form-group">
+          <input id="name" type="text" placeholder="some keyword" name="name" className="big-input"/>
+        </div>
+        <div className="form-group">Category:
+          <select for="category" name="category">
+            <option value="intern">intern</option>
+            <option value="professional">professional</option>
+            <option value="voluntary">voluntary</option>
+            <option value="parttime">parttime</option>
+            <option value="fulltime">fulltime </option>
+            <option value="general">general</option>
+            <option value="skill">skill</option>
+          </select>
+        </div>
+        <button type="submit" class="big-button">Add keyword</button>
+      </form>
+    )
+  }
+}
+
 module.exports = {
+  KeywordForm: KeywordForm,
   RequestWebsiteForm: RequestWebsiteForm,
   LoginForm: LoginForm,
   RegisterForm: RegisterForm

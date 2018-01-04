@@ -20,9 +20,11 @@ const { Login } = require('../Auth');
 const { Register } = require('../Auth');
 
 const { RequestWebsite } = require('../Contact');
+const { AddWebsite } = require('../Admin');
+
+const { AddKeyword } = require('../Admin');
 
 class App extends React.Component {
-
     constructor(props) {
       super(props);
       this.state = {
@@ -38,9 +40,11 @@ class App extends React.Component {
             <Switch>
               <Route path="/" exact render={() => (<RegisterHome/>)} />
               <Route path="/login" render={() => (<Login/>)} />
+              <Route path="/addKeyword" render={() => (<AddKeyword/>)} />
               <Route path="/profile" render={props => <Profile handleLogout = {this.onLogout}/> } />
               <Route path="/register" render={() => (<Register/>)} />
-              <Route path="/requestwebsite" render={() => (<RequestWebsite/>)} />
+              <Route path="/requestwebsite" render={() => (<RequestWebsite />)} />
+              <Route path="/addwebsite" render={() => (<AddWebsite />)} />
               <Route component = { NotFound }/>
             </Switch>
             <Footer loggedIn={ this.state.loggedIn } />

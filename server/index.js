@@ -12,39 +12,29 @@ const session = require('express-session');
 const MongoStore = require('connect-mongo')(session);
 const mongoose = require('mongoose');
 
-const startScraping = require('../scraper/index.js');
-const User = require('../models/user');
-const dbUpdates = require('../databOps/bulkUpdates');
-
 const { router } = require('./router');
 // use react router for all GET requests
 
-// startScraping.start();
-// execute with care, major updates to DB
+// mongoose.Promise = global.Promise;
+// mongoose.connect("mongodb://127.0.0.1:27017/jupdate");
+// var db = mongoose.connection;
+// db.on('error', console.error.bind(console, 'connection error:'));
+// // start up mongo database
 
-// dbUpdates.start();
-// start scraper function
-
-mongoose.Promise = global.Promise;
-mongoose.connect("mongodb://127.0.0.1:27017/jupdate");
-var db = mongoose.connection;
-db.on('error', console.error.bind(console, 'connection error:'));
-// start up mongo database
-
-app.use(session({
-  secret: 'EavesJob career updates',
-  resave: true,
-  saveUninitialized: false,
-  store: new MongoStore({
-    mongooseConnection: db
-  })
-}));
+// app.use(session({
+//   secret: 'EavesJob career updates',
+//   resave: true,
+//   saveUninitialized: false,
+//   store: new MongoStore({
+//     mongooseConnection: db
+//   })
+// }));
 //track users as they navigate through website, useful for tracing logged in or not etc.
-
-app.use(function(req,res,next){
-  res.locals.currentUser = req.session.userID;
-  next();
-})
+// 
+// app.use(function(req,res,next){
+//   res.locals.currentUser = req.session.userID;
+//   next();
+// })
 // use data about session in response, allows for tracking
 
 app.use(function(req, res, next) {

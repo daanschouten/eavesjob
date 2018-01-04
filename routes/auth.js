@@ -54,17 +54,6 @@ router.post('/register', (req, res, next) => {
   }
 });
 
-router.get('/login', mid.loggedOut, function(req,res,next) {
-  let Login = React.createFactory(C.Login);
-
-  return res.render('newLayout', {
-    react: ReactDOMServer.renderToString(Login({
-
-    }))
-  })
-  // return res.render('login', { title: 'Log In'});
-})
-
 router.post('/login', function(req,res,next) {
   if (req.body.email && req.body.password) {
     User.authenticate(req.body.email, req.body.password, function(error, user) {
