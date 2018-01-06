@@ -10,6 +10,8 @@ import {
 const { Home } = require('../Home');
 const { RegisterHome } = require('../Home');
 
+const { Browse } = require('../Browse');
+
 import Header from '../Header';
 import Footer from '../Footer';
 
@@ -40,6 +42,7 @@ class App extends React.Component {
             <Switch>
               <Route path="/" exact render={() => (<RegisterHome/>)} />
               <Route path="/login" render={() => (<Login/>)} />
+              <Route path="/browse" render={() => (<Browse/>)} />
               <Route path="/addKeyword" render={() => (<AddKeyword/>)} />
               <Route path="/profile" render={props => <Profile handleLogout = {this.onLogout}/> } />
               <Route path="/register" render={() => (<Register/>)} />

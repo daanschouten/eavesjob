@@ -1,11 +1,10 @@
 const React = require('react');
 const PropTypes = require('prop-types');
-
-const s = require('../retrieve');
-const Available = s.Available;
-const Monitored = s.Monitored;
-const Search = s.Search;
-
+// const fetch = require('fetch');
+const s = require('../Retrieve');
+// const Available = s.Available;
+// const Monitored = s.Monitored;
+// const Search = s.Search;
 // set conditional for map function, necessary?
 
 class Browse extends React.Component {
@@ -13,29 +12,41 @@ class Browse extends React.Component {
     super(props);
     this.state = {
       loggedIn: true,
-      available: this.props.available,
-      monitored: this.props.monitored
+      available: [],
+      monitored: []
     };
+  }
+  componentDidMount() {
+    fetch('http://localhost:3000/browse/5a4fbaab010aa04fde5cd33e')
+    .then(response => response.json())
+    .then(responseData => {
+      this.setState({
+        available: responseData
+      })
+    })
+    .catch(err => {
+      console.log("error fetching and parsing data");
+    })
   }
 
   render() {
+    console.log(this.state.available);
     return (
         <div id="browse-page">
           <div id="browse-left">
-            <Search />
-            <Available available = {this.state.available}/>
+
           </div>
           <div className="right-sidebar">
-            <Monitored monitored = {this.state.monitored}/>
-            <div class="request-website">
-              <div class="right-sidebar-title">
+
+            <div className="request-website">
+              <div className="right-sidebar-title">
                 <h2>request a career page</h2>
               </div>
-              <div class="single-text">
+              <div className="single-text">
                 <p>Came across a careers page not listed here? Tell us about it, and we'll take it from there!</p>
               </div>
-              <div class="single-text">
-                <button onclick="location.href='/requestWebsite'">request new website</button>
+              <div className="single-text">
+                <button>request new website</button>
               </div>
             </div>
           </div>
