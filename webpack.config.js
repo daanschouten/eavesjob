@@ -14,7 +14,7 @@ module.exports = [{
         ]
       },
       output: {
-        publicPath: "http://localhost:3000/build/", // Development Server
+        publicPath: "http://localhost:8080/build/", // Development Server
         // publicPath: "http://example.com/", // Production Server
         path: path.resolve(__dirname, 'public/build'),
         filename: '[name].bundle.js'
