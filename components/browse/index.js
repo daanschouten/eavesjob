@@ -1,15 +1,12 @@
 const React = require('react');
 const PropTypes = require('prop-types');
-const Header = require('../header').Header;
 
 const s = require('../retrieve');
 const Available = s.Available;
 const Monitored = s.Monitored;
 const Search = s.Search;
-// load dangerouslySetInnerHTML before bundle js
 
 // set conditional for map function, necessary?
-// switch icons entirely?
 
 class Browse extends React.Component {
   constructor(props) {
@@ -23,8 +20,6 @@ class Browse extends React.Component {
 
   render() {
     return (
-      <div id="react-main">
-        <Header loggedIn={this.state.loggedIn}/>
         <div id="browse-page">
           <div id="browse-left">
             <Search />
@@ -32,12 +27,19 @@ class Browse extends React.Component {
           </div>
           <div className="right-sidebar">
             <Monitored monitored = {this.state.monitored}/>
+            <div class="request-website">
+              <div class="right-sidebar-title">
+                <h2>request a career page</h2>
+              </div>
+              <div class="single-text">
+                <p>Came across a careers page not listed here? Tell us about it, and we'll take it from there!</p>
+              </div>
+              <div class="single-text">
+                <button onclick="location.href='/requestWebsite'">request new website</button>
+              </div>
+            </div>
           </div>
         </div>
-        <script dangerouslySetInnerHTML={{
-          __html: 'window.PROPS=' + JSON.stringify(this.props)
-        }} />
-      </div>
     )
   }
 }

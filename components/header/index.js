@@ -1,21 +1,24 @@
 const React = require('react');
 const PropTypes = require('prop-types');
+const { NavLink } = require('react-router-dom');
 
 class MenuLoggedIn extends React.Component {
   render() {
-    return (<div id="menu">
-      <a href="/contact">Contact</a>
-      <a href="/profile">My Profile</a>
-    </div>)
+    return (
+      <div id="menu">
+        <NavLink to="/contact">Contact</NavLink>
+        <NavLink to="/profile">My Profile</NavLink>
+      </div>
+    )
   }
 }
 
 class MenuNotLoggedIn extends React.Component {
   render() {
     return (<div id="menu">
-      <a href="/contact">Contact</a>
-      <a id="header-sign-up" href="/register">Sign Up</a>
-      <a href="/login">Login</a>
+      <NavLink to="/contact">Contact</NavLink>
+      <NavLink id="header-sign-up" to="/register">Sign Up</NavLink>
+      <NavLink to="/login">Login</NavLink>
     </div>)
   }
 }
@@ -28,19 +31,20 @@ const Menu = function(props) {
   return <MenuNotLoggedIn/>;
 }
 
-class Header extends React.Component {
-  render() {
-    return (<header>
-      <div id="logo">
-        <a href="/">Home</a>
-        <a href="/browse">Browse</a>
-        <a href="/support">Support</a>
-      </div>
-      <Menu loggedIn={this.props.loggedIn}/>
-    </header>)
+export default class Header extends React.Component {
+  constructor(props) {
+    super(props);
   }
-}
-
-module.exports = {
-  Header: Header
+  render() {
+    return (
+      <header>
+        <div id="logo">
+          <NavLink exact to="/">Home</NavLink>
+          <NavLink to="/browse">Browse</NavLink>
+          <NavLink to="/support">Support</NavLink>
+        </div>
+        <Menu loggedIn={this.props.loggedIn}/>
+      </header>
+    )
+  }
 }

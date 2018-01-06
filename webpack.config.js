@@ -7,7 +7,6 @@ module.exports = [{
         app: "./public/js/app",
         browse: "./public/js/browse",
         profile: "./public/js/profile",
-        react: "./public/js/components/app.jsx",
         vendor: [
           'react',
           'react-dom',

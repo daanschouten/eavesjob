@@ -1,6 +1,11 @@
 const routes = [
   '/',
-  '/browse'
+  '/browse',
+  '/login',
+  '/logout',
+  '/profile',
+  '/register',
+  '/requestwebsite'
 ]
 
 export default routes

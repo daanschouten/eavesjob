@@ -1,7 +1,7 @@
 const React = require('react');
 const PropTypes = require('prop-types');
-const { WebsiteForm } = require('../forms');
-const { Toggle } = require('../toggle');
+const { WebsiteForm } = require('../Forms');
+const { Toggle } = require('../Toggle');
 
 class Search extends React.Component {
   constructor(props) {

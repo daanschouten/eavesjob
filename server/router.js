@@ -7,9 +7,6 @@ import { renderToString } from 'react-dom/server';
 import routes from './routes';
 import FullPage from './renderFullPage.js';
 
-// import App from '../components/App';
-// let { Home }  = require('../components/home');
-
 import App from '../components/App';
 
 let router = function(req, res) {
@@ -19,21 +16,25 @@ let router = function(req, res) {
     exact: true
   }) || acc, null);
 
-  if (!match) {
-    res.status(404).send('page not found');
-    // page not found nice beautiftul page
-    return;
-  }
+  // if (!match) {
+  //   res.status(404).send('page not found');
+  //   // page not found nice beautiftul page
+  //   return;
+  // }
 
   try {
-    const context = {}
+    const context = {};
+    const data = {
+      loggedIn: res.locals.currentUser ? true : false,
+      userID: res.locals.currentUser
+    }
 
     const html = renderToString(
       <StaticRouter context={context} location={req.url} >
-          <App />
+          <App data = {data} />
       </StaticRouter>
     )
-    return res.send(FullPage(html));
+    return res.send(FullPage(html, data));
 
   } catch (e) {
     console.log(e);

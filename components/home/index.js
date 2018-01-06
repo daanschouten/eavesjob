@@ -1,28 +1,28 @@
 const React = require('react');
 const PropTypes = require('prop-types');
-const Header = require('../header').Header;
-const RegisterForm = require('../auth').RegisterForm;
-
-const App = () => (
-  <div className="container">
-    <p> Hello </p>
-  </div>
-)
+const { RegisterForm } = require('../Forms');
 
 class Home extends React.Component {
+  constructor(props) {
+    super(props);
+    this.redirectSupport = this.redirectSupport.bind(this);
+    this.redirectRegister = this.redirectRegister.bind(this);
+  }
+  redirectSupport() {
+    location.href = '/support';
+  }
+  redirectRegister() {
+    location.href = '/register';
+  }
   render() {
     return (
-      <div id="react-main">
-        <div id="front">
-          <div id="front-top">
-            <div id="banner">
-              <h1>We monitor career pages,<br /> so you don't have to.</h1>
-              <p>Checking for new vacancies can be a hassle. <br /> With EavesJob, you simply select the career pages of organisations you're interested in. Whenever career opportunities appear, we'll shoot you an email.  </p>
-              <div id="front-buttons">
-                <button onClick={{ 'location.href': '/register'}}>Sign Up Free</button>
-                <button onClick={{ 'location.href': '/support'}}>Read More</button>
-              </div>
-            </div>
+      <div className="container-single">
+        <div className="container-center">
+          <h1 className="title">We monitor career pages,<br /> so you don't have to.</h1>
+          <p> Checking for new vacancies can be a hassle. <br/> With EavesJob, you just select the career pages you're interested in. Whenever career opportunities appear, we'll send you an email.  </p>
+          <div id="front-buttons">
+            <button onClick= {this.redirectRegister } className="big-button">Sign Up Free</button>
+            <button onClick= {this.redirectSupport} className="big-button">Read More</button>
           </div>
         </div>
       </div>
@@ -31,32 +31,21 @@ class Home extends React.Component {
 }
 
 class RegisterHome extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      loggedIn: this.props.loggedIn
-    };
-  }
   render () {
     return(
-      <div id="react-main">
-        <Header loggedIn={this.state.loggedIn}/>
-        <div id="front">
-          <div id="front-top">
-            <div id="banner-left">
-              <h2>We monitor career pages,<br/>
-                so you don't have to.</h2>
-              <p style={{
-                  maxWidth: '400px'
-                }}>Checking for new vacancies can be a hassle. With EavesJob, you simply select the career pages of organisations you're interested in. Whenever career opportunities appear, we'll shoot you an email.</p>
-            </div>
-            <div id="register-right">
-            <RegisterForm marginTop={0}/>
+      <div className="container-double">
+          <div className="container-left">
+            <h2 className="title">We monitor career pages,<br/> so you don't have to.</h2>
+            <p> Checking for new vacancies can be a hassle. <br/> With EavesJob, you just select the career pages you're interested in. Whenever career opportunities appear, we'll send you an email.  </p>
+          </div>
+          <div className="container-right">
+            <div className ="single">
+              <div className="form-title">
+                <h1> Join for Free! </h1>
+              </div>
+              <RegisterForm/>
             </div>
           </div>
-        </div>
-        <div id="front-bottom">
-        </div>
       </div>
     )
   }
@@ -64,6 +53,5 @@ class RegisterHome extends React.Component {
 
 module.exports = {
   Home: Home,
-  App: App,
   RegisterHome: RegisterHome
 }
