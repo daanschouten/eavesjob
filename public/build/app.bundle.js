@@ -537,10 +537,17 @@ var LoginForm = function (_React$Component3) {
       user: _this3.props.user
     };
     _this3.performLogin = _this3.performLogin.bind(_this3);
+    _this3.saveSession = _this3.saveSession.bind(_this3);
     return _this3;
   }
 
   _createClass(LoginForm, [{
+    key: 'saveSession',
+    value: function saveSession(user) {
+      console.log(user);
+      localStorage.setItem("user", JSON.stringify(user));
+    }
+  }, {
     key: 'performLogin',
     value: function performLogin(e) {
       var _this4 = this;
@@ -552,6 +559,7 @@ var LoginForm = function (_React$Component3) {
       }).then(function (response) {
         // start rippling login
         var user = response.data;
+        _this4.saveSession(user);
         _this4.props.handleLogin(user);
       }).catch(function (error) {
         console.log(error);
@@ -6569,11 +6577,23 @@ var App = function (_React$Component) {
   }
 
   _createClass(App, [{
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      var canUseDOM = !!(typeof window !== 'undefined' && window.document && window.document.createElement);
+      if (canUseDOM) {
+        var user = localStorage.getItem('user');
+        this.setState({
+          user: user
+        });
+      }
+    }
+  }, {
     key: 'render',
     value: function render() {
       var _this2 = this;
 
-      return _react2.default.createElement('div', { id: 'main' }, _react2.default.createElement(_Header2.default, { userID: this.state.user }), _react2.default.createElement(_reactRouterDom.Switch, null, _react2.default.createElement(_reactRouterDom.Route, { path: '/', exact: true, render: function render() {
+      console.log(this.state.user);
+      return _react2.default.createElement('div', { id: 'main' }, _react2.default.createElement(_Header2.default, { user: this.state.user }), _react2.default.createElement(_reactRouterDom.Switch, null, _react2.default.createElement(_reactRouterDom.Route, { path: '/', exact: true, render: function render() {
           return _react2.default.createElement(RegisterHome, null);
         } }), _react2.default.createElement(_reactRouterDom.Route, { path: '/login', render: function render(props) {
           return _react2.default.createElement(Login, { user: _this2.state.user, handleLogin: _this2.onLogin });
@@ -6589,7 +6609,7 @@ var App = function (_React$Component) {
           return _react2.default.createElement(RequestWebsite, null);
         } }), _react2.default.createElement(_reactRouterDom.Route, { path: '/addwebsite', render: function render() {
           return _react2.default.createElement(AddWebsite, null);
-        } }), _react2.default.createElement(_reactRouterDom.Route, { component: _2.default })), _react2.default.createElement(_Footer2.default, { userID: this.state.user }));
+        } }), _react2.default.createElement(_reactRouterDom.Route, { component: _2.default })), _react2.default.createElement(_Footer2.default, { user: this.state.user }));
     }
     //  last route matches when no other does
 

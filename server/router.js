@@ -24,9 +24,7 @@ let router = function(req, res) {
 
   try {
     const context = {};
-    const data = {
-      user: {}
-    }
+    const data = {};
 
     const html = renderToString(
       <StaticRouter context={context} location={req.url} >

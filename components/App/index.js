@@ -35,10 +35,23 @@ class App extends React.Component {
       this.onLogout = this.onLogout.bind(this);
       this.onLogin = this.onLogin.bind(this);
     }
+    componentDidMount() {
+      let canUseDOM = !!(
+            typeof window !== 'undefined' &&
+            window.document &&
+            window.document.createElement
+      );
+      if (canUseDOM) {
+        let user = localStorage.getItem('user');
+        this.setState({
+          user: user
+        })
+      }
+    }
     render() {
       return (
         <div id="main">
-            <Header userID={ this.state.user } />
+            <Header user={ this.state.user } />
             <Switch>
               <Route path="/" exact render={() => (<RegisterHome/>)} />
               <Route path="/login" render={props => <Login user = {this.state.user} handleLogin = {this.onLogin} />} />
@@ -50,7 +63,7 @@ class App extends React.Component {
               <Route path="/addwebsite" render={() => (<AddWebsite />)} />
               <Route component = { NotFound }/>
             </Switch>
-            <Footer userID={ this.state.user } />
+            <Footer user={ this.state.user } />
         </div>
       )
     }

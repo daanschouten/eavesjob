@@ -59,6 +59,11 @@ class LoginForm extends React.Component {
       user: this.props.user
     }
     this.performLogin = this.performLogin.bind(this);
+    this.saveSession = this.saveSession.bind(this);
+  }
+  saveSession(user) {
+    console.log(user);
+    localStorage.setItem("user", JSON.stringify(user));
   }
   performLogin(e) {
     e.preventDefault();
@@ -69,6 +74,7 @@ class LoginForm extends React.Component {
     .then((response) => {
       // start rippling login
       let user = response.data;
+      this.saveSession(user);
       this.props.handleLogin(user);
     })
     .catch((error) => {
