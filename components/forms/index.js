@@ -1,5 +1,6 @@
 const React = require('react');
 const PropTypes = require('prop-types');
+import axios from 'axios';
 
 class RequestWebsiteForm extends React.Component {
   render() {
@@ -52,9 +53,32 @@ class RegisterForm extends React.Component {
 }
 
 class LoginForm extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      user: this.props.user
+    }
+    this.performLogin = this.performLogin.bind(this);
+  }
+  performLogin(e) {
+    e.preventDefault();
+    axios.post('http://localhost:3000/login', {
+      email: 'me@me.com',
+      password: 'daan1996'
+    })
+    .then((response) => {
+      // start rippling login
+      let user = response.data;
+      this.props.handleLogin(user);
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+    e.currentTarget.reset();
+  }
   render() {
     return (
-        <form method="POST" action="/login" className="form-small">
+        <form className="form-small" onSubmit={this.performLogin}>
           <div className="form-group">
             <input type="text" id="email" placeholder="Your Email Address" name="email" className="big-input"/>
           </div>

@@ -1,6 +1,6 @@
 const React = require('react');
 const PropTypes = require('prop-types');
-// const fetch = require('fetch');
+import axios from 'axios';
 const s = require('../Retrieve');
 // const Available = s.Available;
 // const Monitored = s.Monitored;
@@ -17,16 +17,15 @@ class Browse extends React.Component {
     };
   }
   componentDidMount() {
-    fetch('http://localhost:3000/browse/5a4fbaab010aa04fde5cd33e')
-    .then(response => response.json())
-    .then(responseData => {
-      this.setState({
-        available: responseData
+    axios.get('http://localhost:3000/browse/5a4fbaab010aa04fde5cd33e')
+      .then((response) => {
+        this.setState({
+            available: response.data
+        })
       })
-    })
-    .catch(err => {
-      console.log("error fetching and parsing data");
-    })
+      .catch((error) => {
+        console.log("error fetching and parsing data", error);
+      })
   }
 
   render() {

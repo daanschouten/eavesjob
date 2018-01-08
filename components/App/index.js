@@ -30,18 +30,18 @@ class App extends React.Component {
     constructor(props) {
       super(props);
       this.state = {
-        loggedIn: this.props.data.loggedIn,
-        userID: this.props.data.userID
+        user: {}
       }
       this.onLogout = this.onLogout.bind(this);
+      this.onLogin = this.onLogin.bind(this);
     }
     render() {
       return (
         <div id="main">
-            <Header loggedIn={ this.state.loggedIn } />
+            <Header userID={ this.state.user } />
             <Switch>
               <Route path="/" exact render={() => (<RegisterHome/>)} />
-              <Route path="/login" render={() => (<Login/>)} />
+              <Route path="/login" render={props => <Login user = {this.state.user} handleLogin = {this.onLogin} />} />
               <Route path="/browse" render={() => (<Browse/>)} />
               <Route path="/addKeyword" render={() => (<AddKeyword/>)} />
               <Route path="/profile" render={props => <Profile handleLogout = {this.onLogout}/> } />
@@ -50,17 +50,23 @@ class App extends React.Component {
               <Route path="/addwebsite" render={() => (<AddWebsite />)} />
               <Route component = { NotFound }/>
             </Switch>
-            <Footer loggedIn={ this.state.loggedIn } />
+            <Footer userID={ this.state.user } />
         </div>
       )
     }
     //  last route matches when no other does
     onLogout() {
-      if (this.state.loggedIn) {
+      if (this.state.user) {
         this.setState({
-          loggedIn: false
+          user: {}
         });
       }
+      this.props.history.push('/');
+    }
+    onLogin(user) {
+      this.setState({
+        user: user
+      });
       this.props.history.push('/');
     }
 

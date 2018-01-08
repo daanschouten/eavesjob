@@ -6,6 +6,12 @@ const { LoginForm } = require('../Forms');
 import HandleRedirect from '../Redirect';
 
 class Login extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      user: this.props.user
+    };
+  }
   render() {
     return (
       <div className="container-single">
@@ -14,7 +20,7 @@ class Login extends React.Component {
             <div className="form-title">
               <h1>Log in</h1>
             </div>
-            <LoginForm />
+            <LoginForm user = {this.state.user} handleLogin = {this.props.handleLogin}/>
           </div>
           <HandleRedirect destination ='/register' title='Not yet Member?' message='Sign Up' />
         </div>
