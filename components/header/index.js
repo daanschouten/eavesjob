@@ -15,7 +15,8 @@ class MenuLoggedIn extends React.Component {
 
 class MenuNotLoggedIn extends React.Component {
   render() {
-    return (<div id="menu">
+    return (
+    <div id="menu">
       <NavLink to="/contact">Contact</NavLink>
       <NavLink id="header-sign-up" to="/register">Sign Up</NavLink>
       <NavLink to="/login">Login</NavLink>
@@ -24,8 +25,7 @@ class MenuNotLoggedIn extends React.Component {
 }
 
 const Menu = function(props) {
-  const loggedIn = props.loggedIn;
-  if (loggedIn) {
+  if (props.user) {
     return <MenuLoggedIn/>;
   }
   return <MenuNotLoggedIn/>;
@@ -43,7 +43,7 @@ export default class Header extends React.Component {
           <NavLink to="/browse">Browse</NavLink>
           <NavLink to="/support">Support</NavLink>
         </div>
-        <Menu loggedIn={this.props.loggedIn}/>
+        <Menu user={this.props.user}/>
       </header>
     )
   }

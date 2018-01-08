@@ -6583,7 +6583,7 @@ var App = function (_React$Component) {
       if (canUseDOM) {
         var user = localStorage.getItem('user');
         this.setState({
-          user: user
+          user: JSON.parse(user)
         });
       }
     }
@@ -6592,7 +6592,6 @@ var App = function (_React$Component) {
     value: function render() {
       var _this2 = this;
 
-      console.log(this.state.user);
       return _react2.default.createElement('div', { id: 'main' }, _react2.default.createElement(_Header2.default, { user: this.state.user }), _react2.default.createElement(_reactRouterDom.Switch, null, _react2.default.createElement(_reactRouterDom.Route, { path: '/', exact: true, render: function render() {
           return _react2.default.createElement(RegisterHome, null);
         } }), _react2.default.createElement(_reactRouterDom.Route, { path: '/login', render: function render(props) {
@@ -6726,8 +6725,7 @@ var MenuNotLoggedIn = function (_React$Component2) {
 }(React.Component);
 
 var Menu = function Menu(props) {
-  var loggedIn = props.loggedIn;
-  if (loggedIn) {
+  if (props.user) {
     return React.createElement(MenuLoggedIn, null);
   }
   return React.createElement(MenuNotLoggedIn, null);
@@ -6745,7 +6743,7 @@ var Header = function (_React$Component3) {
   _createClass(Header, [{
     key: 'render',
     value: function render() {
-      return React.createElement('header', null, React.createElement('div', { id: 'logo' }, React.createElement(NavLink, { exact: true, to: '/' }, 'Home'), React.createElement(NavLink, { to: '/browse' }, 'Browse'), React.createElement(NavLink, { to: '/support' }, 'Support')), React.createElement(Menu, { loggedIn: this.props.loggedIn }));
+      return React.createElement('header', null, React.createElement('div', { id: 'logo' }, React.createElement(NavLink, { exact: true, to: '/' }, 'Home'), React.createElement(NavLink, { to: '/browse' }, 'Browse'), React.createElement(NavLink, { to: '/support' }, 'Support')), React.createElement(Menu, { user: this.props.user }));
     }
   }]);
 

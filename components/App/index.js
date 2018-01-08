@@ -44,7 +44,7 @@ class App extends React.Component {
       if (canUseDOM) {
         let user = localStorage.getItem('user');
         this.setState({
-          user: user
+          user: JSON.parse(user)
         })
       }
     }
