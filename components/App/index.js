@@ -62,11 +62,13 @@ class App extends React.Component {
               <Route path="/login" render={props => <Login
                 user = {this.state.user}
                 handleLogin = {this.onLogin} />} />
-              <Route path="/browse" render={() => (<Browse/>)} />
+              <Route path="/browse" render={props => <Browse
+                user = {this.state.user}
+                onSubscribe = {this.onSubscribe}
+                onUnsubscribe = {this.onUnsubscribe} /> } />
               <Route path="/addKeyword" render={() => (<AddKeyword/>)} />
               <Route path="/profile" render={props =>  <Profile
                 user = {this.state.user}
-                onSubscribe = {this.onSubscribe}
                 onUnsubscribe = {this.onUnsubscribe}
                 handleLogout = {this.onLogout} /> } />
               <Route path="/register" render={() => <Register/>} />

@@ -5,9 +5,6 @@ const { Link } = require('react-router-dom');
 const { Available } = require('../Retrieve');
 
 function Profile(props) {
-  function handleSubscribe(e) {
-    props.onSubscribe(e.target.value);
-  }
   function handleUnsubscribe(e) {
     props.onUnsubscribe(e.target.value);
   }
@@ -17,7 +14,6 @@ function Profile(props) {
         <div id="search-website">
           <h2>selected career pages</h2>
           <div className="search-div">
-            <button className="big-button" value={"hasadsds"} onClick = {handleSubscribe}> Subscribe </button>
             <button className="big-button" value={"hasadsds"} onClick = {handleUnsubscribe}> Remove </button>
           </div>
         </div>
