@@ -1,6 +1,6 @@
 const React = require('react');
 const PropTypes = require('prop-types');
-const { WebsiteForm } = require('../Forms');
+const { RequestWebsiteForm } = require('../Forms');
 const { Toggle } = require('../Toggle');
 
 class Search extends React.Component {
@@ -107,21 +107,15 @@ class Available extends React.Component {
           <div className= "single-monitor">
           </div>
         </div>
-        {this.state.available.length > 0 ?
-          this.state.available.map(function(website){
-            return <Single website={website} key={website._id}/>
-          })
-        :
-          <WebsiteForm action="/requestWebsite" />
-        }
+        
       </div>
     )
   }
 }
 
-Available.propTypes = {
-  available: PropTypes.array.isRequired
-};
+// Available.propTypes = {
+//   available: PropTypes.array.isRequired
+// };
 
 module.exports = {
   Search: Search,

@@ -29,7 +29,6 @@ class Browse extends React.Component {
   }
 
   render() {
-    console.log(this.state.available);
     return (
         <div id="browse-page">
           <div id="browse-left">

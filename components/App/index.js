@@ -16,7 +16,7 @@ import Header from '../Header';
 import Footer from '../Footer';
 
 import NotFound from '../404';
-import Profile from '../Profile';
+const { Profile } = require('../Profile');
 
 const { Login } = require('../Auth');
 const { Register } = require('../Auth');

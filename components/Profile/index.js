@@ -4,15 +4,27 @@ const PropTypes = require('prop-types');
 const { Link } = require('react-router-dom');
 const { Available } = require('../Retrieve');
 
-export default class Profile extends React.Component {
+class Profile extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      user: this.props.user
+      user: {}
     }
   }
   componentDidMount() {
-
+    let canUseDOM = !!(
+          typeof window !== 'undefined' &&
+          window.document &&
+          window.document.createElement
+    );
+    if (canUseDOM) {
+      let user = localStorage.getItem('user');
+      if (user) {
+        this.setState({
+          user: JSON.parse(user)
+        })
+      }
+    }
   }
   render() {
     return (
@@ -22,7 +34,7 @@ export default class Profile extends React.Component {
             <h2>selected career pages</h2>
             <div className="search-div">  </div>
           </div>
-
+          <Available available = {this.state.user}/>
           <div id="profile-premium">
             <h2>go premium</h2>
           </div>
@@ -51,4 +63,6 @@ export default class Profile extends React.Component {
   }
 }
 
-// <Available />
+module.exports = {
+  Profile: Profile
+}
