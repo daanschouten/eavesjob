@@ -32,8 +32,11 @@ class App extends React.Component {
       this.state = {
         user: {}
       }
+      this.redirectUser = this.redirectUser.bind(this);
       this.onLogout = this.onLogout.bind(this);
       this.onLogin = this.onLogin.bind(this);
+      this.onSubscribe = this.onSubscribe.bind(this);
+      this.onUnsubscribe = this.onUnsubscribe.bind(this);
     }
     componentDidMount() {
       let canUseDOM = !!(
@@ -56,11 +59,17 @@ class App extends React.Component {
             <Header user={ this.state.user } />
             <Switch>
               <Route path="/" exact render={() => (<RegisterHome/>)} />
-              <Route path="/login" render={props => <Login user = {this.state.user} handleLogin = {this.onLogin} />} />
+              <Route path="/login" render={props => <Login
+                user = {this.state.user}
+                handleLogin = {this.onLogin} />} />
               <Route path="/browse" render={() => (<Browse/>)} />
               <Route path="/addKeyword" render={() => (<AddKeyword/>)} />
-              <Route path="/profile" render={props => <Profile user = {this.state.user} handleLogout = {this.onLogout}/> } />
-              <Route path="/register" render={() => (<Register/>)} />
+              <Route path="/profile" render={props =>  <Profile
+                user = {this.state.user}
+                onSubscribe = {this.onSubscribe}
+                onUnsubscribe = {this.onUnsubscribe}
+                handleLogout = {this.onLogout} /> } />
+              <Route path="/register" render={() => <Register/>} />
               <Route path="/requestwebsite" render={() => (<RequestWebsite />)} />
               <Route path="/addwebsite" render={() => (<AddWebsite />)} />
               <Route component = { NotFound }/>
@@ -69,7 +78,9 @@ class App extends React.Component {
         </div>
       )
     }
-    //  last route matches when no other does
+    redirectUser(to) {
+      this.props.history.push(to);
+    }
     onLogout() {
       if (this.state.user) {
         localStorage.removeItem('user');
@@ -77,13 +88,24 @@ class App extends React.Component {
           user: {}
         });
       }
-      this.props.history.push('/');
+      this.redirectUser('/');
     }
     onLogin(user) {
       this.setState({
         user: user
       });
-      this.props.history.push('/');
+      this.redirectUser('/');
+    }
+    onSubscribe(site) {
+      this.state.user.subscribedWebsites.push(site);
+      this.redirectUser('/');
+    }
+    onUnsubscribe(site) {
+      let index = this.state.user.subscribedWebsites.indexOf(site);
+      if (index > -1) {
+          this.state.user.subscribedWebsites.splice(index, 1);
+      }
+      this.redirectUser('/');
     }
 
 };

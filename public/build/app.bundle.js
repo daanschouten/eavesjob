@@ -6566,8 +6566,11 @@ var App = function (_React$Component) {
     _this.state = {
       user: {}
     };
+    _this.redirectUser = _this.redirectUser.bind(_this);
     _this.onLogout = _this.onLogout.bind(_this);
     _this.onLogin = _this.onLogin.bind(_this);
+    _this.onSubscribe = _this.onSubscribe.bind(_this);
+    _this.onUnsubscribe = _this.onUnsubscribe.bind(_this);
     return _this;
   }
 
@@ -6592,13 +6595,19 @@ var App = function (_React$Component) {
       return _react2.default.createElement('div', { id: 'main' }, _react2.default.createElement(_Header2.default, { user: this.state.user }), _react2.default.createElement(_reactRouterDom.Switch, null, _react2.default.createElement(_reactRouterDom.Route, { path: '/', exact: true, render: function render() {
           return _react2.default.createElement(RegisterHome, null);
         } }), _react2.default.createElement(_reactRouterDom.Route, { path: '/login', render: function render(props) {
-          return _react2.default.createElement(Login, { user: _this2.state.user, handleLogin: _this2.onLogin });
+          return _react2.default.createElement(Login, {
+            user: _this2.state.user,
+            handleLogin: _this2.onLogin });
         } }), _react2.default.createElement(_reactRouterDom.Route, { path: '/browse', render: function render() {
           return _react2.default.createElement(Browse, null);
         } }), _react2.default.createElement(_reactRouterDom.Route, { path: '/addKeyword', render: function render() {
           return _react2.default.createElement(AddKeyword, null);
         } }), _react2.default.createElement(_reactRouterDom.Route, { path: '/profile', render: function render(props) {
-          return _react2.default.createElement(Profile, { user: _this2.state.user, handleLogout: _this2.onLogout });
+          return _react2.default.createElement(Profile, {
+            user: _this2.state.user,
+            onSubscribe: _this2.onSubscribe,
+            onUnsubscribe: _this2.onUnsubscribe,
+            handleLogout: _this2.onLogout });
         } }), _react2.default.createElement(_reactRouterDom.Route, { path: '/register', render: function render() {
           return _react2.default.createElement(Register, null);
         } }), _react2.default.createElement(_reactRouterDom.Route, { path: '/requestwebsite', render: function render() {
@@ -6607,8 +6616,11 @@ var App = function (_React$Component) {
           return _react2.default.createElement(AddWebsite, null);
         } }), _react2.default.createElement(_reactRouterDom.Route, { component: _2.default })), _react2.default.createElement(_Footer2.default, { user: this.state.user }));
     }
-    //  last route matches when no other does
-
+  }, {
+    key: 'redirectUser',
+    value: function redirectUser(to) {
+      this.props.history.push(to);
+    }
   }, {
     key: 'onLogout',
     value: function onLogout() {
@@ -6618,7 +6630,7 @@ var App = function (_React$Component) {
           user: {}
         });
       }
-      this.props.history.push('/');
+      this.redirectUser('/');
     }
   }, {
     key: 'onLogin',
@@ -6626,7 +6638,22 @@ var App = function (_React$Component) {
       this.setState({
         user: user
       });
-      this.props.history.push('/');
+      this.redirectUser('/');
+    }
+  }, {
+    key: 'onSubscribe',
+    value: function onSubscribe(site) {
+      this.state.user.subscribedWebsites.push(site);
+      this.redirectUser('/');
+    }
+  }, {
+    key: 'onUnsubscribe',
+    value: function onUnsubscribe(site) {
+      var index = this.state.user.subscribedWebsites.indexOf(site);
+      if (index > -1) {
+        this.state.user.subscribedWebsites.splice(index, 1);
+      }
+      this.redirectUser('/');
     }
   }]);
 
@@ -7955,36 +7982,6 @@ module.exports = {
 "use strict";
 
 
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-
-var _createClass = function () {
-  function defineProperties(target, props) {
-    for (var i = 0; i < props.length; i++) {
-      var descriptor = props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if ("value" in descriptor) descriptor.writable = true;Object.defineProperty(target, descriptor.key, descriptor);
-    }
-  }return function (Constructor, protoProps, staticProps) {
-    if (protoProps) defineProperties(Constructor.prototype, protoProps);if (staticProps) defineProperties(Constructor, staticProps);return Constructor;
-  };
-}();
-
-function _classCallCheck(instance, Constructor) {
-  if (!(instance instanceof Constructor)) {
-    throw new TypeError("Cannot call a class as a function");
-  }
-}
-
-function _possibleConstructorReturn(self, call) {
-  if (!self) {
-    throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
-  }return call && ((typeof call === "undefined" ? "undefined" : _typeof(call)) === "object" || typeof call === "function") ? call : self;
-}
-
-function _inherits(subClass, superClass) {
-  if (typeof superClass !== "function" && superClass !== null) {
-    throw new TypeError("Super expression must either be null or a function, not " + (typeof superClass === "undefined" ? "undefined" : _typeof(superClass)));
-  }subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } });if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
-}
-
 var React = __webpack_require__(0);
 var PropTypes = __webpack_require__(1);
 
@@ -7994,54 +7991,15 @@ var _require = __webpack_require__(10),
 var _require2 = __webpack_require__(47),
     Available = _require2.Available;
 
-var Profile = function (_React$Component) {
-  _inherits(Profile, _React$Component);
-
-  function Profile(props) {
-    _classCallCheck(this, Profile);
-
-    var _this = _possibleConstructorReturn(this, (Profile.__proto__ || Object.getPrototypeOf(Profile)).call(this, props));
-
-    _this.state = {
-      user: {}
-    };
-    return _this;
+function Profile(props) {
+  function handleSubscribe(e) {
+    props.onSubscribe(e.target.value);
   }
-
-  _createClass(Profile, [{
-    key: 'componentWillReceiveProps',
-    value: function componentWillReceiveProps(nextProps) {
-      if (nextProps.user !== this.props.user) {
-        this.setState({
-          user: nextProps.user
-        });
-      }
-    }
-    // componentDidMount() {
-    //   let canUseDOM = !!(
-    //         typeof window !== 'undefined' &&
-    //         window.document &&
-    //         window.document.createElement
-    //   );
-    //   if (canUseDOM) {
-    //     let user = localStorage.getItem('user');
-    //     if (user) {
-    //       this.setState({
-    //         user: JSON.parse(user)
-    //       })
-    //     }
-    //   }
-    // }
-
-  }, {
-    key: 'render',
-    value: function render() {
-      return React.createElement('div', { id: 'browse-page' }, React.createElement('div', { id: 'browse-left' }, React.createElement('div', { id: 'search-website' }, React.createElement('h2', null, 'selected career pages'), React.createElement('div', { className: 'search-div' }, '  ')), React.createElement(Available, { available: this.state.user }), React.createElement('div', { id: 'profile-premium' }, React.createElement('h2', null, 'go premium'))), React.createElement('div', { className: 'right-sidebar' }, React.createElement('div', { id: 'welcome-user' }, React.createElement('div', { className: 'right-sidebar-title' }, React.createElement('p', null, 'Hi ', this.state.user.firstName, '!'), React.createElement('button', { className: 'big-button', onClick: this.props.handleLogout }, ' Log out '))), React.createElement('div', { className: 'request-website' }, React.createElement('div', { className: 'right-sidebar-title' }, React.createElement('h2', null, 'find more career pages ')), React.createElement('div', { className: 'single-text' }, React.createElement('p', null, ' ')), React.createElement('div', { className: 'single-text' }, React.createElement('button', { className: 'big-button' }, React.createElement(Link, { to: '/browse' }, 'browse career pages'))))));
-    }
-  }]);
-
-  return Profile;
-}(React.Component);
+  function handleUnsubscribe(e) {
+    props.onUnsubscribe(e.target.value);
+  }
+  return React.createElement('div', { id: 'browse-page' }, React.createElement('div', { id: 'browse-left' }, React.createElement('div', { id: 'search-website' }, React.createElement('h2', null, 'selected career pages'), React.createElement('div', { className: 'search-div' }, React.createElement('button', { className: 'big-button', value: "hasadsds", onClick: handleSubscribe }, ' Subscribe '), React.createElement('button', { className: 'big-button', value: "hasadsds", onClick: handleUnsubscribe }, ' Remove '))), React.createElement(Available, { available: props.user }), React.createElement('div', { id: 'profile-premium' }, React.createElement('h2', null, 'go premium'))), React.createElement('div', { className: 'right-sidebar' }, React.createElement('div', { id: 'welcome-user' }, React.createElement('div', { className: 'right-sidebar-title' }, React.createElement('p', null, 'Hi ', props.user.firstName, '!'), React.createElement('button', { className: 'big-button', onClick: props.handleLogout }, ' Log out '))), React.createElement('div', { className: 'request-website' }, React.createElement('div', { className: 'right-sidebar-title' }, React.createElement('h2', null, 'find more career pages ')), React.createElement('div', { className: 'single-text' }, React.createElement('p', null, ' ')), React.createElement('div', { className: 'single-text' }, React.createElement('button', { className: 'big-button' }, React.createElement(Link, { to: '/browse' }, 'browse career pages'))))));
+}
 
 module.exports = {
   Profile: Profile
