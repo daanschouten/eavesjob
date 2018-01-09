@@ -11,19 +11,11 @@ class Profile extends React.Component {
       user: {}
     }
   }
-  componentDidMount() {
-    let canUseDOM = !!(
-          typeof window !== 'undefined' &&
-          window.document &&
-          window.document.createElement
-    );
-    if (canUseDOM) {
-      let user = localStorage.getItem('user');
-      if (user) {
+  componentWillReceiveProps(nextProps){
+    if(nextProps.user !== this.props.user){
         this.setState({
-          user: JSON.parse(user)
-        })
-      }
+          user: nextProps.user
+        });
     }
   }
   render() {

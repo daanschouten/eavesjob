@@ -8009,22 +8009,34 @@ var Profile = function (_React$Component) {
   }
 
   _createClass(Profile, [{
-    key: 'componentDidMount',
-    value: function componentDidMount() {
-      var canUseDOM = !!(typeof window !== 'undefined' && window.document && window.document.createElement);
-      if (canUseDOM) {
-        var user = localStorage.getItem('user');
-        if (user) {
-          this.setState({
-            user: JSON.parse(user)
-          });
-        }
+    key: 'componentWillReceiveProps',
+    value: function componentWillReceiveProps(nextProps) {
+      if (nextProps.user !== this.props.user) {
+        this.setState({
+          user: nextProps.user
+        });
       }
     }
+    // componentDidMount() {
+    //   let canUseDOM = !!(
+    //         typeof window !== 'undefined' &&
+    //         window.document &&
+    //         window.document.createElement
+    //   );
+    //   if (canUseDOM) {
+    //     let user = localStorage.getItem('user');
+    //     if (user) {
+    //       this.setState({
+    //         user: JSON.parse(user)
+    //       })
+    //     }
+    //   }
+    // }
+
   }, {
     key: 'render',
     value: function render() {
-      return React.createElement('div', { id: 'browse-page' }, React.createElement('div', { id: 'browse-left' }, React.createElement('div', { id: 'search-website' }, React.createElement('h2', null, 'selected career pages'), React.createElement('div', { className: 'search-div' }, '  ')), React.createElement(Available, { available: this.props.user }), React.createElement('div', { id: 'profile-premium' }, React.createElement('h2', null, 'go premium'))), React.createElement('div', { className: 'right-sidebar' }, React.createElement('div', { id: 'welcome-user' }, React.createElement('div', { className: 'right-sidebar-title' }, React.createElement('p', null, 'Hi ', this.state.user.firstName, '!'), React.createElement('button', { className: 'big-button', onClick: this.props.handleLogout }, ' Log out '))), React.createElement('div', { className: 'request-website' }, React.createElement('div', { className: 'right-sidebar-title' }, React.createElement('h2', null, 'find more career pages ')), React.createElement('div', { className: 'single-text' }, React.createElement('p', null, ' ')), React.createElement('div', { className: 'single-text' }, React.createElement('button', { className: 'big-button' }, React.createElement(Link, { to: '/browse' }, 'browse career pages'))))));
+      return React.createElement('div', { id: 'browse-page' }, React.createElement('div', { id: 'browse-left' }, React.createElement('div', { id: 'search-website' }, React.createElement('h2', null, 'selected career pages'), React.createElement('div', { className: 'search-div' }, '  ')), React.createElement(Available, { available: this.state.user }), React.createElement('div', { id: 'profile-premium' }, React.createElement('h2', null, 'go premium'))), React.createElement('div', { className: 'right-sidebar' }, React.createElement('div', { id: 'welcome-user' }, React.createElement('div', { className: 'right-sidebar-title' }, React.createElement('p', null, 'Hi ', this.state.user.firstName, '!'), React.createElement('button', { className: 'big-button', onClick: this.props.handleLogout }, ' Log out '))), React.createElement('div', { className: 'request-website' }, React.createElement('div', { className: 'right-sidebar-title' }, React.createElement('h2', null, 'find more career pages ')), React.createElement('div', { className: 'single-text' }, React.createElement('p', null, ' ')), React.createElement('div', { className: 'single-text' }, React.createElement('button', { className: 'big-button' }, React.createElement(Link, { to: '/browse' }, 'browse career pages'))))));
     }
   }]);
 
