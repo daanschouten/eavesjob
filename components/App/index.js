@@ -76,7 +76,7 @@ class App extends React.Component {
               <Route path="/addwebsite" render={() => (<AddWebsite />)} />
               <Route component = { NotFound }/>
             </Switch>
-            <Footer user={ this.state.user } />
+            <Footer />
         </div>
       )
     }

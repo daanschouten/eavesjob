@@ -2,7 +2,7 @@ const React = require('react');
 const PropTypes = require('prop-types');
 
 const { Link } = require('react-router-dom');
-const { Available } = require('../Retrieve');
+const { Available } = require('../Browse');
 
 function Profile(props) {
   function handleUnsubscribe(e) {
