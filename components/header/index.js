@@ -16,16 +16,17 @@ class MenuLoggedIn extends React.Component {
 class MenuNotLoggedIn extends React.Component {
   render() {
     return (
-    <div id="menu">
-      <NavLink to="/contact">Contact</NavLink>
-      <NavLink id="header-sign-up" to="/register">Sign Up</NavLink>
-      <NavLink to="/login">Login</NavLink>
-    </div>)
+      <div id="menu">
+        <NavLink to="/contact">Contact</NavLink>
+        <NavLink id="header-sign-up" to="/register">Sign Up</NavLink>
+        <NavLink to="/login">Login</NavLink>
+      </div>
+    )
   }
 }
 
 const Menu = function(props) {
-  if (props.user) {
+  if (props.user.id) {
     return <MenuLoggedIn/>;
   }
   return <MenuNotLoggedIn/>;

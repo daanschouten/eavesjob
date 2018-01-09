@@ -6582,9 +6582,11 @@ var App = function (_React$Component) {
       var canUseDOM = !!(typeof window !== 'undefined' && window.document && window.document.createElement);
       if (canUseDOM) {
         var user = localStorage.getItem('user');
-        this.setState({
-          user: JSON.parse(user)
-        });
+        if (user) {
+          this.setState({
+            user: JSON.parse(user)
+          });
+        }
       }
     }
   }, {
@@ -6601,7 +6603,7 @@ var App = function (_React$Component) {
         } }), _react2.default.createElement(_reactRouterDom.Route, { path: '/addKeyword', render: function render() {
           return _react2.default.createElement(AddKeyword, null);
         } }), _react2.default.createElement(_reactRouterDom.Route, { path: '/profile', render: function render(props) {
-          return _react2.default.createElement(_Profile2.default, { handleLogout: _this2.onLogout });
+          return _react2.default.createElement(_Profile2.default, { user: _this2.state.user, handleLogout: _this2.onLogout });
         } }), _react2.default.createElement(_reactRouterDom.Route, { path: '/register', render: function render() {
           return _react2.default.createElement(Register, null);
         } }), _react2.default.createElement(_reactRouterDom.Route, { path: '/requestwebsite', render: function render() {
@@ -6616,6 +6618,7 @@ var App = function (_React$Component) {
     key: 'onLogout',
     value: function onLogout() {
       if (this.state.user) {
+        localStorage.removeItem('user');
         this.setState({
           user: {}
         });
@@ -6725,7 +6728,7 @@ var MenuNotLoggedIn = function (_React$Component2) {
 }(React.Component);
 
 var Menu = function Menu(props) {
-  if (props.user) {
+  if (props.user.id) {
     return React.createElement(MenuLoggedIn, null);
   }
   return React.createElement(MenuNotLoggedIn, null);
@@ -6951,8 +6954,7 @@ var Profile = function (_React$Component) {
     var _this = _possibleConstructorReturn(this, (Profile.__proto__ || Object.getPrototypeOf(Profile)).call(this, props));
 
     _this.state = {
-      monitoredWebsites: [],
-      userName: ""
+      user: _this.props.user
     };
     return _this;
   }
@@ -6963,7 +6965,7 @@ var Profile = function (_React$Component) {
   }, {
     key: 'render',
     value: function render() {
-      return React.createElement('div', { id: 'browse-page' }, React.createElement('div', { id: 'browse-left' }, React.createElement('div', { id: 'search-website' }, React.createElement('h2', null, 'selected career pages'), React.createElement('div', { className: 'search-div' }, '  ')), React.createElement('div', { id: 'profile-premium' }, React.createElement('h2', null, 'go premium'))), React.createElement('div', { className: 'right-sidebar' }, React.createElement('div', { id: 'welcome-user' }, React.createElement('div', { className: 'right-sidebar-title' }, React.createElement('p', null, 'Hi ', this.state.userName, '!'), React.createElement('button', { className: 'big-button', onClick: this.props.handleLogout }, ' Log out '))), React.createElement('div', { className: 'request-website' }, React.createElement('div', { className: 'right-sidebar-title' }, React.createElement('h2', null, 'find more career pages ')), React.createElement('div', { className: 'single-text' }, React.createElement('p', null, ' ')), React.createElement('div', { className: 'single-text' }, React.createElement('button', { className: 'big-button' }, React.createElement(Link, { to: '/browse' }, 'browse career pages'))))));
+      return React.createElement('div', { id: 'browse-page' }, React.createElement('div', { id: 'browse-left' }, React.createElement('div', { id: 'search-website' }, React.createElement('h2', null, 'selected career pages'), React.createElement('div', { className: 'search-div' }, '  ')), React.createElement('div', { id: 'profile-premium' }, React.createElement('h2', null, 'go premium'))), React.createElement('div', { className: 'right-sidebar' }, React.createElement('div', { id: 'welcome-user' }, React.createElement('div', { className: 'right-sidebar-title' }, React.createElement('p', null, 'Hi ', this.state.user.firstName, '!'), React.createElement('button', { className: 'big-button', onClick: this.props.handleLogout }, ' Log out '))), React.createElement('div', { className: 'request-website' }, React.createElement('div', { className: 'right-sidebar-title' }, React.createElement('h2', null, 'find more career pages ')), React.createElement('div', { className: 'single-text' }, React.createElement('p', null, ' ')), React.createElement('div', { className: 'single-text' }, React.createElement('button', { className: 'big-button' }, React.createElement(Link, { to: '/browse' }, 'browse career pages'))))));
     }
   }]);
 

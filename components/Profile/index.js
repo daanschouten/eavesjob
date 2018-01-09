@@ -8,8 +8,7 @@ export default class Profile extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      monitoredWebsites: [],
-      userName: ""
+      user: this.props.user
     }
   }
   componentDidMount() {
@@ -31,7 +30,7 @@ export default class Profile extends React.Component {
         <div className="right-sidebar">
           <div id="welcome-user">
             <div className="right-sidebar-title">
-              <p>Hi {this.state.userName}!</p>
+              <p>Hi {this.state.user.firstName}!</p>
               <button className="big-button" onClick = {this.props.handleLogout}> Log out </button>
             </div>
           </div>

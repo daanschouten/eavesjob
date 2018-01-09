@@ -43,9 +43,11 @@ class App extends React.Component {
       );
       if (canUseDOM) {
         let user = localStorage.getItem('user');
-        this.setState({
-          user: JSON.parse(user)
-        })
+        if (user) {
+          this.setState({
+            user: JSON.parse(user)
+          })
+        }
       }
     }
     render() {
@@ -57,7 +59,7 @@ class App extends React.Component {
               <Route path="/login" render={props => <Login user = {this.state.user} handleLogin = {this.onLogin} />} />
               <Route path="/browse" render={() => (<Browse/>)} />
               <Route path="/addKeyword" render={() => (<AddKeyword/>)} />
-              <Route path="/profile" render={props => <Profile handleLogout = {this.onLogout}/> } />
+              <Route path="/profile" render={props => <Profile user = {this.state.user} handleLogout = {this.onLogout}/> } />
               <Route path="/register" render={() => (<Register/>)} />
               <Route path="/requestwebsite" render={() => (<RequestWebsite />)} />
               <Route path="/addwebsite" render={() => (<AddWebsite />)} />
@@ -70,6 +72,7 @@ class App extends React.Component {
     //  last route matches when no other does
     onLogout() {
       if (this.state.user) {
+        localStorage.removeItem('user');
         this.setState({
           user: {}
         });
