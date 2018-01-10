@@ -534,14 +534,23 @@ var LoginForm = function (_React$Component3) {
     var _this3 = _possibleConstructorReturn(this, (LoginForm.__proto__ || Object.getPrototypeOf(LoginForm)).call(this, props));
 
     _this3.state = {
-      user: _this3.props.user
+      email: "",
+      password: ""
     };
     _this3.performLogin = _this3.performLogin.bind(_this3);
     _this3.saveSession = _this3.saveSession.bind(_this3);
+    _this3.handleChange = _this3.handleChange.bind(_this3);
     return _this3;
   }
 
   _createClass(LoginForm, [{
+    key: 'handleChange',
+    value: function handleChange(e) {
+      var returnObj = {};
+      returnObj[e.target.name] = e.target.value;
+      this.setState(returnObj);
+    }
+  }, {
     key: 'saveSession',
     value: function saveSession(user) {
       localStorage.setItem("user", JSON.stringify(user));
@@ -553,8 +562,8 @@ var LoginForm = function (_React$Component3) {
 
       e.preventDefault();
       _axios2.default.post('http://localhost:3000/login', {
-        email: 'me@me.com',
-        password: 'daan1996'
+        email: this.state.email.toLowerCase(),
+        password: this.state.password
       }).then(function (response) {
         var user = response.data;
         _this4.saveSession(user);
@@ -567,7 +576,7 @@ var LoginForm = function (_React$Component3) {
   }, {
     key: 'render',
     value: function render() {
-      return React.createElement('form', { className: 'form-small', onSubmit: this.performLogin }, React.createElement('div', { className: 'form-group' }, React.createElement('input', { type: 'text', id: 'email', placeholder: 'Your Email Address', name: 'email', className: 'big-input' })), React.createElement('div', { className: 'form-group' }, React.createElement('input', { type: 'password', id: 'password', placeholder: 'Your Password', name: 'password', className: 'big-input' })), React.createElement('div', { className: 'form-group' }, React.createElement('button', { type: 'submit', className: 'big-button' }, 'Log in')));
+      return React.createElement('form', { className: 'form-small', onSubmit: this.performLogin }, React.createElement('div', { className: 'form-group' }, React.createElement('input', { type: 'text', id: 'email', placeholder: 'Your Email Address', name: 'email', className: 'big-input', value: this.state.email, onChange: this.handleChange })), React.createElement('div', { className: 'form-group' }, React.createElement('input', { type: 'password', id: 'password', placeholder: 'Your Password', name: 'password', className: 'big-input', value: this.state.password, onChange: this.handleChange })), React.createElement('div', { className: 'form-group' }, React.createElement('button', { type: 'submit', className: 'big-button' }, 'Log in')));
     }
   }]);
 
@@ -2537,7 +2546,7 @@ var Browse = function (_React$Component) {
     var _this = _possibleConstructorReturn(this, (Browse.__proto__ || Object.getPrototypeOf(Browse)).call(this, props));
 
     _this.state = {
-      websites: []
+      data: []
     };
     return _this;
   }
@@ -2550,13 +2559,11 @@ var Browse = function (_React$Component) {
       if (nextProps.user !== this.props.user) {
         _axios2.default.get('http://localhost:3000/browse/' + nextProps.user.id).then(function (response) {
           _this2.setState({
-            websites: response.data
+            data: response.data
           });
         }).catch(function (error) {
           console.log("error fetching and parsing data", error);
         });
-      } else {
-        console.log("same!");
       }
     }
   }, {
@@ -2582,42 +2589,12 @@ module.exports = {
 "use strict";
 
 
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-
-var _createClass = function () {
-  function defineProperties(target, props) {
-    for (var i = 0; i < props.length; i++) {
-      var descriptor = props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if ("value" in descriptor) descriptor.writable = true;Object.defineProperty(target, descriptor.key, descriptor);
-    }
-  }return function (Constructor, protoProps, staticProps) {
-    if (protoProps) defineProperties(Constructor.prototype, protoProps);if (staticProps) defineProperties(Constructor, staticProps);return Constructor;
-  };
-}();
-
 var _Redirect = __webpack_require__(39);
 
 var _Redirect2 = _interopRequireDefault(_Redirect);
 
 function _interopRequireDefault(obj) {
   return obj && obj.__esModule ? obj : { default: obj };
-}
-
-function _classCallCheck(instance, Constructor) {
-  if (!(instance instanceof Constructor)) {
-    throw new TypeError("Cannot call a class as a function");
-  }
-}
-
-function _possibleConstructorReturn(self, call) {
-  if (!self) {
-    throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
-  }return call && ((typeof call === 'undefined' ? 'undefined' : _typeof(call)) === "object" || typeof call === "function") ? call : self;
-}
-
-function _inherits(subClass, superClass) {
-  if (typeof superClass !== "function" && superClass !== null) {
-    throw new TypeError("Super expression must either be null or a function, not " + (typeof superClass === 'undefined' ? 'undefined' : _typeof(superClass)));
-  }subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } });if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
 }
 
 var React = __webpack_require__(0);
@@ -2629,48 +2606,13 @@ var _require = __webpack_require__(7),
 var _require2 = __webpack_require__(7),
     LoginForm = _require2.LoginForm;
 
-var Login = function (_React$Component) {
-  _inherits(Login, _React$Component);
+function Login(props) {
+  return React.createElement('div', { className: 'container-single' }, React.createElement('div', { className: 'container-center' }, React.createElement('div', { className: 'single' }, React.createElement('div', { className: 'form-title' }, React.createElement('h1', null, 'Log in')), React.createElement(LoginForm, { handleLogin: props.handleLogin })), React.createElement(_Redirect2.default, { destination: '/register', title: 'Not yet Member?', message: 'Sign Up' })));
+}
 
-  function Login(props) {
-    _classCallCheck(this, Login);
-
-    var _this = _possibleConstructorReturn(this, (Login.__proto__ || Object.getPrototypeOf(Login)).call(this, props));
-
-    _this.state = {
-      user: _this.props.user
-    };
-    return _this;
-  }
-
-  _createClass(Login, [{
-    key: 'render',
-    value: function render() {
-      return React.createElement('div', { className: 'container-single' }, React.createElement('div', { className: 'container-center' }, React.createElement('div', { className: 'single' }, React.createElement('div', { className: 'form-title' }, React.createElement('h1', null, 'Log in')), React.createElement(LoginForm, { user: this.state.user, handleLogin: this.props.handleLogin })), React.createElement(_Redirect2.default, { destination: '/register', title: 'Not yet Member?', message: 'Sign Up' })));
-    }
-  }]);
-
-  return Login;
-}(React.Component);
-
-var Register = function (_React$Component2) {
-  _inherits(Register, _React$Component2);
-
-  function Register() {
-    _classCallCheck(this, Register);
-
-    return _possibleConstructorReturn(this, (Register.__proto__ || Object.getPrototypeOf(Register)).apply(this, arguments));
-  }
-
-  _createClass(Register, [{
-    key: 'render',
-    value: function render() {
-      return React.createElement('div', { className: 'container-single' }, React.createElement('div', { className: 'container-center' }, React.createElement('div', { className: 'single' }, React.createElement('div', { className: 'form-title' }, React.createElement('h1', null, 'Join us! ')), React.createElement(RegisterForm, null)), React.createElement(_Redirect2.default, { destination: '/login', title: 'Already a Member?', message: 'Login' })));
-    }
-  }]);
-
-  return Register;
-}(React.Component);
+function Register(props) {
+  return React.createElement('div', { className: 'container-single' }, React.createElement('div', { className: 'container-center' }, React.createElement('div', { className: 'single' }, React.createElement('div', { className: 'form-title' }, React.createElement('h1', null, 'Join us! ')), React.createElement(RegisterForm, null)), React.createElement(_Redirect2.default, { destination: '/login', title: 'Already a Member?', message: 'Login' })));
+}
 
 module.exports = {
   Register: Register,
@@ -6591,7 +6533,6 @@ var App = function (_React$Component) {
           return _react2.default.createElement(RegisterHome, null);
         } }), _react2.default.createElement(_reactRouterDom.Route, { path: '/login', render: function render(props) {
           return _react2.default.createElement(Login, {
-            user: _this2.state.user,
             handleLogin: _this2.onLogin });
         } }), _react2.default.createElement(_reactRouterDom.Route, { path: '/browse', render: function render(props) {
           return _react2.default.createElement(Browse, {

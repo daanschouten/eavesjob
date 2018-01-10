@@ -56,10 +56,17 @@ class LoginForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      user: this.props.user
+      email: "",
+      password: ""
     }
     this.performLogin = this.performLogin.bind(this);
     this.saveSession = this.saveSession.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+  }
+  handleChange(e) {
+    let returnObj = {};
+    returnObj[e.target.name] = e.target.value;
+    this.setState(returnObj);
   }
   saveSession(user) {
     localStorage.setItem("user", JSON.stringify(user));
@@ -67,8 +74,8 @@ class LoginForm extends React.Component {
   performLogin(e) {
     e.preventDefault();
     axios.post('http://localhost:3000/login', {
-      email: 'me@me.com',
-      password: 'daan1996'
+      email: this.state.email.toLowerCase(),
+      password: this.state.password
     })
     .then((response) => {
       let user = response.data;
@@ -84,10 +91,10 @@ class LoginForm extends React.Component {
     return (
         <form className="form-small" onSubmit={this.performLogin}>
           <div className="form-group">
-            <input type="text" id="email" placeholder="Your Email Address" name="email" className="big-input"/>
+            <input type="text" id="email" placeholder="Your Email Address" name="email" className="big-input" value={this.state.email} onChange={this.handleChange} />
           </div>
           <div className="form-group">
-            <input type="password" id="password" placeholder="Your Password" name="password" className="big-input"/>
+            <input type="password" id="password" placeholder="Your Password" name="password" className="big-input" value={this.state.password} onChange={this.handleChange} />
           </div>
           <div className="form-group">
             <button type="submit" className="big-button">Log in</button>

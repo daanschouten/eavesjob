@@ -60,7 +60,6 @@ class App extends React.Component {
             <Switch>
               <Route path="/" exact render={() => (<RegisterHome/>)} />
               <Route path="/login" render={props => <Login
-                user = {this.state.user}
                 handleLogin = {this.onLogin} />} />
               <Route path="/browse" render={props => <Browse
                 user = {this.state.user}

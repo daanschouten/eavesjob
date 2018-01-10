@@ -5,32 +5,23 @@ const { RegisterForm } = require('../Forms');
 const { LoginForm } = require('../Forms');
 import HandleRedirect from '../Redirect';
 
-class Login extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      user: this.props.user
-    };
-  }
-  render() {
-    return (
-      <div className="container-single">
-        <div className="container-center">
-          <div className="single">
-            <div className="form-title">
-              <h1>Log in</h1>
-            </div>
-            <LoginForm user = {this.state.user} handleLogin = {this.props.handleLogin}/>
+function Login(props) {
+  return (
+    <div className="container-single">
+      <div className="container-center">
+        <div className="single">
+          <div className="form-title">
+            <h1>Log in</h1>
           </div>
-          <HandleRedirect destination ='/register' title='Not yet Member?' message='Sign Up' />
+          <LoginForm handleLogin = {props.handleLogin}/>
         </div>
+        <HandleRedirect destination ='/register' title='Not yet Member?' message='Sign Up' />
       </div>
-    );
-  }
+    </div>
+  );
 }
 
-class Register extends React.Component {
-  render() {
+function Register(props) {
     return (
       <div className ="container-single">
         <div className ="container-center">
@@ -44,7 +35,6 @@ class Register extends React.Component {
         </div>
       </div>
     )
-  }
 }
 
 module.exports = {
