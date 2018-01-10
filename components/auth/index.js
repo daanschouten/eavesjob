@@ -13,7 +13,7 @@ function Login(props) {
           <div className="form-title">
             <h1>Log in</h1>
           </div>
-          <LoginForm handleLogin = {props.handleLogin}/>
+          <LoginForm onLogin = {props.onLogin}/>
         </div>
         <HandleRedirect destination ='/register' title='Not yet Member?' message='Sign Up' />
       </div>
@@ -27,9 +27,9 @@ function Register(props) {
         <div className ="container-center">
           <div className ="single">
             <div className="form-title">
-              <h1>Join us! </h1>
+              <h1> Join us! </h1>
             </div>
-            <RegisterForm/>
+            <RegisterForm onRegister = {props.onRegister} />
           </div>
           <HandleRedirect destination ='/login' title='Already a Member?' message='Login' />
         </div>

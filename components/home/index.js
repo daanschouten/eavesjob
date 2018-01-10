@@ -30,25 +30,23 @@ class Home extends React.Component {
   }
 }
 
-class RegisterHome extends React.Component {
-  render () {
-    return(
-      <div className="container-double">
-          <div className="container-left">
-            <h2 className="title">We monitor career pages,<br/> so you don't have to.</h2>
-            <p> Checking for new vacancies can be a hassle. <br/> With EavesJob, you just select the career pages you're interested in. Whenever career opportunities appear, we'll send you an email.  </p>
-          </div>
-          <div className="container-right">
-            <div className ="single">
-              <div className="form-title">
-                <h1> Join for Free! </h1>
-              </div>
-              <RegisterForm/>
+function RegisterHome(props) {
+  return(
+    <div className="container-double">
+        <div className="container-left">
+          <h2 className="title">We monitor career pages,<br/> so you don't have to.</h2>
+          <p> Checking for new vacancies can be a hassle. <br/> With EavesJob, you just select the career pages you're interested in. Whenever career opportunities appear, we'll send you an email.  </p>
+        </div>
+        <div className="container-right">
+          <div className ="single">
+            <div className="form-title">
+              <h1> Join for Free! </h1>
             </div>
+            <RegisterForm onRegister = {props.onRegister} />
           </div>
-      </div>
-    )
-  }
+        </div>
+    </div>
+  )
 }
 
 module.exports = {

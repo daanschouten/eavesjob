@@ -509,16 +509,60 @@ var RequestWebsiteForm = function (_React$Component) {
 var RegisterForm = function (_React$Component2) {
   _inherits(RegisterForm, _React$Component2);
 
-  function RegisterForm() {
+  function RegisterForm(props) {
     _classCallCheck(this, RegisterForm);
 
-    return _possibleConstructorReturn(this, (RegisterForm.__proto__ || Object.getPrototypeOf(RegisterForm)).apply(this, arguments));
+    var _this2 = _possibleConstructorReturn(this, (RegisterForm.__proto__ || Object.getPrototypeOf(RegisterForm)).call(this, props));
+
+    _this2.state = {
+      firstName: "",
+      lastName: "",
+      email: "",
+      password: "",
+      confirmPassword: ""
+    };
+    _this2.performRegister = _this2.performRegister.bind(_this2);
+    _this2.saveSession = _this2.saveSession.bind(_this2);
+    _this2.handleChange = _this2.handleChange.bind(_this2);
+    return _this2;
   }
 
   _createClass(RegisterForm, [{
+    key: 'handleChange',
+    value: function handleChange(e) {
+      var returnObj = {};
+      returnObj[e.target.name] = e.target.value;
+      this.setState(returnObj);
+    }
+  }, {
+    key: 'saveSession',
+    value: function saveSession(user) {
+      localStorage.setItem("user", JSON.stringify(user));
+    }
+  }, {
+    key: 'performRegister',
+    value: function performRegister(e) {
+      var _this3 = this;
+
+      e.preventDefault();
+      e.currentTarget.reset();
+      _axios2.default.post('http://localhost:3000/register', {
+        firstName: this.state.firstName,
+        lastName: this.state.lastName,
+        email: this.state.email.toLowerCase(),
+        password: this.state.password
+      }).then(function (response) {
+        var user = response.data;
+        _this3.saveSession(user);
+        _this3.props.onRegister(user);
+      }).catch(function (error) {
+        console.log(error);
+      });
+    }
+  }, {
     key: 'render',
     value: function render() {
-      return React.createElement('form', { method: 'POST', action: '/register', className: 'form-small' }, React.createElement('div', { className: 'form-group' }, React.createElement('input', { type: 'text', placeholder: 'First Name', name: 'firstName', className: 'big-input half' }), React.createElement('input', { type: 'text', placeholder: 'Last Name', name: 'lastName', className: 'big-input half' })), React.createElement('div', { className: 'form-group' }, React.createElement('input', { type: 'email', placeholder: 'Your Email Address', name: 'email', className: 'big-input' })), React.createElement('div', { className: 'form-group' }, React.createElement('input', { type: 'password', name: 'password', placeholder: 'Password', className: 'big-input half' }), React.createElement('input', { type: 'password', name: 'confirmPassword', placeholder: 'Confirm Password', className: 'big-input half' })), React.createElement('div', { className: 'form-group' }, React.createElement('button', { type: 'submit', className: 'big-button' }, 'Sign up')));
+      return React.createElement('form', { method: 'POST', action: '/register', className: 'form-small' }, React.createElement('div', { className: 'form-group' }, React.createElement('input', { type: 'text', placeholder: 'First Name', name: 'firstName', className: 'big-input half', value: this.state.firstName, onChange: this.handleChange }), React.createElement('input', { type: 'text', placeholder: 'Last Name', name: 'lastName', className: 'big-input half', value: this.state.lastName, onChange: this.handleChange })), React.createElement('div', { className: 'form-group' }, React.createElement('input', { type: 'email', placeholder: 'Your Email Address', name: 'email', className: 'big-input', value: this.state.email, onChange: this.handleChange })), React.createElement('div', { className: 'form-group' }, React.createElement('input', { type: 'password', name: 'password', placeholder: 'Password', className: 'big-input half', value: this.state.password, onChange: this.handleChange }), React.createElement('input', { type: 'password', name: 'confirmPassword', placeholder: 'Confirm Password', className: 'big-input half', value: this.state.confirmPassword, onChange: this.handleChange })), React.createElement('div', { className: 'form-group' }, React.createElement('button', { type: 'submit', className: 'big-button' }, 'Sign up')));
     }
   }]);
 
@@ -531,16 +575,16 @@ var LoginForm = function (_React$Component3) {
   function LoginForm(props) {
     _classCallCheck(this, LoginForm);
 
-    var _this3 = _possibleConstructorReturn(this, (LoginForm.__proto__ || Object.getPrototypeOf(LoginForm)).call(this, props));
+    var _this4 = _possibleConstructorReturn(this, (LoginForm.__proto__ || Object.getPrototypeOf(LoginForm)).call(this, props));
 
-    _this3.state = {
+    _this4.state = {
       email: "",
       password: ""
     };
-    _this3.performLogin = _this3.performLogin.bind(_this3);
-    _this3.saveSession = _this3.saveSession.bind(_this3);
-    _this3.handleChange = _this3.handleChange.bind(_this3);
-    return _this3;
+    _this4.performLogin = _this4.performLogin.bind(_this4);
+    _this4.saveSession = _this4.saveSession.bind(_this4);
+    _this4.handleChange = _this4.handleChange.bind(_this4);
+    return _this4;
   }
 
   _createClass(LoginForm, [{
@@ -558,25 +602,25 @@ var LoginForm = function (_React$Component3) {
   }, {
     key: 'performLogin',
     value: function performLogin(e) {
-      var _this4 = this;
+      var _this5 = this;
 
       e.preventDefault();
+      e.currentTarget.reset();
       _axios2.default.post('http://localhost:3000/login', {
         email: this.state.email.toLowerCase(),
         password: this.state.password
       }).then(function (response) {
         var user = response.data;
-        _this4.saveSession(user);
-        _this4.props.handleLogin(user);
+        _this5.saveSession(user);
+        _this5.props.onLogin(user);
       }).catch(function (error) {
         console.log(error);
       });
-      e.currentTarget.reset();
     }
   }, {
     key: 'render',
     value: function render() {
-      return React.createElement('form', { className: 'form-small', onSubmit: this.performLogin }, React.createElement('div', { className: 'form-group' }, React.createElement('input', { type: 'text', id: 'email', placeholder: 'Your Email Address', name: 'email', className: 'big-input', value: this.state.email, onChange: this.handleChange })), React.createElement('div', { className: 'form-group' }, React.createElement('input', { type: 'password', id: 'password', placeholder: 'Your Password', name: 'password', className: 'big-input', value: this.state.password, onChange: this.handleChange })), React.createElement('div', { className: 'form-group' }, React.createElement('button', { type: 'submit', className: 'big-button' }, 'Log in')));
+      return React.createElement('form', { className: 'form-small', onSubmit: this.performLogin }, React.createElement('div', { className: 'form-group' }, React.createElement('input', { type: 'email', id: 'email', placeholder: 'Your Email Address', name: 'email', className: 'big-input', value: this.state.email, onChange: this.handleChange })), React.createElement('div', { className: 'form-group' }, React.createElement('input', { type: 'password', id: 'password', placeholder: 'Your Password', name: 'password', className: 'big-input', value: this.state.password, onChange: this.handleChange })), React.createElement('div', { className: 'form-group' }, React.createElement('button', { type: 'submit', className: 'big-button' }, 'Log in')));
     }
   }]);
 
@@ -2134,24 +2178,9 @@ var Home = function (_React$Component) {
   return Home;
 }(React.Component);
 
-var RegisterHome = function (_React$Component2) {
-  _inherits(RegisterHome, _React$Component2);
-
-  function RegisterHome() {
-    _classCallCheck(this, RegisterHome);
-
-    return _possibleConstructorReturn(this, (RegisterHome.__proto__ || Object.getPrototypeOf(RegisterHome)).apply(this, arguments));
-  }
-
-  _createClass(RegisterHome, [{
-    key: 'render',
-    value: function render() {
-      return React.createElement('div', { className: 'container-double' }, React.createElement('div', { className: 'container-left' }, React.createElement('h2', { className: 'title' }, 'We monitor career pages,', React.createElement('br', null), ' so you don\'t have to.'), React.createElement('p', null, ' Checking for new vacancies can be a hassle. ', React.createElement('br', null), ' With EavesJob, you just select the career pages you\'re interested in. Whenever career opportunities appear, we\'ll send you an email.  ')), React.createElement('div', { className: 'container-right' }, React.createElement('div', { className: 'single' }, React.createElement('div', { className: 'form-title' }, React.createElement('h1', null, ' Join for Free! ')), React.createElement(RegisterForm, null))));
-    }
-  }]);
-
-  return RegisterHome;
-}(React.Component);
+function RegisterHome(props) {
+  return React.createElement('div', { className: 'container-double' }, React.createElement('div', { className: 'container-left' }, React.createElement('h2', { className: 'title' }, 'We monitor career pages,', React.createElement('br', null), ' so you don\'t have to.'), React.createElement('p', null, ' Checking for new vacancies can be a hassle. ', React.createElement('br', null), ' With EavesJob, you just select the career pages you\'re interested in. Whenever career opportunities appear, we\'ll send you an email.  ')), React.createElement('div', { className: 'container-right' }, React.createElement('div', { className: 'single' }, React.createElement('div', { className: 'form-title' }, React.createElement('h1', null, ' Join for Free! ')), React.createElement(RegisterForm, { onRegister: props.onRegister }))));
+}
 
 module.exports = {
   Home: Home,
@@ -2607,11 +2636,11 @@ var _require2 = __webpack_require__(7),
     LoginForm = _require2.LoginForm;
 
 function Login(props) {
-  return React.createElement('div', { className: 'container-single' }, React.createElement('div', { className: 'container-center' }, React.createElement('div', { className: 'single' }, React.createElement('div', { className: 'form-title' }, React.createElement('h1', null, 'Log in')), React.createElement(LoginForm, { handleLogin: props.handleLogin })), React.createElement(_Redirect2.default, { destination: '/register', title: 'Not yet Member?', message: 'Sign Up' })));
+  return React.createElement('div', { className: 'container-single' }, React.createElement('div', { className: 'container-center' }, React.createElement('div', { className: 'single' }, React.createElement('div', { className: 'form-title' }, React.createElement('h1', null, 'Log in')), React.createElement(LoginForm, { onLogin: props.onLogin })), React.createElement(_Redirect2.default, { destination: '/register', title: 'Not yet Member?', message: 'Sign Up' })));
 }
 
 function Register(props) {
-  return React.createElement('div', { className: 'container-single' }, React.createElement('div', { className: 'container-center' }, React.createElement('div', { className: 'single' }, React.createElement('div', { className: 'form-title' }, React.createElement('h1', null, 'Join us! ')), React.createElement(RegisterForm, null)), React.createElement(_Redirect2.default, { destination: '/login', title: 'Already a Member?', message: 'Login' })));
+  return React.createElement('div', { className: 'container-single' }, React.createElement('div', { className: 'container-center' }, React.createElement('div', { className: 'single' }, React.createElement('div', { className: 'form-title' }, React.createElement('h1', null, ' Join us! ')), React.createElement(RegisterForm, { onRegister: props.onRegister })), React.createElement(_Redirect2.default, { destination: '/login', title: 'Already a Member?', message: 'Login' })));
 }
 
 module.exports = {
@@ -6505,6 +6534,7 @@ var App = function (_React$Component) {
     };
     _this.redirectUser = _this.redirectUser.bind(_this);
     _this.onLogout = _this.onLogout.bind(_this);
+    _this.onRegister = _this.onRegister.bind(_this);
     _this.onLogin = _this.onLogin.bind(_this);
     _this.onSubscribe = _this.onSubscribe.bind(_this);
     _this.onUnsubscribe = _this.onUnsubscribe.bind(_this);
@@ -6529,11 +6559,12 @@ var App = function (_React$Component) {
     value: function render() {
       var _this2 = this;
 
-      return _react2.default.createElement('div', { id: 'main' }, _react2.default.createElement(_Header2.default, { user: this.state.user }), _react2.default.createElement(_reactRouterDom.Switch, null, _react2.default.createElement(_reactRouterDom.Route, { path: '/', exact: true, render: function render() {
-          return _react2.default.createElement(RegisterHome, null);
+      return _react2.default.createElement('div', { id: 'main' }, _react2.default.createElement(_Header2.default, { user: this.state.user }), _react2.default.createElement(_reactRouterDom.Switch, null, _react2.default.createElement(_reactRouterDom.Route, { path: '/', exact: true, render: function render(props) {
+          return _react2.default.createElement(RegisterHome, {
+            onRegister: _this2.onRegister });
         } }), _react2.default.createElement(_reactRouterDom.Route, { path: '/login', render: function render(props) {
           return _react2.default.createElement(Login, {
-            handleLogin: _this2.onLogin });
+            onLogin: _this2.onLogin });
         } }), _react2.default.createElement(_reactRouterDom.Route, { path: '/browse', render: function render(props) {
           return _react2.default.createElement(Browse, {
             user: _this2.state.user,
@@ -6546,8 +6577,9 @@ var App = function (_React$Component) {
             user: _this2.state.user,
             onUnsubscribe: _this2.onUnsubscribe,
             handleLogout: _this2.onLogout });
-        } }), _react2.default.createElement(_reactRouterDom.Route, { path: '/register', render: function render() {
-          return _react2.default.createElement(Register, null);
+        } }), _react2.default.createElement(_reactRouterDom.Route, { path: '/register', render: function render(props) {
+          return _react2.default.createElement(Register, {
+            onRegister: _this2.onRegister });
         } }), _react2.default.createElement(_reactRouterDom.Route, { path: '/requestwebsite', render: function render() {
           return _react2.default.createElement(RequestWebsite, null);
         } }), _react2.default.createElement(_reactRouterDom.Route, { path: '/addwebsite', render: function render() {
@@ -6569,6 +6601,14 @@ var App = function (_React$Component) {
         });
       }
       this.redirectUser('/');
+    }
+  }, {
+    key: 'onRegister',
+    value: function onRegister(user) {
+      this.setState({
+        user: user
+      });
+      this.redirectUser('/browse');
     }
   }, {
     key: 'onLogin',

@@ -34,6 +34,7 @@ class App extends React.Component {
       }
       this.redirectUser = this.redirectUser.bind(this);
       this.onLogout = this.onLogout.bind(this);
+      this.onRegister = this.onRegister.bind(this);
       this.onLogin = this.onLogin.bind(this);
       this.onSubscribe = this.onSubscribe.bind(this);
       this.onUnsubscribe = this.onUnsubscribe.bind(this);
@@ -58,9 +59,10 @@ class App extends React.Component {
         <div id="main">
             <Header user={ this.state.user } />
             <Switch>
-              <Route path="/" exact render={() => (<RegisterHome/>)} />
+              <Route path="/" exact render={props => <RegisterHome
+                onRegister = {this.onRegister} />} />
               <Route path="/login" render={props => <Login
-                handleLogin = {this.onLogin} />} />
+                onLogin = {this.onLogin} />} />
               <Route path="/browse" render={props => <Browse
                 user = {this.state.user}
                 onSubscribe = {this.onSubscribe}
@@ -70,7 +72,8 @@ class App extends React.Component {
                 user = {this.state.user}
                 onUnsubscribe = {this.onUnsubscribe}
                 handleLogout = {this.onLogout} /> } />
-              <Route path="/register" render={() => <Register/>} />
+              <Route path="/register" render={props => <Register
+                onRegister = {this.onRegister} /> } />
               <Route path="/requestwebsite" render={() => (<RequestWebsite />)} />
               <Route path="/addwebsite" render={() => (<AddWebsite />)} />
               <Route component = { NotFound }/>
@@ -90,6 +93,12 @@ class App extends React.Component {
         });
       }
       this.redirectUser('/');
+    }
+    onRegister(user) {
+      this.setState({
+        user: user
+      });
+      this.redirectUser('/browse');
     }
     onLogin(user) {
       this.setState({
