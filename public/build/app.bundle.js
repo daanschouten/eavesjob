@@ -441,6 +441,65 @@ module.exports = invariant;
 /***/ }),
 /* 6 */,
 /* 7 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__BrowserRouter__ = __webpack_require__(73);
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "BrowserRouter", function() { return __WEBPACK_IMPORTED_MODULE_0__BrowserRouter__["a"]; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__HashRouter__ = __webpack_require__(75);
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "HashRouter", function() { return __WEBPACK_IMPORTED_MODULE_1__HashRouter__["a"]; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Link__ = __webpack_require__(36);
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "Link", function() { return __WEBPACK_IMPORTED_MODULE_2__Link__["a"]; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__MemoryRouter__ = __webpack_require__(77);
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "MemoryRouter", function() { return __WEBPACK_IMPORTED_MODULE_3__MemoryRouter__["a"]; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__NavLink__ = __webpack_require__(80);
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "NavLink", function() { return __WEBPACK_IMPORTED_MODULE_4__NavLink__["a"]; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__Prompt__ = __webpack_require__(83);
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "Prompt", function() { return __WEBPACK_IMPORTED_MODULE_5__Prompt__["a"]; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__Redirect__ = __webpack_require__(85);
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "Redirect", function() { return __WEBPACK_IMPORTED_MODULE_6__Redirect__["a"]; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__Route__ = __webpack_require__(37);
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "Route", function() { return __WEBPACK_IMPORTED_MODULE_7__Route__["a"]; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__Router__ = __webpack_require__(20);
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "Router", function() { return __WEBPACK_IMPORTED_MODULE_8__Router__["a"]; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__StaticRouter__ = __webpack_require__(91);
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "StaticRouter", function() { return __WEBPACK_IMPORTED_MODULE_9__StaticRouter__["a"]; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__Switch__ = __webpack_require__(93);
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "Switch", function() { return __WEBPACK_IMPORTED_MODULE_10__Switch__["a"]; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__matchPath__ = __webpack_require__(95);
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "matchPath", function() { return __WEBPACK_IMPORTED_MODULE_11__matchPath__["a"]; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__withRouter__ = __webpack_require__(96);
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "withRouter", function() { return __WEBPACK_IMPORTED_MODULE_12__withRouter__["a"]; });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/***/ }),
+/* 8 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -486,6 +545,9 @@ function _inherits(subClass, superClass) {
 
 var React = __webpack_require__(0);
 var PropTypes = __webpack_require__(1);
+
+var _require = __webpack_require__(7),
+    Link = _require.Link;
 
 var AddWebsiteForm = function (_React$Component) {
   _inherits(AddWebsiteForm, _React$Component);
@@ -543,6 +605,7 @@ var AddWebsiteForm = function (_React$Component) {
 
       e.preventDefault();
       e.currentTarget.reset();
+      console.log("posting!");
       _axios2.default.post('http://localhost:3000/addWebsite', {
         name: this.state.name,
         firstLink: this.state.firstLink,
@@ -564,7 +627,7 @@ var AddWebsiteForm = function (_React$Component) {
   }, {
     key: 'render',
     value: function render() {
-      return React.createElement('form', { className: 'form-small', onSubmit: this.addRequestWebsite }, React.createElement('div', { className: 'form-group' }, React.createElement('input', { style: { marginBottom: "20px" }, type: 'text', placeholder: 'Website Name', className: 'big-input', name: 'name', value: this.state.name, onChange: this.handleChange })), React.createElement('div', { className: 'form-group' }, React.createElement('input', { type: 'text', placeholder: 'Career Page URL (1)', name: 'firstLink', className: 'big-input', value: this.state.firstLink, onChange: this.handleChange })), React.createElement('div', { className: 'form-group' }, React.createElement('input', { type: 'text', placeholder: 'Career Page URL (2) (optional)', name: 'secondLink', className: 'big-input', value: this.state.secondLink, onChange: this.handleChange })), React.createElement('div', { className: 'form-group' }, React.createElement('input', { type: 'text', placeholder: 'Career Page URL (3) (optional)', name: 'thirdLink', className: 'big-input', value: this.state.thirdLink, onChange: this.handleChange })), React.createElement('div', { className: 'form-group' }, React.createElement('button', { type: 'submit', className: 'big-button' }, 'Add Website')));
+      return React.createElement('form', { className: 'form-small', onSubmit: this.performAddWebsite }, React.createElement('div', { className: 'form-group' }, React.createElement('input', { style: { marginBottom: "20px" }, type: 'text', placeholder: 'Website Name', className: 'big-input', name: 'name', value: this.state.name, onChange: this.handleChange })), React.createElement('div', { className: 'form-group' }, React.createElement('input', { type: 'text', placeholder: 'Career Page URL (1)', name: 'firstLink', className: 'big-input', value: this.state.firstLink, onChange: this.handleChange })), React.createElement('div', { className: 'form-group' }, React.createElement(Link, { target: '_blank', to: this.state.firstLink }, this.state.firstLink)), React.createElement('div', { className: 'form-group' }, React.createElement('input', { type: 'text', placeholder: 'Career Page URL (2) (optional)', name: 'secondLink', className: 'big-input', value: this.state.secondLink, onChange: this.handleChange })), React.createElement('div', { className: 'form-group' }, React.createElement(Link, { target: '_blank', to: this.state.secondLink }, this.state.secondLink)), React.createElement('div', { className: 'form-group' }, React.createElement('input', { type: 'text', placeholder: 'Career Page URL (3) (optional)', name: 'thirdLink', className: 'big-input', value: this.state.thirdLink, onChange: this.handleChange })), React.createElement('div', { className: 'form-group' }, React.createElement(Link, { target: '_blank', to: this.state.thirdLink }, this.state.thirdLink)), React.createElement('div', { className: 'form-group' }, React.createElement('button', { type: 'submit', className: 'big-button' }, 'Add Website')));
     }
   }]);
 
@@ -782,65 +845,6 @@ module.exports = {
   LoginForm: LoginForm,
   RegisterForm: RegisterForm
 };
-
-/***/ }),
-/* 8 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__BrowserRouter__ = __webpack_require__(73);
-/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "BrowserRouter", function() { return __WEBPACK_IMPORTED_MODULE_0__BrowserRouter__["a"]; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__HashRouter__ = __webpack_require__(75);
-/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "HashRouter", function() { return __WEBPACK_IMPORTED_MODULE_1__HashRouter__["a"]; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Link__ = __webpack_require__(36);
-/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "Link", function() { return __WEBPACK_IMPORTED_MODULE_2__Link__["a"]; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__MemoryRouter__ = __webpack_require__(77);
-/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "MemoryRouter", function() { return __WEBPACK_IMPORTED_MODULE_3__MemoryRouter__["a"]; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__NavLink__ = __webpack_require__(80);
-/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "NavLink", function() { return __WEBPACK_IMPORTED_MODULE_4__NavLink__["a"]; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__Prompt__ = __webpack_require__(83);
-/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "Prompt", function() { return __WEBPACK_IMPORTED_MODULE_5__Prompt__["a"]; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__Redirect__ = __webpack_require__(85);
-/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "Redirect", function() { return __WEBPACK_IMPORTED_MODULE_6__Redirect__["a"]; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__Route__ = __webpack_require__(37);
-/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "Route", function() { return __WEBPACK_IMPORTED_MODULE_7__Route__["a"]; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__Router__ = __webpack_require__(20);
-/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "Router", function() { return __WEBPACK_IMPORTED_MODULE_8__Router__["a"]; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__StaticRouter__ = __webpack_require__(91);
-/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "StaticRouter", function() { return __WEBPACK_IMPORTED_MODULE_9__StaticRouter__["a"]; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__Switch__ = __webpack_require__(93);
-/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "Switch", function() { return __WEBPACK_IMPORTED_MODULE_10__Switch__["a"]; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__matchPath__ = __webpack_require__(95);
-/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "matchPath", function() { return __WEBPACK_IMPORTED_MODULE_11__matchPath__["a"]; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__withRouter__ = __webpack_require__(96);
-/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "withRouter", function() { return __WEBPACK_IMPORTED_MODULE_12__withRouter__["a"]; });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 /***/ }),
 /* 9 */,
@@ -1553,7 +1557,7 @@ function _interopRequireDefault(obj) {
   return obj && obj.__esModule ? obj : { default: obj };
 }
 
-var _require = __webpack_require__(8),
+var _require = __webpack_require__(7),
     Link = _require.Link;
 
 function HandleRedirect(props) {
@@ -2226,7 +2230,7 @@ function _inherits(subClass, superClass) {
 var React = __webpack_require__(0);
 var PropTypes = __webpack_require__(1);
 
-var _require = __webpack_require__(7),
+var _require = __webpack_require__(8),
     RegisterForm = _require.RegisterForm;
 
 var Home = function (_React$Component) {
@@ -2598,10 +2602,10 @@ function _inherits(subClass, superClass) {
 var React = __webpack_require__(0);
 var PropTypes = __webpack_require__(1);
 
-var _require = __webpack_require__(8),
+var _require = __webpack_require__(7),
     Link = _require.Link;
 
-var _require2 = __webpack_require__(7),
+var _require2 = __webpack_require__(8),
     RequestWebsiteForm = _require2.RequestWebsiteForm;
 
 var _require3 = __webpack_require__(121),
@@ -2720,10 +2724,10 @@ function _interopRequireDefault(obj) {
 var React = __webpack_require__(0);
 var PropTypes = __webpack_require__(1);
 
-var _require = __webpack_require__(7),
+var _require = __webpack_require__(8),
     RegisterForm = _require.RegisterForm;
 
-var _require2 = __webpack_require__(7),
+var _require2 = __webpack_require__(8),
     LoginForm = _require2.LoginForm;
 
 function Login(props) {
@@ -2749,7 +2753,7 @@ module.exports = {
 var React = __webpack_require__(0);
 var PropTypes = __webpack_require__(1);
 
-var _require = __webpack_require__(7),
+var _require = __webpack_require__(8),
     RequestWebsiteForm = _require.RequestWebsiteForm;
 
 function Contact(props) {
@@ -2805,10 +2809,10 @@ function _inherits(subClass, superClass) {
 var React = __webpack_require__(0);
 var PropTypes = __webpack_require__(1);
 
-var _require = __webpack_require__(7),
+var _require = __webpack_require__(8),
     KeywordForm = _require.KeywordForm;
 
-var _require2 = __webpack_require__(7),
+var _require2 = __webpack_require__(8),
     AddWebsiteForm = _require2.AddWebsiteForm;
 
 var AddKeyword = function (_React$Component) {
@@ -2875,7 +2879,7 @@ var _propTypes = __webpack_require__(1);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _reactRouterDom = __webpack_require__(8);
+var _reactRouterDom = __webpack_require__(7);
 
 var _App = __webpack_require__(99);
 
@@ -6575,7 +6579,7 @@ var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactRouterDom = __webpack_require__(8);
+var _reactRouterDom = __webpack_require__(7);
 
 var _Header = __webpack_require__(100);
 
@@ -6800,7 +6804,7 @@ function _inherits(subClass, superClass) {
 var React = __webpack_require__(0);
 var PropTypes = __webpack_require__(1);
 
-var _require = __webpack_require__(8),
+var _require = __webpack_require__(7),
     NavLink = _require.NavLink;
 
 var MenuLoggedIn = function (_React$Component) {
@@ -7980,7 +7984,7 @@ module.exports = {
 var React = __webpack_require__(0);
 var PropTypes = __webpack_require__(1);
 
-var _require = __webpack_require__(8),
+var _require = __webpack_require__(7),
     Link = _require.Link;
 
 var _require2 = __webpack_require__(47),

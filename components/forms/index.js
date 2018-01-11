@@ -1,6 +1,8 @@
 const React = require('react');
 const PropTypes = require('prop-types');
 import axios from 'axios';
+const { Link } = require('react-router-dom');
+
 
 class AddWebsiteForm extends React.Component {
   constructor(props) {
@@ -43,6 +45,7 @@ class AddWebsiteForm extends React.Component {
   performAddWebsite(e) {
     e.preventDefault();
     e.currentTarget.reset();
+    console.log("posting!");
     axios.post('http://localhost:3000/addWebsite', {
       name: this.state.name,
       firstLink: this.state.firstLink,
@@ -65,7 +68,7 @@ class AddWebsiteForm extends React.Component {
   }
   render() {
     return(
-      <form className="form-small" onSubmit={this.addRequestWebsite}>
+      <form className="form-small" onSubmit={this.performAddWebsite}>
         <div className="form-group">
           <input style={{marginBottom: "20px"}} type="text" placeholder="Website Name" className="big-input" name="name" value={this.state.name} onChange={this.handleChange} />
         </div>
@@ -73,10 +76,19 @@ class AddWebsiteForm extends React.Component {
           <input type="text" placeholder="Career Page URL (1)" name="firstLink" className="big-input" value={this.state.firstLink} onChange={this.handleChange}/>
         </div>
         <div className="form-group">
+          <Link target = "_blank" to={this.state.firstLink}>{this.state.firstLink}</Link>
+        </div>
+        <div className="form-group">
           <input type="text" placeholder="Career Page URL (2) (optional)" name="secondLink" className="big-input" value={this.state.secondLink} onChange={this.handleChange} />
         </div>
         <div className="form-group">
+          <Link target = "_blank" to={this.state.secondLink}>{this.state.secondLink}</Link>
+        </div>
+        <div className="form-group">
           <input type="text" placeholder="Career Page URL (3) (optional)" name="thirdLink" className="big-input" value={this.state.thirdLink} onChange={this.handleChange} />
+        </div>
+        <div className="form-group">
+          <Link target = "_blank" to={this.state.thirdLink}>{this.state.thirdLink}</Link>
         </div>
         <div className="form-group">
           <button type="submit" className="big-button">Add Website</button>
