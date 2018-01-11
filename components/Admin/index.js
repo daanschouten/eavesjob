@@ -1,7 +1,7 @@
 const React = require('react');
 const PropTypes = require('prop-types');
 const { KeywordForm } = require('../Forms');
-const { RequestWebsiteForm } = require('../Forms');
+const { AddWebsiteForm } = require('../Forms');
 
 class AddKeyword extends React.Component {
   render() {
@@ -29,7 +29,7 @@ class AddWebsite extends React.Component {
             <div className="form-title">
               <h1>Add New Website</h1>
             </div>
-            <RequestWebsiteForm/>
+            <AddWebsiteForm/>
           </div>
         </div>
       </div>

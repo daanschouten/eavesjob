@@ -28,7 +28,6 @@ class App extends React.Component {
         user: {}
       }
       this.redirectUser = this.redirectUser.bind(this);
-      this.onRedirectUser = this.onRedirectUser.bind(this);
       this.onLogout = this.onLogout.bind(this);
       this.onRegister = this.onRegister.bind(this);
       this.onLogin = this.onLogin.bind(this);
@@ -63,24 +62,22 @@ class App extends React.Component {
                 user = {this.state.user}
                 onSubscribe = {this.onSubscribe}
                 onUnsubscribe = {this.onUnsubscribe} /> } />
-              <Route path="/addKeyword" render={() => (<AddKeyword/>)} />
               <Route path="/profile" render={props =>  <Profile
                 user = {this.state.user}
                 onUnsubscribe = {this.onUnsubscribe}
                 handleLogout = {this.onLogout} /> } />
               <Route path="/register" render={props => <Register
                 onRegister = {this.onRegister} /> } />
-              <Route path="/requestwebsite" render={() => <RequestWebsite/> } />
-              <Route path="/addwebsite" render={() => (<AddWebsite />)} />
-              <Route path="/contact" render={() => (<Contact />)} />
+
+              <Route path="/addKeyword" component={AddKeyword} />
+              <Route path="/requestwebsite" component = {RequestWebsite} />
+              <Route path="/addwebsite" component = {AddWebsite} />
+              <Route path="/contact" component={Contact} />
               <Route component = { NotFound }/>
             </Switch>
             <Footer />
         </div>
       )
-    }
-    onRedirectUser(to) {
-      this.redirectUser(to);
     }
     redirectUser(to) {
       this.props.history.push(to);

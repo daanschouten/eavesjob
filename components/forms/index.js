@@ -2,6 +2,92 @@ const React = require('react');
 const PropTypes = require('prop-types');
 import axios from 'axios';
 
+class AddWebsiteForm extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      name: "",
+      firstLink: "",
+      secondLink: "",
+      thirdLink: ""
+    }
+    this.performAddWebsite = this.performAddWebsite.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+  }
+  componentDidMount() {
+    axios.get('http://localhost:3000/addWebsite')
+      .then((response) => {
+        if (response.data.name) {
+          let responseObj = {
+            name: response.data.name,
+            firstLink: response.data.links[0]
+          };
+          if (response.data.links[1]) {
+              responseObj.secondLink = response.data.links[1];
+          }
+          if (response.data.links[2]) {
+              responseObj.response.data.links[2];
+          }
+          this.setState(responseObj);
+        }
+      })
+      .catch((error) => {
+        console.log("error fetching and parsing data", error);
+      })
+  }
+  handleChange(e) {
+    let returnObj = {};
+    returnObj[e.target.name] = e.target.value;
+    this.setState(returnObj);
+  }
+  performAddWebsite(e) {
+    e.preventDefault();
+    e.currentTarget.reset();
+    axios.post('http://localhost:3000/addWebsite', {
+      name: this.state.name,
+      firstLink: this.state.firstLink,
+      secondLink: this.state.secondLink,
+      thirdLink: this.state.thirdLink,
+    })
+    .then((response) => {
+      let data = response.data;
+      console.log(data);
+      this.setState({
+        name: "",
+        firstLink: "",
+        secondLink: "",
+        thirdLink: ""
+      });
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+  }
+  render() {
+    return(
+      <form className="form-small" onSubmit={this.addRequestWebsite}>
+        <div className="form-group">
+          <input style={{marginBottom: "20px"}} type="text" placeholder="Website Name" className="big-input" name="name" value={this.state.name} onChange={this.handleChange} />
+        </div>
+        <div className="form-group">
+          <input type="text" placeholder="Career Page URL (1)" name="firstLink" className="big-input" value={this.state.firstLink} onChange={this.handleChange}/>
+        </div>
+        <div className="form-group">
+          <input type="text" placeholder="Career Page URL (2) (optional)" name="secondLink" className="big-input" value={this.state.secondLink} onChange={this.handleChange} />
+        </div>
+        <div className="form-group">
+          <input type="text" placeholder="Career Page URL (3) (optional)" name="thirdLink" className="big-input" value={this.state.thirdLink} onChange={this.handleChange} />
+        </div>
+        <div className="form-group">
+          <button type="submit" className="big-button">Add Website</button>
+        </div>
+      </form>
+    )
+  }
+}
+
+// <button type="submit" className="big-button">Remove Request</button>
+
 class RequestWebsiteForm extends React.Component {
   constructor(props) {
     super(props);
@@ -209,6 +295,7 @@ class KeywordForm extends React.Component {
 
 module.exports = {
   KeywordForm: KeywordForm,
+  AddWebsiteForm: AddWebsiteForm,
   RequestWebsiteForm: RequestWebsiteForm,
   LoginForm: LoginForm,
   RegisterForm: RegisterForm

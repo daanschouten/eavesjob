@@ -487,13 +487,13 @@ function _inherits(subClass, superClass) {
 var React = __webpack_require__(0);
 var PropTypes = __webpack_require__(1);
 
-var RequestWebsiteForm = function (_React$Component) {
-  _inherits(RequestWebsiteForm, _React$Component);
+var AddWebsiteForm = function (_React$Component) {
+  _inherits(AddWebsiteForm, _React$Component);
 
-  function RequestWebsiteForm(props) {
-    _classCallCheck(this, RequestWebsiteForm);
+  function AddWebsiteForm(props) {
+    _classCallCheck(this, AddWebsiteForm);
 
-    var _this = _possibleConstructorReturn(this, (RequestWebsiteForm.__proto__ || Object.getPrototypeOf(RequestWebsiteForm)).call(this, props));
+    var _this = _possibleConstructorReturn(this, (AddWebsiteForm.__proto__ || Object.getPrototypeOf(AddWebsiteForm)).call(this, props));
 
     _this.state = {
       name: "",
@@ -501,9 +501,95 @@ var RequestWebsiteForm = function (_React$Component) {
       secondLink: "",
       thirdLink: ""
     };
-    _this.performRequestWebsite = _this.performRequestWebsite.bind(_this);
+    _this.performAddWebsite = _this.performAddWebsite.bind(_this);
     _this.handleChange = _this.handleChange.bind(_this);
     return _this;
+  }
+
+  _createClass(AddWebsiteForm, [{
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      var _this2 = this;
+
+      _axios2.default.get('http://localhost:3000/addWebsite').then(function (response) {
+        if (response.data.name) {
+          var responseObj = {
+            name: response.data.name,
+            firstLink: response.data.links[0]
+          };
+          if (response.data.links[1]) {
+            responseObj.secondLink = response.data.links[1];
+          }
+          if (response.data.links[2]) {
+            responseObj.response.data.links[2];
+          }
+          _this2.setState(responseObj);
+        }
+      }).catch(function (error) {
+        console.log("error fetching and parsing data", error);
+      });
+    }
+  }, {
+    key: 'handleChange',
+    value: function handleChange(e) {
+      var returnObj = {};
+      returnObj[e.target.name] = e.target.value;
+      this.setState(returnObj);
+    }
+  }, {
+    key: 'performAddWebsite',
+    value: function performAddWebsite(e) {
+      var _this3 = this;
+
+      e.preventDefault();
+      e.currentTarget.reset();
+      _axios2.default.post('http://localhost:3000/addWebsite', {
+        name: this.state.name,
+        firstLink: this.state.firstLink,
+        secondLink: this.state.secondLink,
+        thirdLink: this.state.thirdLink
+      }).then(function (response) {
+        var data = response.data;
+        console.log(data);
+        _this3.setState({
+          name: "",
+          firstLink: "",
+          secondLink: "",
+          thirdLink: ""
+        });
+      }).catch(function (error) {
+        console.log(error);
+      });
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      return React.createElement('form', { className: 'form-small', onSubmit: this.addRequestWebsite }, React.createElement('div', { className: 'form-group' }, React.createElement('input', { style: { marginBottom: "20px" }, type: 'text', placeholder: 'Website Name', className: 'big-input', name: 'name', value: this.state.name, onChange: this.handleChange })), React.createElement('div', { className: 'form-group' }, React.createElement('input', { type: 'text', placeholder: 'Career Page URL (1)', name: 'firstLink', className: 'big-input', value: this.state.firstLink, onChange: this.handleChange })), React.createElement('div', { className: 'form-group' }, React.createElement('input', { type: 'text', placeholder: 'Career Page URL (2) (optional)', name: 'secondLink', className: 'big-input', value: this.state.secondLink, onChange: this.handleChange })), React.createElement('div', { className: 'form-group' }, React.createElement('input', { type: 'text', placeholder: 'Career Page URL (3) (optional)', name: 'thirdLink', className: 'big-input', value: this.state.thirdLink, onChange: this.handleChange })), React.createElement('div', { className: 'form-group' }, React.createElement('button', { type: 'submit', className: 'big-button' }, 'Add Website')));
+    }
+  }]);
+
+  return AddWebsiteForm;
+}(React.Component);
+
+// <button type="submit" className="big-button">Remove Request</button>
+
+var RequestWebsiteForm = function (_React$Component2) {
+  _inherits(RequestWebsiteForm, _React$Component2);
+
+  function RequestWebsiteForm(props) {
+    _classCallCheck(this, RequestWebsiteForm);
+
+    var _this4 = _possibleConstructorReturn(this, (RequestWebsiteForm.__proto__ || Object.getPrototypeOf(RequestWebsiteForm)).call(this, props));
+
+    _this4.state = {
+      name: "",
+      firstLink: "",
+      secondLink: "",
+      thirdLink: ""
+    };
+    _this4.performRequestWebsite = _this4.performRequestWebsite.bind(_this4);
+    _this4.handleChange = _this4.handleChange.bind(_this4);
+    return _this4;
   }
 
   _createClass(RequestWebsiteForm, [{
@@ -516,7 +602,7 @@ var RequestWebsiteForm = function (_React$Component) {
   }, {
     key: 'performRequestWebsite',
     value: function performRequestWebsite(e) {
-      var _this2 = this;
+      var _this5 = this;
 
       e.preventDefault();
       e.currentTarget.reset();
@@ -528,7 +614,7 @@ var RequestWebsiteForm = function (_React$Component) {
       }).then(function (response) {
         var data = response.data;
         console.log(data);
-        _this2.setState({
+        _this5.setState({
           name: "",
           firstLink: "",
           secondLink: "",
@@ -548,25 +634,25 @@ var RequestWebsiteForm = function (_React$Component) {
   return RequestWebsiteForm;
 }(React.Component);
 
-var RegisterForm = function (_React$Component2) {
-  _inherits(RegisterForm, _React$Component2);
+var RegisterForm = function (_React$Component3) {
+  _inherits(RegisterForm, _React$Component3);
 
   function RegisterForm(props) {
     _classCallCheck(this, RegisterForm);
 
-    var _this3 = _possibleConstructorReturn(this, (RegisterForm.__proto__ || Object.getPrototypeOf(RegisterForm)).call(this, props));
+    var _this6 = _possibleConstructorReturn(this, (RegisterForm.__proto__ || Object.getPrototypeOf(RegisterForm)).call(this, props));
 
-    _this3.state = {
+    _this6.state = {
       firstName: "",
       lastName: "",
       email: "",
       password: "",
       confirmPassword: ""
     };
-    _this3.performRegister = _this3.performRegister.bind(_this3);
-    _this3.saveSession = _this3.saveSession.bind(_this3);
-    _this3.handleChange = _this3.handleChange.bind(_this3);
-    return _this3;
+    _this6.performRegister = _this6.performRegister.bind(_this6);
+    _this6.saveSession = _this6.saveSession.bind(_this6);
+    _this6.handleChange = _this6.handleChange.bind(_this6);
+    return _this6;
   }
 
   _createClass(RegisterForm, [{
@@ -584,7 +670,7 @@ var RegisterForm = function (_React$Component2) {
   }, {
     key: 'performRegister',
     value: function performRegister(e) {
-      var _this4 = this;
+      var _this7 = this;
 
       e.preventDefault();
       e.currentTarget.reset();
@@ -596,8 +682,8 @@ var RegisterForm = function (_React$Component2) {
         confirmPassword: this.state.confirmPassword
       }).then(function (response) {
         var user = response.data;
-        _this4.saveSession(user);
-        _this4.props.onRegister(user);
+        _this7.saveSession(user);
+        _this7.props.onRegister(user);
       }).catch(function (error) {
         console.log(error);
       });
@@ -612,22 +698,22 @@ var RegisterForm = function (_React$Component2) {
   return RegisterForm;
 }(React.Component);
 
-var LoginForm = function (_React$Component3) {
-  _inherits(LoginForm, _React$Component3);
+var LoginForm = function (_React$Component4) {
+  _inherits(LoginForm, _React$Component4);
 
   function LoginForm(props) {
     _classCallCheck(this, LoginForm);
 
-    var _this5 = _possibleConstructorReturn(this, (LoginForm.__proto__ || Object.getPrototypeOf(LoginForm)).call(this, props));
+    var _this8 = _possibleConstructorReturn(this, (LoginForm.__proto__ || Object.getPrototypeOf(LoginForm)).call(this, props));
 
-    _this5.state = {
+    _this8.state = {
       email: "",
       password: ""
     };
-    _this5.performLogin = _this5.performLogin.bind(_this5);
-    _this5.saveSession = _this5.saveSession.bind(_this5);
-    _this5.handleChange = _this5.handleChange.bind(_this5);
-    return _this5;
+    _this8.performLogin = _this8.performLogin.bind(_this8);
+    _this8.saveSession = _this8.saveSession.bind(_this8);
+    _this8.handleChange = _this8.handleChange.bind(_this8);
+    return _this8;
   }
 
   _createClass(LoginForm, [{
@@ -645,7 +731,7 @@ var LoginForm = function (_React$Component3) {
   }, {
     key: 'performLogin',
     value: function performLogin(e) {
-      var _this6 = this;
+      var _this9 = this;
 
       e.preventDefault();
       e.currentTarget.reset();
@@ -654,8 +740,8 @@ var LoginForm = function (_React$Component3) {
         password: this.state.password
       }).then(function (response) {
         var user = response.data;
-        _this6.saveSession(user);
-        _this6.props.onLogin(user);
+        _this9.saveSession(user);
+        _this9.props.onLogin(user);
       }).catch(function (error) {
         console.log(error);
       });
@@ -670,8 +756,8 @@ var LoginForm = function (_React$Component3) {
   return LoginForm;
 }(React.Component);
 
-var KeywordForm = function (_React$Component4) {
-  _inherits(KeywordForm, _React$Component4);
+var KeywordForm = function (_React$Component5) {
+  _inherits(KeywordForm, _React$Component5);
 
   function KeywordForm() {
     _classCallCheck(this, KeywordForm);
@@ -691,6 +777,7 @@ var KeywordForm = function (_React$Component4) {
 
 module.exports = {
   KeywordForm: KeywordForm,
+  AddWebsiteForm: AddWebsiteForm,
   RequestWebsiteForm: RequestWebsiteForm,
   LoginForm: LoginForm,
   RegisterForm: RegisterForm
@@ -2722,7 +2809,7 @@ var _require = __webpack_require__(7),
     KeywordForm = _require.KeywordForm;
 
 var _require2 = __webpack_require__(7),
-    RequestWebsiteForm = _require2.RequestWebsiteForm;
+    AddWebsiteForm = _require2.AddWebsiteForm;
 
 var AddKeyword = function (_React$Component) {
   _inherits(AddKeyword, _React$Component);
@@ -2755,7 +2842,7 @@ var AddWebsite = function (_React$Component2) {
   _createClass(AddWebsite, [{
     key: 'render',
     value: function render() {
-      return React.createElement('div', { className: 'container-single' }, React.createElement('div', { className: 'container-center' }, React.createElement('div', { className: 'single' }, React.createElement('div', { className: 'form-title' }, React.createElement('h1', null, 'Add New Website')), React.createElement(RequestWebsiteForm, null))));
+      return React.createElement('div', { className: 'container-single' }, React.createElement('div', { className: 'container-center' }, React.createElement('div', { className: 'single' }, React.createElement('div', { className: 'form-title' }, React.createElement('h1', null, 'Add New Website')), React.createElement(AddWebsiteForm, null))));
     }
   }]);
 
@@ -6566,7 +6653,6 @@ var App = function (_React$Component) {
       user: {}
     };
     _this.redirectUser = _this.redirectUser.bind(_this);
-    _this.onRedirectUser = _this.onRedirectUser.bind(_this);
     _this.onLogout = _this.onLogout.bind(_this);
     _this.onRegister = _this.onRegister.bind(_this);
     _this.onLogin = _this.onLogin.bind(_this);
@@ -6604,8 +6690,6 @@ var App = function (_React$Component) {
             user: _this2.state.user,
             onSubscribe: _this2.onSubscribe,
             onUnsubscribe: _this2.onUnsubscribe });
-        } }), _react2.default.createElement(_reactRouterDom.Route, { path: '/addKeyword', render: function render() {
-          return _react2.default.createElement(AddKeyword, null);
         } }), _react2.default.createElement(_reactRouterDom.Route, { path: '/profile', render: function render(props) {
           return _react2.default.createElement(Profile, {
             user: _this2.state.user,
@@ -6614,18 +6698,7 @@ var App = function (_React$Component) {
         } }), _react2.default.createElement(_reactRouterDom.Route, { path: '/register', render: function render(props) {
           return _react2.default.createElement(Register, {
             onRegister: _this2.onRegister });
-        } }), _react2.default.createElement(_reactRouterDom.Route, { path: '/requestwebsite', render: function render() {
-          return _react2.default.createElement(RequestWebsite, null);
-        } }), _react2.default.createElement(_reactRouterDom.Route, { path: '/addwebsite', render: function render() {
-          return _react2.default.createElement(AddWebsite, null);
-        } }), _react2.default.createElement(_reactRouterDom.Route, { path: '/contact', render: function render() {
-          return _react2.default.createElement(Contact, null);
-        } }), _react2.default.createElement(_reactRouterDom.Route, { component: _2.default })), _react2.default.createElement(_Footer2.default, null));
-    }
-  }, {
-    key: 'onRedirectUser',
-    value: function onRedirectUser(to) {
-      this.redirectUser(to);
+        } }), _react2.default.createElement(_reactRouterDom.Route, { path: '/addKeyword', component: AddKeyword }), _react2.default.createElement(_reactRouterDom.Route, { path: '/requestwebsite', component: RequestWebsite }), _react2.default.createElement(_reactRouterDom.Route, { path: '/addwebsite', component: AddWebsite }), _react2.default.createElement(_reactRouterDom.Route, { path: '/contact', component: Contact }), _react2.default.createElement(_reactRouterDom.Route, { component: _2.default })), _react2.default.createElement(_Footer2.default, null));
     }
   }, {
     key: 'redirectUser',
