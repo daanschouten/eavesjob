@@ -24,13 +24,8 @@ class AddWebsite extends React.Component {
   render() {
     return (
       <div className="container-single">
-        <div className="container-center">
-          <div className="single">
-            <div className="form-title">
-              <h1>Add New Website</h1>
-            </div>
+        <div className="container-center">          
             <AddWebsiteForm/>
-          </div>
         </div>
       </div>
     )

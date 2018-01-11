@@ -564,6 +564,7 @@ var AddWebsiteForm = function (_React$Component) {
       thirdLink: ""
     };
     _this.performAddWebsite = _this.performAddWebsite.bind(_this);
+    _this.performRemoveRequest = _this.performRemoveRequest.bind(_this);
     _this.handleChange = _this.handleChange.bind(_this);
     return _this;
   }
@@ -605,16 +606,34 @@ var AddWebsiteForm = function (_React$Component) {
 
       e.preventDefault();
       e.currentTarget.reset();
-      console.log("posting!");
       _axios2.default.post('http://localhost:3000/addWebsite', {
         name: this.state.name,
         firstLink: this.state.firstLink,
         secondLink: this.state.secondLink,
         thirdLink: this.state.thirdLink
       }).then(function (response) {
-        var data = response.data;
-        console.log(data);
         _this3.setState({
+          name: "",
+          firstLink: "",
+          secondLink: "",
+          thirdLink: ""
+        });
+      }).catch(function (error) {
+        console.log(error);
+      });
+    }
+  }, {
+    key: 'performRemoveRequest',
+    value: function performRemoveRequest(e) {
+      var _this4 = this;
+
+      _axios2.default.post('http://localhost:3000/removeRequest', {
+        name: this.state.name,
+        firstLink: this.state.firstLink,
+        secondLink: this.state.secondLink,
+        thirdLink: this.state.thirdLink
+      }).then(function (response) {
+        _this4.setState({
           name: "",
           firstLink: "",
           secondLink: "",
@@ -627,14 +646,12 @@ var AddWebsiteForm = function (_React$Component) {
   }, {
     key: 'render',
     value: function render() {
-      return React.createElement('form', { className: 'form-small', onSubmit: this.performAddWebsite }, React.createElement('div', { className: 'form-group' }, React.createElement('input', { style: { marginBottom: "20px" }, type: 'text', placeholder: 'Website Name', className: 'big-input', name: 'name', value: this.state.name, onChange: this.handleChange })), React.createElement('div', { className: 'form-group' }, React.createElement('input', { type: 'text', placeholder: 'Career Page URL (1)', name: 'firstLink', className: 'big-input', value: this.state.firstLink, onChange: this.handleChange })), React.createElement('div', { className: 'form-group' }, React.createElement(Link, { target: '_blank', to: this.state.firstLink }, this.state.firstLink)), React.createElement('div', { className: 'form-group' }, React.createElement('input', { type: 'text', placeholder: 'Career Page URL (2) (optional)', name: 'secondLink', className: 'big-input', value: this.state.secondLink, onChange: this.handleChange })), React.createElement('div', { className: 'form-group' }, React.createElement(Link, { target: '_blank', to: this.state.secondLink }, this.state.secondLink)), React.createElement('div', { className: 'form-group' }, React.createElement('input', { type: 'text', placeholder: 'Career Page URL (3) (optional)', name: 'thirdLink', className: 'big-input', value: this.state.thirdLink, onChange: this.handleChange })), React.createElement('div', { className: 'form-group' }, React.createElement(Link, { target: '_blank', to: this.state.thirdLink }, this.state.thirdLink)), React.createElement('div', { className: 'form-group' }, React.createElement('button', { type: 'submit', className: 'big-button' }, 'Add Website')));
+      return React.createElement('div', { className: 'single' }, React.createElement('div', { className: 'form-title' }, React.createElement('h1', null, 'Add New Website')), React.createElement('form', { className: 'form-small', onSubmit: this.performAddWebsite }, React.createElement('div', { className: 'form-group' }, React.createElement('input', { style: { marginBottom: "20px" }, type: 'text', placeholder: 'Website Name', className: 'big-input', name: 'name', value: this.state.name, onChange: this.handleChange })), React.createElement('div', { className: 'form-group' }, React.createElement('input', { type: 'text', placeholder: 'Career Page URL (1)', name: 'firstLink', className: 'big-input', value: this.state.firstLink, onChange: this.handleChange })), React.createElement('div', { className: 'form-group' }, React.createElement(Link, { target: '_blank', to: this.state.firstLink }, this.state.firstLink)), React.createElement('div', { className: 'form-group' }, React.createElement('input', { type: 'text', placeholder: 'Career Page URL (2) (optional)', name: 'secondLink', className: 'big-input', value: this.state.secondLink, onChange: this.handleChange })), React.createElement('div', { className: 'form-group' }, React.createElement(Link, { target: '_blank', to: this.state.secondLink }, this.state.secondLink)), React.createElement('div', { className: 'form-group' }, React.createElement('input', { type: 'text', placeholder: 'Career Page URL (3) (optional)', name: 'thirdLink', className: 'big-input', value: this.state.thirdLink, onChange: this.handleChange })), React.createElement('div', { className: 'form-group' }, React.createElement(Link, { target: '_blank', to: this.state.thirdLink }, this.state.thirdLink)), React.createElement('div', { className: 'form-group' }, React.createElement('button', { type: 'submit', className: 'big-button' }, 'Add Website'))), React.createElement('div', { className: 'form-small' }, React.createElement('button', { className: 'big-button', onClick: this.performRemoveRequest }, ' Remove Request ')));
     }
   }]);
 
   return AddWebsiteForm;
 }(React.Component);
-
-// <button type="submit" className="big-button">Remove Request</button>
 
 var RequestWebsiteForm = function (_React$Component2) {
   _inherits(RequestWebsiteForm, _React$Component2);
@@ -642,17 +659,17 @@ var RequestWebsiteForm = function (_React$Component2) {
   function RequestWebsiteForm(props) {
     _classCallCheck(this, RequestWebsiteForm);
 
-    var _this4 = _possibleConstructorReturn(this, (RequestWebsiteForm.__proto__ || Object.getPrototypeOf(RequestWebsiteForm)).call(this, props));
+    var _this5 = _possibleConstructorReturn(this, (RequestWebsiteForm.__proto__ || Object.getPrototypeOf(RequestWebsiteForm)).call(this, props));
 
-    _this4.state = {
+    _this5.state = {
       name: "",
       firstLink: "",
       secondLink: "",
       thirdLink: ""
     };
-    _this4.performRequestWebsite = _this4.performRequestWebsite.bind(_this4);
-    _this4.handleChange = _this4.handleChange.bind(_this4);
-    return _this4;
+    _this5.performRequestWebsite = _this5.performRequestWebsite.bind(_this5);
+    _this5.handleChange = _this5.handleChange.bind(_this5);
+    return _this5;
   }
 
   _createClass(RequestWebsiteForm, [{
@@ -665,7 +682,7 @@ var RequestWebsiteForm = function (_React$Component2) {
   }, {
     key: 'performRequestWebsite',
     value: function performRequestWebsite(e) {
-      var _this5 = this;
+      var _this6 = this;
 
       e.preventDefault();
       e.currentTarget.reset();
@@ -677,7 +694,7 @@ var RequestWebsiteForm = function (_React$Component2) {
       }).then(function (response) {
         var data = response.data;
         console.log(data);
-        _this5.setState({
+        _this6.setState({
           name: "",
           firstLink: "",
           secondLink: "",
@@ -703,19 +720,19 @@ var RegisterForm = function (_React$Component3) {
   function RegisterForm(props) {
     _classCallCheck(this, RegisterForm);
 
-    var _this6 = _possibleConstructorReturn(this, (RegisterForm.__proto__ || Object.getPrototypeOf(RegisterForm)).call(this, props));
+    var _this7 = _possibleConstructorReturn(this, (RegisterForm.__proto__ || Object.getPrototypeOf(RegisterForm)).call(this, props));
 
-    _this6.state = {
+    _this7.state = {
       firstName: "",
       lastName: "",
       email: "",
       password: "",
       confirmPassword: ""
     };
-    _this6.performRegister = _this6.performRegister.bind(_this6);
-    _this6.saveSession = _this6.saveSession.bind(_this6);
-    _this6.handleChange = _this6.handleChange.bind(_this6);
-    return _this6;
+    _this7.performRegister = _this7.performRegister.bind(_this7);
+    _this7.saveSession = _this7.saveSession.bind(_this7);
+    _this7.handleChange = _this7.handleChange.bind(_this7);
+    return _this7;
   }
 
   _createClass(RegisterForm, [{
@@ -733,7 +750,7 @@ var RegisterForm = function (_React$Component3) {
   }, {
     key: 'performRegister',
     value: function performRegister(e) {
-      var _this7 = this;
+      var _this8 = this;
 
       e.preventDefault();
       e.currentTarget.reset();
@@ -745,8 +762,8 @@ var RegisterForm = function (_React$Component3) {
         confirmPassword: this.state.confirmPassword
       }).then(function (response) {
         var user = response.data;
-        _this7.saveSession(user);
-        _this7.props.onRegister(user);
+        _this8.saveSession(user);
+        _this8.props.onRegister(user);
       }).catch(function (error) {
         console.log(error);
       });
@@ -767,16 +784,16 @@ var LoginForm = function (_React$Component4) {
   function LoginForm(props) {
     _classCallCheck(this, LoginForm);
 
-    var _this8 = _possibleConstructorReturn(this, (LoginForm.__proto__ || Object.getPrototypeOf(LoginForm)).call(this, props));
+    var _this9 = _possibleConstructorReturn(this, (LoginForm.__proto__ || Object.getPrototypeOf(LoginForm)).call(this, props));
 
-    _this8.state = {
+    _this9.state = {
       email: "",
       password: ""
     };
-    _this8.performLogin = _this8.performLogin.bind(_this8);
-    _this8.saveSession = _this8.saveSession.bind(_this8);
-    _this8.handleChange = _this8.handleChange.bind(_this8);
-    return _this8;
+    _this9.performLogin = _this9.performLogin.bind(_this9);
+    _this9.saveSession = _this9.saveSession.bind(_this9);
+    _this9.handleChange = _this9.handleChange.bind(_this9);
+    return _this9;
   }
 
   _createClass(LoginForm, [{
@@ -794,7 +811,7 @@ var LoginForm = function (_React$Component4) {
   }, {
     key: 'performLogin',
     value: function performLogin(e) {
-      var _this9 = this;
+      var _this10 = this;
 
       e.preventDefault();
       e.currentTarget.reset();
@@ -803,8 +820,8 @@ var LoginForm = function (_React$Component4) {
         password: this.state.password
       }).then(function (response) {
         var user = response.data;
-        _this9.saveSession(user);
-        _this9.props.onLogin(user);
+        _this10.saveSession(user);
+        _this10.props.onLogin(user);
       }).catch(function (error) {
         console.log(error);
       });
@@ -2846,7 +2863,7 @@ var AddWebsite = function (_React$Component2) {
   _createClass(AddWebsite, [{
     key: 'render',
     value: function render() {
-      return React.createElement('div', { className: 'container-single' }, React.createElement('div', { className: 'container-center' }, React.createElement('div', { className: 'single' }, React.createElement('div', { className: 'form-title' }, React.createElement('h1', null, 'Add New Website')), React.createElement(AddWebsiteForm, null))));
+      return React.createElement('div', { className: 'container-single' }, React.createElement('div', { className: 'container-center' }, React.createElement(AddWebsiteForm, null)));
     }
   }]);
 
@@ -6880,63 +6897,16 @@ exports.default = Header;
 "use strict";
 
 
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-
-var _createClass = function () {
-  function defineProperties(target, props) {
-    for (var i = 0; i < props.length; i++) {
-      var descriptor = props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if ("value" in descriptor) descriptor.writable = true;Object.defineProperty(target, descriptor.key, descriptor);
-    }
-  }return function (Constructor, protoProps, staticProps) {
-    if (protoProps) defineProperties(Constructor.prototype, protoProps);if (staticProps) defineProperties(Constructor, staticProps);return Constructor;
-  };
-}();
-
-function _classCallCheck(instance, Constructor) {
-  if (!(instance instanceof Constructor)) {
-    throw new TypeError("Cannot call a class as a function");
-  }
-}
-
-function _possibleConstructorReturn(self, call) {
-  if (!self) {
-    throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
-  }return call && ((typeof call === "undefined" ? "undefined" : _typeof(call)) === "object" || typeof call === "function") ? call : self;
-}
-
-function _inherits(subClass, superClass) {
-  if (typeof superClass !== "function" && superClass !== null) {
-    throw new TypeError("Super expression must either be null or a function, not " + (typeof superClass === "undefined" ? "undefined" : _typeof(superClass)));
-  }subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } });if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
-}
-
+exports.default = Footer;
 var React = __webpack_require__(0);
 var PropTypes = __webpack_require__(1);
 
-var Footer = function (_React$Component) {
-  _inherits(Footer, _React$Component);
-
-  function Footer(props) {
-    _classCallCheck(this, Footer);
-
-    return _possibleConstructorReturn(this, (Footer.__proto__ || Object.getPrototypeOf(Footer)).call(this, props));
-  }
-
-  _createClass(Footer, [{
-    key: 'render',
-    value: function render() {
-      return React.createElement('footer', null, React.createElement('div', { id: 'footer-left' }, React.createElement('div', { className: 'footer-column' })), React.createElement('div', { id: 'footer-right' }, React.createElement('div', { className: 'footer-column' }), React.createElement('div', { className: 'footer-column' })));
-    }
-  }]);
-
-  return Footer;
-}(React.Component);
-
-exports.default = Footer;
+function Footer(props) {
+  return React.createElement('footer', null, React.createElement('div', { id: 'footer-left' }, React.createElement('div', { className: 'footer-column' })), React.createElement('div', { id: 'footer-right' }, React.createElement('div', { className: 'footer-column' }), React.createElement('div', { className: 'footer-column' })));
+}
 
 /***/ }),
 /* 102 */

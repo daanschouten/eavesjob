@@ -3,7 +3,6 @@ const PropTypes = require('prop-types');
 import axios from 'axios';
 const { Link } = require('react-router-dom');
 
-
 class AddWebsiteForm extends React.Component {
   constructor(props) {
     super(props);
@@ -14,6 +13,7 @@ class AddWebsiteForm extends React.Component {
       thirdLink: ""
     }
     this.performAddWebsite = this.performAddWebsite.bind(this);
+    this.performRemoveRequest = this.performRemoveRequest.bind(this);
     this.handleChange = this.handleChange.bind(this);
   }
   componentDidMount() {
@@ -45,7 +45,6 @@ class AddWebsiteForm extends React.Component {
   performAddWebsite(e) {
     e.preventDefault();
     e.currentTarget.reset();
-    console.log("posting!");
     axios.post('http://localhost:3000/addWebsite', {
       name: this.state.name,
       firstLink: this.state.firstLink,
@@ -53,8 +52,25 @@ class AddWebsiteForm extends React.Component {
       thirdLink: this.state.thirdLink,
     })
     .then((response) => {
-      let data = response.data;
-      console.log(data);
+      this.setState({
+        name: "",
+        firstLink: "",
+        secondLink: "",
+        thirdLink: ""
+      });
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+  }
+  performRemoveRequest(e) {
+    axios.post('http://localhost:3000/removeRequest', {
+      name: this.state.name,
+      firstLink: this.state.firstLink,
+      secondLink: this.state.secondLink,
+      thirdLink: this.state.thirdLink,
+    })
+    .then((response) => {
       this.setState({
         name: "",
         firstLink: "",
@@ -68,37 +84,43 @@ class AddWebsiteForm extends React.Component {
   }
   render() {
     return(
-      <form className="form-small" onSubmit={this.performAddWebsite}>
-        <div className="form-group">
-          <input style={{marginBottom: "20px"}} type="text" placeholder="Website Name" className="big-input" name="name" value={this.state.name} onChange={this.handleChange} />
+      <div className="single">
+        <div className="form-title">
+          <h1>Add New Website</h1>
         </div>
-        <div className="form-group">
-          <input type="text" placeholder="Career Page URL (1)" name="firstLink" className="big-input" value={this.state.firstLink} onChange={this.handleChange}/>
+        <form className="form-small" onSubmit={this.performAddWebsite}>
+          <div className="form-group">
+            <input style={{marginBottom: "20px"}} type="text" placeholder="Website Name" className="big-input" name="name" value={this.state.name} onChange={this.handleChange} />
+          </div>
+          <div className="form-group">
+            <input type="text" placeholder="Career Page URL (1)" name="firstLink" className="big-input" value={this.state.firstLink} onChange={this.handleChange}/>
+          </div>
+          <div className="form-group">
+            <Link target = "_blank" to={this.state.firstLink}>{this.state.firstLink}</Link>
+          </div>
+          <div className="form-group">
+            <input type="text" placeholder="Career Page URL (2) (optional)" name="secondLink" className="big-input" value={this.state.secondLink} onChange={this.handleChange} />
+          </div>
+          <div className="form-group">
+            <Link target = "_blank" to={this.state.secondLink}>{this.state.secondLink}</Link>
+          </div>
+          <div className="form-group">
+            <input type="text" placeholder="Career Page URL (3) (optional)" name="thirdLink" className="big-input" value={this.state.thirdLink} onChange={this.handleChange} />
+          </div>
+          <div className="form-group">
+            <Link target = "_blank" to={this.state.thirdLink}>{this.state.thirdLink}</Link>
+          </div>
+          <div className="form-group">
+            <button type="submit" className="big-button">Add Website</button>
+          </div>
+        </form>
+        <div className="form-small">
+          <button className="big-button" onClick={this.performRemoveRequest}> Remove Request </button>
         </div>
-        <div className="form-group">
-          <Link target = "_blank" to={this.state.firstLink}>{this.state.firstLink}</Link>
-        </div>
-        <div className="form-group">
-          <input type="text" placeholder="Career Page URL (2) (optional)" name="secondLink" className="big-input" value={this.state.secondLink} onChange={this.handleChange} />
-        </div>
-        <div className="form-group">
-          <Link target = "_blank" to={this.state.secondLink}>{this.state.secondLink}</Link>
-        </div>
-        <div className="form-group">
-          <input type="text" placeholder="Career Page URL (3) (optional)" name="thirdLink" className="big-input" value={this.state.thirdLink} onChange={this.handleChange} />
-        </div>
-        <div className="form-group">
-          <Link target = "_blank" to={this.state.thirdLink}>{this.state.thirdLink}</Link>
-        </div>
-        <div className="form-group">
-          <button type="submit" className="big-button">Add Website</button>
-        </div>
-      </form>
+      </div>
     )
   }
 }
-
-// <button type="submit" className="big-button">Remove Request</button>
 
 class RequestWebsiteForm extends React.Component {
   constructor(props) {
