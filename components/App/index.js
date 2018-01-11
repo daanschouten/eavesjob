@@ -9,21 +9,15 @@ import {
 
 const { Home } = require('../Home');
 const { RegisterHome } = require('../Home');
-
 const { Browse } = require('../Browse');
-
 import Header from '../Header';
 import Footer from '../Footer';
-
 import NotFound from '../404';
 const { Profile } = require('../Profile');
-
 const { Login } = require('../Auth');
 const { Register } = require('../Auth');
-
 const { RequestWebsite } = require('../Contact');
 const { AddWebsite } = require('../Admin');
-
 const { AddKeyword } = require('../Admin');
 
 class App extends React.Component {

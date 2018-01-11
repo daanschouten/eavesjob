@@ -58,7 +58,8 @@ class RegisterForm extends React.Component {
       firstName: this.state.firstName,
       lastName: this.state.lastName,
       email: this.state.email.toLowerCase(),
-      password: this.state.password
+      password: this.state.password,
+      confirmPassword: this.state.confirmPassword
     })
     .then((response) => {
       let user = response.data;
@@ -71,22 +72,22 @@ class RegisterForm extends React.Component {
   }
   render() {
     return (
-        <form method="POST" action="/register" className="form-small">
-          <div className="form-group">
-            <input type="text" placeholder="First Name" name="firstName" className="big-input half" value={this.state.firstName} onChange={this.handleChange} />
-            <input type="text" placeholder="Last Name" name="lastName" className="big-input half" value={this.state.lastName} onChange={this.handleChange}/>
-          </div>
-          <div className="form-group">
-            <input type="email" placeholder="Your Email Address" name="email" className="big-input" value={this.state.email} onChange={this.handleChange} />
-          </div>
-          <div className="form-group">
-            <input type="password" name="password" placeholder="Password" className="big-input half" value={this.state.password} onChange={this.handleChange}/>
-            <input type="password" name="confirmPassword" placeholder="Confirm Password" className="big-input half" value={this.state.confirmPassword} onChange={this.handleChange}/>
-          </div>
-          <div className="form-group">
-            <button type="submit" className="big-button">Sign up</button>
-          </div>
-        </form>
+      <form className="form-small" onSubmit={this.performRegister}>
+        <div className="form-group">
+          <input type="text" placeholder="First Name" name="firstName" className="big-input half" value={this.state.firstName} onChange={this.handleChange} />
+          <input type="text" placeholder="Last Name" name="lastName" className="big-input half" value={this.state.lastName} onChange={this.handleChange}/>
+        </div>
+        <div className="form-group">
+          <input type="email" placeholder="Your Email Address" name="email" className="big-input" value={this.state.email} onChange={this.handleChange} />
+        </div>
+        <div className="form-group">
+          <input type="password" name="password" placeholder="Password" className="big-input half" value={this.state.password} onChange={this.handleChange}/>
+          <input type="password" name="confirmPassword" placeholder="Confirm Password" className="big-input half" value={this.state.confirmPassword} onChange={this.handleChange}/>
+        </div>
+        <div className="form-group">
+          <button type="submit" className="big-button">Sign up</button>
+        </div>
+      </form>
     )
   }
 }

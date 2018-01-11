@@ -26,7 +26,7 @@ class MenuNotLoggedIn extends React.Component {
 }
 
 const Menu = function(props) {
-  if (props.user.id) {
+  if (props.user._id) {
     return <MenuLoggedIn/>;
   }
   return <MenuNotLoggedIn/>;

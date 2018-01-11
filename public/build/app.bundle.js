@@ -550,7 +550,8 @@ var RegisterForm = function (_React$Component2) {
         firstName: this.state.firstName,
         lastName: this.state.lastName,
         email: this.state.email.toLowerCase(),
-        password: this.state.password
+        password: this.state.password,
+        confirmPassword: this.state.confirmPassword
       }).then(function (response) {
         var user = response.data;
         _this3.saveSession(user);
@@ -562,7 +563,7 @@ var RegisterForm = function (_React$Component2) {
   }, {
     key: 'render',
     value: function render() {
-      return React.createElement('form', { method: 'POST', action: '/register', className: 'form-small' }, React.createElement('div', { className: 'form-group' }, React.createElement('input', { type: 'text', placeholder: 'First Name', name: 'firstName', className: 'big-input half', value: this.state.firstName, onChange: this.handleChange }), React.createElement('input', { type: 'text', placeholder: 'Last Name', name: 'lastName', className: 'big-input half', value: this.state.lastName, onChange: this.handleChange })), React.createElement('div', { className: 'form-group' }, React.createElement('input', { type: 'email', placeholder: 'Your Email Address', name: 'email', className: 'big-input', value: this.state.email, onChange: this.handleChange })), React.createElement('div', { className: 'form-group' }, React.createElement('input', { type: 'password', name: 'password', placeholder: 'Password', className: 'big-input half', value: this.state.password, onChange: this.handleChange }), React.createElement('input', { type: 'password', name: 'confirmPassword', placeholder: 'Confirm Password', className: 'big-input half', value: this.state.confirmPassword, onChange: this.handleChange })), React.createElement('div', { className: 'form-group' }, React.createElement('button', { type: 'submit', className: 'big-button' }, 'Sign up')));
+      return React.createElement('form', { className: 'form-small', onSubmit: this.performRegister }, React.createElement('div', { className: 'form-group' }, React.createElement('input', { type: 'text', placeholder: 'First Name', name: 'firstName', className: 'big-input half', value: this.state.firstName, onChange: this.handleChange }), React.createElement('input', { type: 'text', placeholder: 'Last Name', name: 'lastName', className: 'big-input half', value: this.state.lastName, onChange: this.handleChange })), React.createElement('div', { className: 'form-group' }, React.createElement('input', { type: 'email', placeholder: 'Your Email Address', name: 'email', className: 'big-input', value: this.state.email, onChange: this.handleChange })), React.createElement('div', { className: 'form-group' }, React.createElement('input', { type: 'password', name: 'password', placeholder: 'Password', className: 'big-input half', value: this.state.password, onChange: this.handleChange }), React.createElement('input', { type: 'password', name: 'confirmPassword', placeholder: 'Confirm Password', className: 'big-input half', value: this.state.confirmPassword, onChange: this.handleChange })), React.createElement('div', { className: 'form-group' }, React.createElement('button', { type: 'submit', className: 'big-button' }, 'Sign up')));
     }
   }]);
 
@@ -6728,7 +6729,7 @@ var MenuNotLoggedIn = function (_React$Component2) {
 }(React.Component);
 
 var Menu = function Menu(props) {
-  if (props.user.id) {
+  if (props.user._id) {
     return React.createElement(MenuLoggedIn, null);
   }
   return React.createElement(MenuNotLoggedIn, null);
