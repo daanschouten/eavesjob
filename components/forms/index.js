@@ -3,20 +3,59 @@ const PropTypes = require('prop-types');
 import axios from 'axios';
 
 class RequestWebsiteForm extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      name: "",
+      firstLink: "",
+      secondLink: "",
+      thirdLink: ""
+    }
+    this.performRequestWebsite = this.performRequestWebsite.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+  }
+  handleChange(e) {
+    let returnObj = {};
+    returnObj[e.target.name] = e.target.value;
+    this.setState(returnObj);
+  }
+  performRequestWebsite(e) {
+    e.preventDefault();
+    e.currentTarget.reset();
+    axios.post('http://localhost:3000/requestWebsite', {
+      name: this.state.name,
+      firstLink: this.state.firstLink,
+      secondLink: this.state.secondLink,
+      thirdLink: this.state.thirdLink,
+    })
+    .then((response) => {
+      let data = response.data;
+      console.log(data);
+      this.setState({
+        name: "",
+        firstLink: "",
+        secondLink: "",
+        thirdLink: ""
+      });
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+  }
   render() {
     return(
-      <form method="POST" action={this.props.action} className="form-small">
+      <form className="form-small" onSubmit={this.performRequestWebsite}>
         <div className="form-group">
-          <input style={{marginBottom: "20px"}} type="text" placeholder="Website Name" name="name" className="big-input"/>
+          <input style={{marginBottom: "20px"}} type="text" placeholder="Website Name" className="big-input" name="name" value={this.state.name} onChange={this.handleChange} />
         </div>
         <div className="form-group">
-          <input type="text" placeholder="Career Page URL (1)" name="url1" className="big-input"/>
+          <input type="text" placeholder="Career Page URL (1)" name="firstLink" className="big-input" value={this.state.firstLink} onChange={this.handleChange}/>
         </div>
         <div className="form-group">
-          <input type="text" placeholder="Career Page URL (2) (optional)" name="url2" className="big-input"/>
+          <input type="text" placeholder="Career Page URL (2) (optional)" name="secondLink" className="big-input" value={this.state.secondLink} onChange={this.handleChange} />
         </div>
         <div className="form-group">
-          <input type="text" placeholder="Career Page URL (3) (optional)" name="url3" className="big-input"/>
+          <input type="text" placeholder="Career Page URL (3) (optional)" name="thirdLink" className="big-input" value={this.state.thirdLink} onChange={this.handleChange} />
         </div>
         <div className="form-group">
           <p>Once the the request comes through, we'll add the company to your subscribes automatically. Keep in mind this might take up to 24 hours.</p>

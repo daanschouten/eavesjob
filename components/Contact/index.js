@@ -2,22 +2,13 @@ const React = require('react');
 const PropTypes = require('prop-types');
 const { RequestWebsiteForm } = require('../Forms');
 
-// class Contact extends React.Component {
-//   constructor(props) {
-//     super(props);
-//   }
-//   render() {
-//     return (
-//  
-//     )
-//   }
-// }
+function Contact(props) {
+  return (
+    <div> Contact </div>
+  )
+}
 
-class RequestWebsite extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-  render() {
+function RequestWebsite(props) {
     return (
       <div className="container-single">
         <div className="container-center">
@@ -30,10 +21,9 @@ class RequestWebsite extends React.Component {
         </div>
       </div>
     )
-  }
 }
 
 module.exports = {
-  // Contact: Contact,
+  Contact: Contact,
   RequestWebsite: RequestWebsite
 }

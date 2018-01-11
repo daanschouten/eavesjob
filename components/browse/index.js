@@ -1,9 +1,13 @@
 const React = require('react');
 const PropTypes = require('prop-types');
 import axios from 'axios';
+const { Link } = require('react-router-dom');
 
+import HandleRedirect from '../Redirect';
 const { RequestWebsiteForm } = require('../Forms');
 const { Toggle } = require('../Toggle');
+
+
 
 // function handleSubscribe(e) {
 //   props.onSubscribe(e.target.value);
@@ -18,7 +22,7 @@ function NoResults() {
   )
 }
 
-function RequestWebsite() {
+function RequestWebsite(props) {
   return (
     <div className="request-website">
       <div className="right-sidebar-title">
@@ -28,7 +32,7 @@ function RequestWebsite() {
         <p>Came across a careers page not listed here? Tell us about it, and we'll take it from there!</p>
       </div>
       <div className="single-text">
-        <button>request new website</button>
+        <button className="big-button"><Link to='/requestwebsite'> request new website? </Link></button>
       </div>
     </div>
   )
