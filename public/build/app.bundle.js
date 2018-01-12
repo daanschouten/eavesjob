@@ -2635,11 +2635,20 @@ var _require3 = __webpack_require__(121),
 //   props.onUnsubscribe(e.target.value);
 // }
 
+// {props.subscribedWebsites.length > 0 ?
+//   props.subscribedWebsites.map(function(website){
+//     return <SingleSubscribed website={website} key={website._id}/>
+//   })
+// :
+//   <NoResults/>
+// }
+
 function NoResults() {
   return React.createElement('div', null, ' No results div here ');
 }
 
 function RequestWebsite(props) {
+  // render actual form here instead of redirect?
   return React.createElement('div', { className: 'request-website' }, React.createElement('div', { className: 'right-sidebar-title' }, React.createElement('h2', null, 'request a career page')), React.createElement('div', { className: 'single-text' }, React.createElement('p', null, 'Came across a careers page not listed here? Tell us about it, and we\'ll take it from there!')), React.createElement('div', { className: 'single-text' }, React.createElement('button', { className: 'big-button' }, React.createElement(Link, { to: '/requestwebsite' }, ' request new website? '))));
 }
 
@@ -2651,66 +2660,111 @@ function SingleSubscribed(props) {
   return React.createElement('div', { className: 'single-website' }, React.createElement('div', { className: 'single-name' }, React.createElement('p', null, ' ')), React.createElement('div', { className: 'single-monitor' }, React.createElement(Toggle, null)));
 }
 
-// {props.subscribedWebsites.length > 0 ?
-//   props.subscribedWebsites.map(function(website){
-//     return <SingleSubscribed website={website} key={website._id}/>
-//   })
-// :
-//   <NoResults/>
-// }
-
 function Subscribed(props) {
   return React.createElement('div', { id: 'monitored-websites' }, React.createElement('div', { className: 'right-sidebar-title' }, React.createElement('h2', null, 'subscribed career pages')));
-}
-
-function Search(props) {
-  return React.createElement('div', { id: 'search-website' }, React.createElement('h2', null, 'browse career pages'), React.createElement('div', { className: 'search-div' }, React.createElement('form', { className: 'search-form' }, React.createElement('div', { className: 'search-bar' }, React.createElement('input', { id: 'search-input', type: 'text', placeholder: 'organisation / company name', name: 'name' }), React.createElement('button', { disabled: 'disabled' }, React.createElement('img', { src: '../img/search.svg' }))))));
 }
 
 function Available(props) {
   return React.createElement('div', { id: 'website-list' }, React.createElement('div', { className: 'single-website' }, React.createElement('div', { className: 'single-name' }, React.createElement('p', null, ' name ')), React.createElement('div', { className: 'single-date' }, React.createElement('p', null, ' new career opportunity ')), React.createElement('div', { className: 'single-monitor' })));
 }
 
-// Available.propTypes = {
-//   available: PropTypes.array.isRequired
-// };
+var Search = function (_React$Component) {
+  _inherits(Search, _React$Component);
 
-// <button className="big-button" value={"hasadsds"} onClick = {handleSubscribe}> Subscribe </button>
-// <button className="big-button" value={"hasadsds"} onClick = {handleUnsubscribe}> Remove </button>
+  function Search() {
+    _classCallCheck(this, Search);
 
-var Browse = function (_React$Component) {
-  _inherits(Browse, _React$Component);
-
-  function Browse(props) {
-    _classCallCheck(this, Browse);
-
-    var _this = _possibleConstructorReturn(this, (Browse.__proto__ || Object.getPrototypeOf(Browse)).call(this, props));
+    var _this = _possibleConstructorReturn(this, (Search.__proto__ || Object.getPrototypeOf(Search)).call(this));
 
     _this.state = {
-      data: []
+      query: ""
     };
+    _this.handleChange = _this.handleChange.bind(_this);
     return _this;
   }
 
-  _createClass(Browse, [{
-    key: 'componentWillReceiveProps',
-    value: function componentWillReceiveProps(nextProps) {
-      var _this2 = this;
-
-      if (nextProps.user !== this.props.user) {
-        _axios2.default.get('http://localhost:3000/browse/' + nextProps.user.id).then(function (response) {
-          _this2.setState({
-            data: response.data
-          });
-        }).catch(function (error) {
-          console.log("error fetching and parsing data", error);
-        });
-      }
+  _createClass(Search, [{
+    key: 'handleChange',
+    value: function handleChange(e) {
+      var returnObj = {};
+      returnObj[e.target.name] = e.target.value;
+      this.setState(returnObj, function () {
+        this.props.onQueryChange(this.state.query);
+      });
     }
   }, {
     key: 'render',
     value: function render() {
-      return React.createElement('div', { id: 'browse-page' }, React.createElement('div', { id: 'browse-left' }, React.createElement(Search, null), React.createElement(Available, null)), React.createElement('div', { className: 'right-sidebar' }, React.createElement(Subscribed, {
+      return React.createElement('div', { id: 'search-website' }, React.createElement('h2', null, 'browse career pages'), React.createElement('div', { className: 'search-div' }, React.createElement('form', { className: 'search-form', onSubmit: this.searchWebsite }, React.createElement('div', { className: 'search-bar' }, React.createElement('input', { id: 'search-input', type: 'text', placeholder: 'organisation / company name', name: 'query', value: this.state.query, onChange: this.handleChange }), React.createElement('button', { disabled: 'disabled' }, React.createElement('img', { src: '../img/search.svg' }))))));
+    }
+  }]);
+
+  return Search;
+}(React.Component);
+
+var Browse = function (_React$Component2) {
+  _inherits(Browse, _React$Component2);
+
+  function Browse(props) {
+    _classCallCheck(this, Browse);
+
+    var _this2 = _possibleConstructorReturn(this, (Browse.__proto__ || Object.getPrototypeOf(Browse)).call(this, props));
+
+    _this2.state = {
+      query: ""
+    };
+    _this2.onQueryChange = _this2.onQueryChange.bind(_this2);
+    _this2.searchWebsite = _this2.searchWebsite.bind(_this2);
+    _this2.shouldSearch = _this2.shouldSearch.bind(_this2);
+    return _this2;
+  }
+  // componentWillReceiveProps(nextProps) {
+  //   if (nextProps.user !== this.props.user) {
+  //     axios.get(`http://localhost:3000/browse/${nextProps.user._id}`)
+  //       .then((response) => {
+  //         this.setState({
+  //             data: response.data
+  //         })
+  //       })
+  //       .catch((error) => {
+  //         console.log("error fetching and parsing data", error);
+  //       })
+  //   }
+  // }
+
+
+  _createClass(Browse, [{
+    key: 'onQueryChange',
+    value: function onQueryChange(query) {
+      this.setState({
+        query: query
+      }, function () {
+        this.shouldSearch();
+      });
+    }
+  }, {
+    key: 'shouldSearch',
+    value: function shouldSearch() {
+      if (this.state.query === "") {
+        console.log("query is empty");
+        // render instructions
+      } else if (this.props.user._id) {
+        this.searchWebsite();
+        // query is non empty and user exists, execute API call
+      } else {
+        console.log("state changed, but user undefined");
+      }
+    }
+  }, {
+    key: 'searchWebsite',
+    value: function searchWebsite() {
+      // perform API call
+      console.log(this.props.user._id, this.state.query);
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      return React.createElement('div', { id: 'browse-page' }, React.createElement('div', { id: 'browse-left' }, React.createElement(Search, { onQueryChange: this.onQueryChange }), React.createElement(Available, null)), React.createElement('div', { className: 'right-sidebar' }, React.createElement(Subscribed, {
         onUnsubscribe: this.props.onUnsubscribe }), React.createElement(RequestWebsite, null)));
     }
   }]);

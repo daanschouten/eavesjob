@@ -7,13 +7,19 @@ import HandleRedirect from '../Redirect';
 const { RequestWebsiteForm } = require('../Forms');
 const { Toggle } = require('../Toggle');
 
-
-
 // function handleSubscribe(e) {
 //   props.onSubscribe(e.target.value);
 // }
 // function handleUnsubscribe(e) {
 //   props.onUnsubscribe(e.target.value);
+// }
+
+// {props.subscribedWebsites.length > 0 ?
+//   props.subscribedWebsites.map(function(website){
+//     return <SingleSubscribed website={website} key={website._id}/>
+//   })
+// :
+//   <NoResults/>
 // }
 
 function NoResults() {
@@ -23,6 +29,7 @@ function NoResults() {
 }
 
 function RequestWebsite(props) {
+  // render actual form here instead of redirect?
   return (
     <div className="request-website">
       <div className="right-sidebar-title">
@@ -67,14 +74,6 @@ function SingleSubscribed(props) {
   )
 }
 
-// {props.subscribedWebsites.length > 0 ?
-//   props.subscribedWebsites.map(function(website){
-//     return <SingleSubscribed website={website} key={website._id}/>
-//   })
-// :
-//   <NoResults/>
-// }
-
 function Subscribed(props) {
   return (
     <div id="monitored-websites">
@@ -82,24 +81,6 @@ function Subscribed(props) {
         <h2>subscribed career pages</h2>
       </div>
 
-    </div>
-  )
-}
-
-function Search(props) {
-  return (
-    <div id="search-website">
-      <h2>browse career pages</h2>
-      <div className="search-div">
-        <form className="search-form">
-          <div className="search-bar">
-            <input id="search-input" type="text" placeholder="organisation / company name" name="name"/>
-            <button disabled="disabled">
-              <img src="../img/search.svg"/>
-            </button>
-          </div>
-        </form>
-      </div>
     </div>
   )
 }
@@ -122,38 +103,92 @@ function Available(props) {
   )
 }
 
-// Available.propTypes = {
-//   available: PropTypes.array.isRequired
-// };
-
-// <button className="big-button" value={"hasadsds"} onClick = {handleSubscribe}> Subscribe </button>
-// <button className="big-button" value={"hasadsds"} onClick = {handleUnsubscribe}> Remove </button>
+class Search extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      query: ""
+    }
+    this.handleChange = this.handleChange.bind(this);
+  }
+  handleChange(e) {
+    let returnObj = {};
+    returnObj[e.target.name] = e.target.value;
+    this.setState(returnObj, function() {
+      this.props.onQueryChange(this.state.query);
+    });
+  }
+  render() {
+    return (
+      <div id="search-website">
+        <h2>browse career pages</h2>
+        <div className="search-div">
+          <form className="search-form" onSubmit={this.searchWebsite}>
+            <div className="search-bar">
+              <input id="search-input" type="text" placeholder="organisation / company name" name="query" value={this.state.query}  onChange={this.handleChange}/>
+              <button disabled="disabled">
+                <img src="../img/search.svg"/>
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    )
+  }
+}
 
 class Browse extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      data: []
+      query: ""
     };
+    this.onQueryChange = this.onQueryChange.bind(this);
+    this.searchWebsite = this.searchWebsite.bind(this);
+    this.shouldSearch = this.shouldSearch.bind(this);
   }
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.user !== this.props.user) {
-      axios.get(`http://localhost:3000/browse/${nextProps.user.id}`)
-        .then((response) => {
-          this.setState({
-              data: response.data
-          })
-        })
-        .catch((error) => {
-          console.log("error fetching and parsing data", error);
-        })
+  // componentWillReceiveProps(nextProps) {
+  //   if (nextProps.user !== this.props.user) {
+  //     axios.get(`http://localhost:3000/browse/${nextProps.user._id}`)
+  //       .then((response) => {
+  //         this.setState({
+  //             data: response.data
+  //         })
+  //       })
+  //       .catch((error) => {
+  //         console.log("error fetching and parsing data", error);
+  //       })
+  //   }
+  // }
+  onQueryChange(query) {
+    this.setState({
+      query: query
+    },
+    function() {
+      this.shouldSearch();
     }
+    );
+  }
+  shouldSearch() {
+    if (this.state.query === "") {
+      console.log("query is empty");
+      // render instructions
+    } else if (this.props.user._id) {
+      this.searchWebsite();
+      // query is non empty and user exists, execute API call
+    } else {
+      console.log("state changed, but user undefined");
+    }
+  }
+  searchWebsite() {
+    // perform API call
+    console.log(this.props.user._id, this.state.query);
   }
   render() {
     return (
       <div id="browse-page">
         <div id="browse-left">
-          <Search />
+          <Search onQueryChange = {this.onQueryChange} />
           <Available />
         </div>
         <div className="right-sidebar">
