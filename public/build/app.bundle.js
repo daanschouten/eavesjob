@@ -2635,13 +2635,9 @@ var _require3 = __webpack_require__(121),
 //   props.onUnsubscribe(e.target.value);
 // }
 
-// {props.subscribedWebsites.length > 0 ?
-//   props.subscribedWebsites.map(function(website){
-//     return <SingleSubscribed website={website} key={website._id}/>
-//   })
-// :
-//   <NoResults/>
-// }
+function StartSearching() {
+  return React.createElement('div', null, ' start searching div here ');
+}
 
 function NoResults() {
   return React.createElement('div', null, ' No results div here ');
@@ -2653,7 +2649,7 @@ function RequestWebsite(props) {
 }
 
 function SingleAvailable(props) {
-  return React.createElement('div', { className: 'single-website' }, React.createElement('div', { className: 'single-name' }, React.createElement('p', null)), React.createElement('div', { className: 'single-date' }, React.createElement('p', null)), React.createElement('div', { className: 'single-monitor ' }, React.createElement(Toggle, null)));
+  return React.createElement('div', { className: 'single-website' }, React.createElement('div', { className: 'single-name' }, React.createElement('p', null, props.website.name)), React.createElement('div', { className: 'single-date' }, React.createElement('p', null, props.website.storedPage.date)), React.createElement('div', { className: 'single-monitor ' }, React.createElement(Toggle, null)));
 }
 
 function SingleSubscribed(props) {
@@ -2665,7 +2661,22 @@ function Subscribed(props) {
 }
 
 function Available(props) {
-  return React.createElement('div', { id: 'website-list' }, React.createElement('div', { className: 'single-website' }, React.createElement('div', { className: 'single-name' }, React.createElement('p', null, ' name ')), React.createElement('div', { className: 'single-date' }, React.createElement('p', null, ' new career opportunity ')), React.createElement('div', { className: 'single-monitor' })));
+  if (props.available) {
+    if (props.available.length > 0) {
+      return React.createElement('div', { id: 'website-list' }, React.createElement('div', { className: 'single-website' }, React.createElement('div', { className: 'single-name' }, React.createElement('p', null, ' name ')), React.createElement('div', { className: 'single-date' }, React.createElement('p', null, ' new career opportunity ')), React.createElement('div', { className: 'single-monitor' })), props.available.map(function (website) {
+        return React.createElement(SingleAvailable, {
+          website: website,
+          key: website._id });
+      }));
+    } else {
+      return React.createElement(NoResults, null);
+    }
+  } else {
+    return (
+      // should be start searching
+      React.createElement(StartSearching, null)
+    );
+  }
 }
 
 var Search = function (_React$Component) {
@@ -2718,26 +2729,14 @@ var Browse = function (_React$Component2) {
     _this2.shouldSearch = _this2.shouldSearch.bind(_this2);
     return _this2;
   }
-  // componentWillReceiveProps(nextProps) {
-  //   if (nextProps.user !== this.props.user) {
-  //     axios.get(`http://localhost:3000/browse/${nextProps.user._id}`)
-  //       .then((response) => {
-  //         this.setState({
-  //             data: response.data
-  //         })
-  //       })
-  //       .catch((error) => {
-  //         console.log("error fetching and parsing data", error);
-  //       })
-  //   }
-  // }
-
 
   _createClass(Browse, [{
     key: 'onQueryChange',
     value: function onQueryChange(query) {
       this.setState({
-        query: query
+        query: query,
+        available: [],
+        monitored: []
       }, function () {
         this.shouldSearch();
       });
@@ -2758,14 +2757,30 @@ var Browse = function (_React$Component2) {
   }, {
     key: 'searchWebsite',
     value: function searchWebsite() {
+      var _this3 = this;
+
       // perform API call
-      console.log(this.props.user._id, this.state.query);
+      _axios2.default.post('http://localhost:3000/search/' + this.props.user._id, {
+        query: this.state.query
+      }).then(function (response) {
+        var data = response.data;
+        _this3.setState({
+          available: data.available,
+          monitored: data.monitored
+        });
+      }).catch(function (error) {
+        console.log("error fetching and parsing data", error);
+      });
     }
   }, {
     key: 'render',
     value: function render() {
-      return React.createElement('div', { id: 'browse-page' }, React.createElement('div', { id: 'browse-left' }, React.createElement(Search, { onQueryChange: this.onQueryChange }), React.createElement(Available, null)), React.createElement('div', { className: 'right-sidebar' }, React.createElement(Subscribed, {
-        onUnsubscribe: this.props.onUnsubscribe }), React.createElement(RequestWebsite, null)));
+      return React.createElement('div', { id: 'browse-page' }, React.createElement('div', { id: 'browse-left' }, React.createElement(Search, { onQueryChange: this.onQueryChange }), React.createElement(Available, {
+        onSubscribe: this.props.onSubscribe,
+        onUnsubscribe: this.props.onUnsubscribe,
+        available: this.state.available })), React.createElement('div', { className: 'right-sidebar' }, React.createElement(Subscribed, {
+        onUnsubscribe: this.props.onUnsubscribe,
+        monitored: this.state.monitored }), React.createElement(RequestWebsite, null)));
     }
   }]);
 

@@ -14,13 +14,11 @@ const { Toggle } = require('../Toggle');
 //   props.onUnsubscribe(e.target.value);
 // }
 
-// {props.subscribedWebsites.length > 0 ?
-//   props.subscribedWebsites.map(function(website){
-//     return <SingleSubscribed website={website} key={website._id}/>
-//   })
-// :
-//   <NoResults/>
-// }
+function StartSearching() {
+  return (
+    <div> start searching div here </div>
+  )
+}
 
 function NoResults() {
   return (
@@ -49,10 +47,10 @@ function SingleAvailable(props) {
   return(
     <div className="single-website">
       <div className="single-name">
-        <p></p>
+        <p>{props.website.name}</p>
       </div>
       <div className="single-date">
-        <p></p>
+        <p>{props.website.storedPage.date}</p>
       </div>
       <div className="single-monitor ">
         <Toggle />
@@ -86,21 +84,41 @@ function Subscribed(props) {
 }
 
 function Available(props) {
-  return (
-    <div id="website-list">
-      <div className= "single-website">
-        <div className ="single-name">
-          <p> name </p>
+  if (props.available) {
+    if (props.available.length > 0) {
+      // typed, and results, cool!
+      return (
+        <div id="website-list">
+          <div className= "single-website">
+            <div className ="single-name">
+              <p> name </p>
+            </div>
+            <div className = "single-date">
+              <p> new career opportunity </p>
+            </div>
+            <div className= "single-monitor">
+            </div>
+          </div>
+          { props.available.map(function(website){
+                return <SingleAvailable
+                 website= {website}
+                 key= {website._id} />
+            })
+          }
         </div>
-        <div className = "single-date">
-          <p> new career opportunity </p>
-        </div>
-        <div className= "single-monitor">
-        </div>
-      </div>
-
-    </div>
-  )
+      )
+    } else {
+      // typed, but no results, sorry!
+      return (
+        <NoResults/>
+      )
+    }
+  } else {
+    // nothing typed yet, start searching!
+    return (
+      <StartSearching/>
+    )
+  }
 }
 
 class Search extends React.Component {
@@ -147,22 +165,11 @@ class Browse extends React.Component {
     this.searchWebsite = this.searchWebsite.bind(this);
     this.shouldSearch = this.shouldSearch.bind(this);
   }
-  // componentWillReceiveProps(nextProps) {
-  //   if (nextProps.user !== this.props.user) {
-  //     axios.get(`http://localhost:3000/browse/${nextProps.user._id}`)
-  //       .then((response) => {
-  //         this.setState({
-  //             data: response.data
-  //         })
-  //       })
-  //       .catch((error) => {
-  //         console.log("error fetching and parsing data", error);
-  //       })
-  //   }
-  // }
   onQueryChange(query) {
     this.setState({
-      query: query
+      query: query,
+      available: [],
+      monitored: []
     },
     function() {
       this.shouldSearch();
@@ -182,18 +189,34 @@ class Browse extends React.Component {
   }
   searchWebsite() {
     // perform API call
-    console.log(this.props.user._id, this.state.query);
+    axios.post(`http://localhost:3000/search/${this.props.user._id}`, {
+      query: this.state.query
+    })
+    .then((response) => {
+      let data = response.data;
+      this.setState({
+        available: data.available,
+        monitored: data.monitored
+      })
+    })
+    .catch((error) => {
+      console.log("error fetching and parsing data", error);
+    })
   }
   render() {
     return (
       <div id="browse-page">
         <div id="browse-left">
           <Search onQueryChange = {this.onQueryChange} />
-          <Available />
+          <Available
+          onSubscribe = {this.props.onSubscribe}
+          onUnsubscribe = {this.props.onUnsubscribe}
+          available = {this.state.available} />
         </div>
         <div className="right-sidebar">
           <Subscribed
-          onUnsubscribe = {this.props.onUnsubscribe} />
+          onUnsubscribe = {this.props.onUnsubscribe}
+          monitored = {this.state.monitored} />
           <RequestWebsite/>
         </div>
       </div>
