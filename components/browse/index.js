@@ -44,7 +44,10 @@ function RequestWebsite(props) {
 }
 
 function SingleAvailable(props) {
-  return(
+  function onToggle() {
+    props.onChangeSubscribe(props.website._id);
+  }
+  return (
     <div className="single-website">
       <div className="single-name">
         <p>{props.website.name}</p>
@@ -53,13 +56,15 @@ function SingleAvailable(props) {
         <p>{props.website.storedPage.date}</p>
       </div>
       <div className="single-monitor ">
-        <Toggle />
+        <Toggle
+        monitored = {props.website.monitored}
+        onToggle = {onToggle}/>
       </div>
     </div>
   )
 }
 
-function SingleSubscribed(props) {
+function SingleMonitored(props) {
   return(
     <div className="single-website">
       <div className="single-name">
@@ -99,8 +104,10 @@ function Available(props) {
             <div className= "single-monitor">
             </div>
           </div>
-          { props.available.map(function(website){
+          {
+            props.available.map(function(website){
                 return <SingleAvailable
+                 onChangeSubscribe = {props.onChangeSubscribe}
                  website= {website}
                  key= {website._id} />
             })
@@ -164,6 +171,7 @@ class Browse extends React.Component {
     this.onQueryChange = this.onQueryChange.bind(this);
     this.searchWebsite = this.searchWebsite.bind(this);
     this.shouldSearch = this.shouldSearch.bind(this);
+    this.onChangeSubscribe = this.onChangeSubscribe.bind(this);
   }
   onQueryChange(query) {
     this.setState({
@@ -175,6 +183,39 @@ class Browse extends React.Component {
       this.shouldSearch();
     }
     );
+  }
+  onChangeSubscribe(site) {
+    let isMonitored = false;
+    for (var i = 0; i < this.state.monitored.length; i++) {
+      if (this.state.monitored[i]._id === site) {
+        isMonitored = true;
+        // remove from monitor
+        axios.post(`http://localhost:3000/removeSubscribe/${this.props.user._id}`, {
+          id: site
+        })
+        .then((response) => {
+          console.log(response.data, "hi!");
+          this.searchWebsite();
+        })
+        .catch((error) => {
+          console.log("error fetching and parsing data", error);
+        })
+      }
+    }
+    console.log(isMonitored);
+    if (!isMonitored) {
+      // add site to monitor
+      axios.post(`http://localhost:3000/addSubscribe/${this.props.user._id}`, {
+        id: site
+      })
+      .then((response) => {
+        console.log(response.data);
+        this.searchWebsite();
+      })
+      .catch((error) => {
+        console.log("error fetching and parsing data", error);
+      })
+    }
   }
   shouldSearch() {
     if (this.state.query === "") {
@@ -209,13 +250,12 @@ class Browse extends React.Component {
         <div id="browse-left">
           <Search onQueryChange = {this.onQueryChange} />
           <Available
-          onSubscribe = {this.props.onSubscribe}
-          onUnsubscribe = {this.props.onUnsubscribe}
+          onChangeSubscribe = {this.onChangeSubscribe}
           available = {this.state.available} />
         </div>
         <div className="right-sidebar">
           <Subscribed
-          onUnsubscribe = {this.props.onUnsubscribe}
+          onChangeSubscribe = {this.onChangeSubscribe}
           monitored = {this.state.monitored} />
           <RequestWebsite/>
         </div>

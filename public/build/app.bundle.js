@@ -2649,10 +2649,15 @@ function RequestWebsite(props) {
 }
 
 function SingleAvailable(props) {
-  return React.createElement('div', { className: 'single-website' }, React.createElement('div', { className: 'single-name' }, React.createElement('p', null, props.website.name)), React.createElement('div', { className: 'single-date' }, React.createElement('p', null, props.website.storedPage.date)), React.createElement('div', { className: 'single-monitor ' }, React.createElement(Toggle, null)));
+  function onToggle() {
+    props.onChangeSubscribe(props.website._id);
+  }
+  return React.createElement('div', { className: 'single-website' }, React.createElement('div', { className: 'single-name' }, React.createElement('p', null, props.website.name)), React.createElement('div', { className: 'single-date' }, React.createElement('p', null, props.website.storedPage.date)), React.createElement('div', { className: 'single-monitor ' }, React.createElement(Toggle, {
+    monitored: props.website.monitored,
+    onToggle: onToggle })));
 }
 
-function SingleSubscribed(props) {
+function SingleMonitored(props) {
   return React.createElement('div', { className: 'single-website' }, React.createElement('div', { className: 'single-name' }, React.createElement('p', null, ' ')), React.createElement('div', { className: 'single-monitor' }, React.createElement(Toggle, null)));
 }
 
@@ -2663,19 +2668,20 @@ function Subscribed(props) {
 function Available(props) {
   if (props.available) {
     if (props.available.length > 0) {
+      // typed, and results, cool!
       return React.createElement('div', { id: 'website-list' }, React.createElement('div', { className: 'single-website' }, React.createElement('div', { className: 'single-name' }, React.createElement('p', null, ' name ')), React.createElement('div', { className: 'single-date' }, React.createElement('p', null, ' new career opportunity ')), React.createElement('div', { className: 'single-monitor' })), props.available.map(function (website) {
         return React.createElement(SingleAvailable, {
+          onChangeSubscribe: props.onChangeSubscribe,
           website: website,
           key: website._id });
       }));
     } else {
+      // typed, but no results, sorry!
       return React.createElement(NoResults, null);
     }
   } else {
-    return (
-      // should be start searching
-      React.createElement(StartSearching, null)
-    );
+    // nothing typed yet, start searching!
+    return React.createElement(StartSearching, null);
   }
 }
 
@@ -2727,6 +2733,7 @@ var Browse = function (_React$Component2) {
     _this2.onQueryChange = _this2.onQueryChange.bind(_this2);
     _this2.searchWebsite = _this2.searchWebsite.bind(_this2);
     _this2.shouldSearch = _this2.shouldSearch.bind(_this2);
+    _this2.onChangeSubscribe = _this2.onChangeSubscribe.bind(_this2);
     return _this2;
   }
 
@@ -2740,6 +2747,39 @@ var Browse = function (_React$Component2) {
       }, function () {
         this.shouldSearch();
       });
+    }
+  }, {
+    key: 'onChangeSubscribe',
+    value: function onChangeSubscribe(site) {
+      var _this3 = this;
+
+      var isMonitored = false;
+      for (var i = 0; i < this.state.monitored.length; i++) {
+        if (this.state.monitored[i]._id === site) {
+          isMonitored = true;
+          // remove from monitor
+          _axios2.default.post('http://localhost:3000/removeSubscribe/' + this.props.user._id, {
+            id: site
+          }).then(function (response) {
+            console.log(response.data, "hi!");
+            _this3.searchWebsite();
+          }).catch(function (error) {
+            console.log("error fetching and parsing data", error);
+          });
+        }
+      }
+      console.log(isMonitored);
+      if (!isMonitored) {
+        // add site to monitor
+        _axios2.default.post('http://localhost:3000/addSubscribe/' + this.props.user._id, {
+          id: site
+        }).then(function (response) {
+          console.log(response.data);
+          _this3.searchWebsite();
+        }).catch(function (error) {
+          console.log("error fetching and parsing data", error);
+        });
+      }
     }
   }, {
     key: 'shouldSearch',
@@ -2757,14 +2797,14 @@ var Browse = function (_React$Component2) {
   }, {
     key: 'searchWebsite',
     value: function searchWebsite() {
-      var _this3 = this;
+      var _this4 = this;
 
       // perform API call
       _axios2.default.post('http://localhost:3000/search/' + this.props.user._id, {
         query: this.state.query
       }).then(function (response) {
         var data = response.data;
-        _this3.setState({
+        _this4.setState({
           available: data.available,
           monitored: data.monitored
         });
@@ -2776,10 +2816,9 @@ var Browse = function (_React$Component2) {
     key: 'render',
     value: function render() {
       return React.createElement('div', { id: 'browse-page' }, React.createElement('div', { id: 'browse-left' }, React.createElement(Search, { onQueryChange: this.onQueryChange }), React.createElement(Available, {
-        onSubscribe: this.props.onSubscribe,
-        onUnsubscribe: this.props.onUnsubscribe,
+        onChangeSubscribe: this.onChangeSubscribe,
         available: this.state.available })), React.createElement('div', { className: 'right-sidebar' }, React.createElement(Subscribed, {
-        onUnsubscribe: this.props.onUnsubscribe,
+        onChangeSubscribe: this.onChangeSubscribe,
         monitored: this.state.monitored }), React.createElement(RequestWebsite, null)));
     }
   }]);
@@ -6746,8 +6785,6 @@ var App = function (_React$Component) {
     _this.onLogout = _this.onLogout.bind(_this);
     _this.onRegister = _this.onRegister.bind(_this);
     _this.onLogin = _this.onLogin.bind(_this);
-    _this.onSubscribe = _this.onSubscribe.bind(_this);
-    _this.onUnsubscribe = _this.onUnsubscribe.bind(_this);
     return _this;
   }
 
@@ -6777,13 +6814,10 @@ var App = function (_React$Component) {
             onLogin: _this2.onLogin });
         } }), _react2.default.createElement(_reactRouterDom.Route, { path: '/browse', render: function render(props) {
           return _react2.default.createElement(Browse, {
-            user: _this2.state.user,
-            onSubscribe: _this2.onSubscribe,
-            onUnsubscribe: _this2.onUnsubscribe });
+            user: _this2.state.user });
         } }), _react2.default.createElement(_reactRouterDom.Route, { path: '/profile', render: function render(props) {
           return _react2.default.createElement(Profile, {
             user: _this2.state.user,
-            onUnsubscribe: _this2.onUnsubscribe,
             handleLogout: _this2.onLogout });
         } }), _react2.default.createElement(_reactRouterDom.Route, { path: '/register', render: function render(props) {
           return _react2.default.createElement(Register, {
@@ -6820,21 +6854,6 @@ var App = function (_React$Component) {
       this.setState({
         user: user
       });
-      this.redirectUser('/');
-    }
-  }, {
-    key: 'onSubscribe',
-    value: function onSubscribe(site) {
-      this.state.user.subscribedWebsites.push(site);
-      this.redirectUser('/');
-    }
-  }, {
-    key: 'onUnsubscribe',
-    value: function onUnsubscribe(site) {
-      var index = this.state.user.subscribedWebsites.indexOf(site);
-      if (index > -1) {
-        this.state.user.subscribedWebsites.splice(index, 1);
-      }
       this.redirectUser('/');
     }
   }]);
@@ -7943,71 +7962,17 @@ module.exports = function spread(callback) {
 "use strict";
 
 
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-
-var _createClass = function () {
-  function defineProperties(target, props) {
-    for (var i = 0; i < props.length; i++) {
-      var descriptor = props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if ("value" in descriptor) descriptor.writable = true;Object.defineProperty(target, descriptor.key, descriptor);
-    }
-  }return function (Constructor, protoProps, staticProps) {
-    if (protoProps) defineProperties(Constructor.prototype, protoProps);if (staticProps) defineProperties(Constructor, staticProps);return Constructor;
-  };
-}();
-
-function _classCallCheck(instance, Constructor) {
-  if (!(instance instanceof Constructor)) {
-    throw new TypeError("Cannot call a class as a function");
-  }
-}
-
-function _possibleConstructorReturn(self, call) {
-  if (!self) {
-    throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
-  }return call && ((typeof call === "undefined" ? "undefined" : _typeof(call)) === "object" || typeof call === "function") ? call : self;
-}
-
-function _inherits(subClass, superClass) {
-  if (typeof superClass !== "function" && superClass !== null) {
-    throw new TypeError("Super expression must either be null or a function, not " + (typeof superClass === "undefined" ? "undefined" : _typeof(superClass)));
-  }subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } });if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
-}
-
 var React = __webpack_require__(0);
 var PropTypes = __webpack_require__(1);
 
 // set checked value of checkbox and attach onchange handler or sth
 
-var Toggle = function (_React$Component) {
-  _inherits(Toggle, _React$Component);
-
-  function Toggle(props) {
-    _classCallCheck(this, Toggle);
-
-    var _this = _possibleConstructorReturn(this, (Toggle.__proto__ || Object.getPrototypeOf(Toggle)).call(this, props));
-
-    _this.state = {
-      monitored: false
-    };
-    _this.handleChange = _this.handleChange.bind(_this);
-    return _this;
+function Toggle(props) {
+  function handleChange() {
+    props.onToggle();
   }
-
-  _createClass(Toggle, [{
-    key: 'handleChange',
-    value: function handleChange(event) {
-      this.setState({ monitored: this.state.monitored ? false : true });
-      console.log(event.target.value);
-    }
-  }, {
-    key: 'render',
-    value: function render() {
-      return React.createElement('label', { className: 'switch', role: 'switch' }, React.createElement('input', { className: 'switch__toggle', type: 'checkbox', checked: this.state.monitored, onChange: this.handleChange }), React.createElement('span', { className: 'switch__label' }));
-    }
-  }]);
-
-  return Toggle;
-}(React.Component);
+  return React.createElement('label', { className: 'switch', role: 'switch' }, React.createElement('input', { className: 'switch__toggle', type: 'checkbox', checked: props.monitored, onChange: handleChange }), React.createElement('span', { className: 'switch__label' }));
+}
 
 module.exports = {
   Toggle: Toggle

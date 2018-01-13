@@ -31,8 +31,6 @@ class App extends React.Component {
       this.onLogout = this.onLogout.bind(this);
       this.onRegister = this.onRegister.bind(this);
       this.onLogin = this.onLogin.bind(this);
-      this.onSubscribe = this.onSubscribe.bind(this);
-      this.onUnsubscribe = this.onUnsubscribe.bind(this);
     }
     componentDidMount() {
       let canUseDOM = !!(
@@ -59,12 +57,9 @@ class App extends React.Component {
               <Route path="/login" render={props => <Login
                 onLogin = {this.onLogin} />} />
               <Route path="/browse" render={props => <Browse
-                user = {this.state.user}
-                onSubscribe = {this.onSubscribe}
-                onUnsubscribe = {this.onUnsubscribe} /> } />
+                user = {this.state.user} /> } />
               <Route path="/profile" render={props =>  <Profile
                 user = {this.state.user}
-                onUnsubscribe = {this.onUnsubscribe}
                 handleLogout = {this.onLogout} /> } />
               <Route path="/register" render={props => <Register
                 onRegister = {this.onRegister} /> } />
@@ -103,18 +98,6 @@ class App extends React.Component {
       });
       this.redirectUser('/');
     }
-    onSubscribe(site) {
-      this.state.user.subscribedWebsites.push(site);
-      this.redirectUser('/');
-    }
-    onUnsubscribe(site) {
-      let index = this.state.user.subscribedWebsites.indexOf(site);
-      if (index > -1) {
-          this.state.user.subscribedWebsites.splice(index, 1);
-      }
-      this.redirectUser('/');
-    }
-
 };
 
 export default withRouter(App);
