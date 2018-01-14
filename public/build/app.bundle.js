@@ -2657,32 +2657,22 @@ function SingleAvailable(props) {
     onToggle: onToggle })));
 }
 
-function SingleMonitored(props) {
-  return React.createElement('div', { className: 'single-website' }, React.createElement('div', { className: 'single-name' }, React.createElement('p', null, ' ')), React.createElement('div', { className: 'single-monitor' }, React.createElement(Toggle, null)));
-}
-
 function Subscribed(props) {
-  return React.createElement('div', { id: 'monitored-websites' }, React.createElement('div', { className: 'right-sidebar-title' }, React.createElement('h2', null, 'subscribed career pages')));
+  return React.createElement('div', { id: 'monitored-websites' }, React.createElement('div', { className: 'right-sidebar-title' }, React.createElement('h2', null, 'subscribed career pages')), props.monitored ? props.monitored.length > 0 ? props.monitored.map(function (website) {
+    return React.createElement(SingleAvailable, {
+      onChangeSubscribe: props.onChangeSubscribe,
+      website: website,
+      key: website._id });
+  }) : React.createElement(NoResults, null) : React.createElement(StartSearching, null));
 }
 
 function Available(props) {
-  if (props.available) {
-    if (props.available.length > 0) {
-      // typed, and results, cool!
-      return React.createElement('div', { id: 'website-list' }, React.createElement('div', { className: 'single-website' }, React.createElement('div', { className: 'single-name' }, React.createElement('p', null, ' name ')), React.createElement('div', { className: 'single-date' }, React.createElement('p', null, ' new career opportunity ')), React.createElement('div', { className: 'single-monitor' })), props.available.map(function (website) {
-        return React.createElement(SingleAvailable, {
-          onChangeSubscribe: props.onChangeSubscribe,
-          website: website,
-          key: website._id });
-      }));
-    } else {
-      // typed, but no results, sorry!
-      return React.createElement(NoResults, null);
-    }
-  } else {
-    // nothing typed yet, start searching!
-    return React.createElement(StartSearching, null);
-  }
+  return React.createElement('div', { id: 'website-list' }, React.createElement('div', { className: 'single-website' }, React.createElement('div', { className: 'single-name' }, React.createElement('p', null, ' name ')), React.createElement('div', { className: 'single-date' }, React.createElement('p', null, ' new career opportunity ')), React.createElement('div', { className: 'single-monitor' })), props.available ? props.available.length > 0 ? props.available.map(function (website) {
+    return React.createElement(SingleAvailable, {
+      onChangeSubscribe: props.onChangeSubscribe,
+      website: website,
+      key: website._id });
+  }) : React.createElement(NoResults, null) : React.createElement(StartSearching, null));
 }
 
 var Search = function (_React$Component) {
@@ -2768,7 +2758,6 @@ var Browse = function (_React$Component2) {
           });
         }
       }
-      console.log(isMonitored);
       if (!isMonitored) {
         // add site to monitor
         _axios2.default.post('http://localhost:3000/addSubscribe/' + this.props.user._id, {

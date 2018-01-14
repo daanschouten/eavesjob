@@ -7,13 +7,6 @@ import HandleRedirect from '../Redirect';
 const { RequestWebsiteForm } = require('../Forms');
 const { Toggle } = require('../Toggle');
 
-// function handleSubscribe(e) {
-//   props.onSubscribe(e.target.value);
-// }
-// function handleUnsubscribe(e) {
-//   props.onUnsubscribe(e.target.value);
-// }
-
 function StartSearching() {
   return (
     <div> start searching div here </div>
@@ -43,7 +36,7 @@ function RequestWebsite(props) {
   )
 }
 
-function SingleAvailable(props) {
+function SingleSite(props) {
   function onToggle() {
     props.onChangeSubscribe(props.website._id);
   }
@@ -64,68 +57,57 @@ function SingleAvailable(props) {
   )
 }
 
-function SingleMonitored(props) {
-  return(
-    <div className="single-website">
-      <div className="single-name">
-        <p> </p>
-      </div>
-      <div className="single-monitor">
-        <Toggle />
-      </div>
-    </div>
-  )
-}
-
 function Subscribed(props) {
   return (
     <div id="monitored-websites">
       <div className="right-sidebar-title">
         <h2>subscribed career pages</h2>
       </div>
-
+      {
+        props.monitored ?
+          props.monitored.length > 0 ?
+            props.monitored.map(function(website){
+              return (
+                <SingleSite
+                 onChangeSubscribe = {props.onChangeSubscribe}
+                 website= {website}
+                 key= {website._id} /> )
+            })
+          : <NoResults/>
+        : <StartSearching/>
+      }
     </div>
   )
 }
 
 function Available(props) {
-  if (props.available) {
-    if (props.available.length > 0) {
-      // typed, and results, cool!
-      return (
-        <div id="website-list">
-          <div className= "single-website">
-            <div className ="single-name">
-              <p> name </p>
-            </div>
-            <div className = "single-date">
-              <p> new career opportunity </p>
-            </div>
-            <div className= "single-monitor">
-            </div>
-          </div>
-          {
+  return (
+    <div id="website-list">
+      <div className= "single-website">
+        <div className ="single-name">
+          <p> name </p>
+        </div>
+        <div className = "single-date">
+          <p> new career opportunity </p>
+        </div>
+        <div className= "single-monitor">
+        </div>
+      </div>
+      {
+        props.available ?
+          props.available.length > 0 ?
             props.available.map(function(website){
-                return <SingleAvailable
+              return (
+                <SingleSite
                  onChangeSubscribe = {props.onChangeSubscribe}
                  website= {website}
-                 key= {website._id} />
+                 key= {website._id} /> )
             })
-          }
-        </div>
-      )
-    } else {
-      // typed, but no results, sorry!
-      return (
-        <NoResults/>
-      )
-    }
-  } else {
-    // nothing typed yet, start searching!
-    return (
-      <StartSearching/>
-    )
-  }
+          : <NoResults/>
+        : <StartSearching/>
+      }
+    </div>
+  )
 }
 
 class Search extends React.Component {
@@ -202,7 +184,6 @@ class Browse extends React.Component {
         })
       }
     }
-    console.log(isMonitored);
     if (!isMonitored) {
       // add site to monitor
       axios.post(`http://localhost:3000/addSubscribe/${this.props.user._id}`, {
