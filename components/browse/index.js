@@ -130,7 +130,7 @@ class Search extends React.Component {
       <div id="search-website">
         <h2>browse career pages</h2>
         <div className="search-div">
-          <form className="search-form" onSubmit={this.searchWebsite}>
+          <form className="search-form">
             <div className="search-bar">
               <input id="search-input" type="text" placeholder="organisation / company name" name="query" value={this.state.query}  onChange={this.handleChange}/>
               <button disabled="disabled">
@@ -148,21 +148,32 @@ class Browse extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      query: ""
+      user: {},
+      query: "",
+      available: [],
+      monitored: []
     };
     this.onQueryChange = this.onQueryChange.bind(this);
-    this.searchWebsite = this.searchWebsite.bind(this);
-    this.shouldSearch = this.shouldSearch.bind(this);
     this.onChangeSubscribe = this.onChangeSubscribe.bind(this);
+    this.searchFull = this.searchFull.bind(this);
+    this.searchAvailable = this.searchAvailable.bind(this);
+  }
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.user !== this.props.user ) {
+      this.setState({
+        user: nextProps.user
+      }, function() {
+        this.searchFull();
+      })
+    }
   }
   onQueryChange(query) {
     this.setState({
       query: query,
-      available: [],
-      monitored: []
+      available: []
     },
     function() {
-      this.shouldSearch();
+      this.searchAvailable();
     }
     );
   }
@@ -176,8 +187,8 @@ class Browse extends React.Component {
           id: site
         })
         .then((response) => {
-          console.log(response.data, "hi!");
-          this.searchWebsite();
+          // perform an entire search, reload all of it
+          this.searchFull();
         })
         .catch((error) => {
           console.log("error fetching and parsing data", error);
@@ -190,28 +201,32 @@ class Browse extends React.Component {
         id: site
       })
       .then((response) => {
-        console.log(response.data);
-        this.searchWebsite();
+        this.searchFull();
+        // perform an entire search, reload all);
       })
       .catch((error) => {
         console.log("error fetching and parsing data", error);
       })
     }
   }
-  shouldSearch() {
-    if (this.state.query === "") {
-      console.log("query is empty");
-      // render instructions
-    } else if (this.props.user._id) {
-      this.searchWebsite();
-      // query is non empty and user exists, execute API call
-    } else {
-      console.log("state changed, but user undefined");
-    }
+  searchAvailable() {
+    // refresh only available
+    axios.post(`http://localhost:3000/search/${this.state.user._id}`, {
+      query: this.state.query
+    })
+    .then((response) => {
+      let data = response.data;
+      this.setState({
+        available: data.available
+      })
+    })
+    .catch((error) => {
+      console.log("error fetching and parsing data", error);
+    })
   }
-  searchWebsite() {
-    // perform API call
-    axios.post(`http://localhost:3000/search/${this.props.user._id}`, {
+  searchFull() {
+    // refresh both monitored & available
+    axios.post(`http://localhost:3000/browse/${this.state.user._id}`, {
       query: this.state.query
     })
     .then((response) => {
