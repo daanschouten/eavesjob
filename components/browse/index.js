@@ -158,6 +158,15 @@ class Browse extends React.Component {
     this.searchFull = this.searchFull.bind(this);
     this.searchAvailable = this.searchAvailable.bind(this);
   }
+  componentDidMount() {
+    if (this.props.user) {
+      this.setState({
+        user: this.props.user
+      }, function() {
+        this.searchFull();
+      })
+    }
+  }
   componentWillReceiveProps(nextProps) {
     if (nextProps.user !== this.props.user ) {
       this.setState({
