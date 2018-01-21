@@ -56,13 +56,14 @@ class App extends React.Component {
                 onRegister = {this.onRegister} />} />
               <Route path="/login" render={props => <Login
                 onLogin = {this.onLogin} />} />
+              <Route path="/register" render={props => <Register
+                onRegister = {this.onRegister} /> } />
+
               <Route path="/browse" render={props => <Browse
                 user = {this.state.user} /> } />
               <Route path="/profile" render={props =>  <Profile
                 user = {this.state.user}
                 handleLogout = {this.onLogout} /> } />
-              <Route path="/register" render={props => <Register
-                onRegister = {this.onRegister} /> } />
 
               <Route path="/addKeyword" component={AddKeyword} />
               <Route path="/requestwebsite" component = {RequestWebsite} />
@@ -96,7 +97,7 @@ class App extends React.Component {
       this.setState({
         user: user
       });
-      this.redirectUser('/');
+      this.redirectUser('/browse');
     }
 };
 

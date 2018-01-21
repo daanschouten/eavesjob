@@ -1,48 +1,108 @@
 const React = require('react');
 const PropTypes = require('prop-types');
+import axios from 'axios';
 
 const { Link } = require('react-router-dom');
 const { Available } = require('../Browse');
 
-function Profile(props) {
-  function handleUnsubscribe(e) {
-    props.onUnsubscribe(e.target.value);
+class Profile extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      user: {},
+      monitored: []
+    };
+    this.onChangeSubscribe = this.onChangeSubscribe.bind(this);
+    this.searchFull = this.searchFull.bind(this);
   }
-  return (
-    <div id="browse-page">
-      <div id="browse-left">
-        <div id="search-website">
-          <h2>selected career pages</h2>
-          <div className="search-div">
-            <button className="big-button" value={"hasadsds"} onClick = {handleUnsubscribe}> Remove </button>
+  componentDidMount() {
+    if (this.props.user) {
+      this.setState({
+        user: this.props.user
+      }, function() {
+        console.log(this.props);
+        this.searchFull();
+      })
+    }
+  }
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.user !== this.props.user ) {
+      this.setState({
+        user: nextProps.user
+      }, function() {
+        console.log(this.props);
+        this.searchFull();
+      })
+    }
+  }
+  onChangeSubscribe(site) {
+    for (var i = 0; i < this.state.monitored.length; i++) {
+      if (this.state.monitored[i]._id === site) {
+        // remove from monitor
+        axios.post(`http://localhost:3000/removeSubscribe/${this.props.user._id}`, {
+          id: site
+        })
+        .then((response) => {
+          // perform an entire search, reload all of it
+          this.searchFull();
+        })
+        .catch((error) => {
+          console.log("error fetching and parsing data", error);
+        })
+      }
+    }
+  }
+  searchFull() {
+    // refresh both monitored & available
+    axios.post(`http://localhost:3000/browse/${this.state.user._id}`, {
+      query: this.state.query
+    })
+    .then((response) => {
+      let data = response.data;
+      this.setState({
+        monitored: data.monitored
+      })
+    })
+    .catch((error) => {
+      console.log("error fetching and parsing data", error);
+    })
+  }
+  render() {
+    return (
+        <div id="browse-page">
+          <div id="browse-left">
+            <div id="search-website">
+              <h2>selected career pages</h2>
+            </div>
+            <Available
+            onChangeSubscribe = {this.onChangeSubscribe}
+            available = {this.state.monitored} />
+            <div id="profile-premium">
+              <h2>go premium</h2>
+            </div>
+          </div>
+          <div className="right-sidebar">
+            <div id="welcome-user">
+              <div className="right-sidebar-title">
+                <p>Hi {this.props.user.firstName}!</p>
+                <button className="big-button" onClick = {this.props.handleLogout}> Log out </button>
+              </div>
+            </div>
+            <div className="request-website">
+              <div className="right-sidebar-title">
+                <h2>find more career pages </h2>
+              </div>
+              <div className="single-text">
+                <p> </p>
+              </div>
+              <div className="single-text">
+                <button className="big-button"><Link to='/browse'>browse career pages</Link></button>
+              </div>
+            </div>
           </div>
         </div>
-        <Available available = {props.user}/>
-        <div id="profile-premium">
-          <h2>go premium</h2>
-        </div>
-      </div>
-      <div className="right-sidebar">
-        <div id="welcome-user">
-          <div className="right-sidebar-title">
-            <p>Hi {props.user.firstName}!</p>
-            <button className="big-button" onClick = {props.handleLogout}> Log out </button>
-          </div>
-        </div>
-        <div className="request-website">
-          <div className="right-sidebar-title">
-            <h2>find more career pages </h2>
-          </div>
-          <div className="single-text">
-            <p> </p>
-          </div>
-          <div className="single-text">
-            <button className="big-button"><Link to='/browse'>browse career pages</Link></button>
-          </div>
-        </div>
-      </div>
-    </div>
-  )
+    )
+  }
 }
 
 module.exports = {
