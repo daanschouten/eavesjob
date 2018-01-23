@@ -1,6 +1,5 @@
 import React from 'react';
 import {
-    BrowserRouter as Router,
     Redirect,
     Route,
     Switch,
@@ -20,6 +19,10 @@ const { RequestWebsite } = require('../Contact');
 const { Contact } = require('../Contact');
 const { AddWebsite } = require('../Admin');
 const { AddKeyword } = require('../Admin');
+
+const { PrivateRoute } = require('../RestrictedRoutes');
+const { StrangerRoute } = require('../RestrictedRoutes');
+const { AdminRoute } = require('../RestrictedRoutes');
 
 class App extends React.Component {
     constructor(props) {
@@ -52,24 +55,23 @@ class App extends React.Component {
         <div id="main">
             <Header user={ this.state.user } />
             <Switch>
+
               <Route path="/" exact render={props => <RegisterHome
                 onRegister = {this.onRegister} />} />
-              <Route path="/login" render={props => <Login
-                onLogin = {this.onLogin} />} />
-              <Route path="/register" render={props => <Register
-                onRegister = {this.onRegister} /> } />
-
-              <Route path="/browse" render={props => <Browse
-                user = {this.state.user} /> } />
-              <Route path="/profile" render={props =>  <Profile
-                user = {this.state.user}
-                handleLogout = {this.onLogout} /> } />
-
-              <Route path="/addKeyword" component={AddKeyword} />
-              <Route path="/requestwebsite" component = {RequestWebsite} />
-              <Route path="/addwebsite" component = {AddWebsite} />
               <Route path="/contact" component={Contact} />
+
+              <StrangerRoute path="/login" component = {Login} onLogin = {this.onLogin} />
+              <StrangerRoute path="/register" component= {Register} onRegister = {this.onRegister} />
+
+              <PrivateRoute path='/browse' component={Browse} user={this.state.user}/>
+              <PrivateRoute path="/profile" component={Profile} user = {this.state.user} handleLogout = {this.onLogout} />
+              <PrivateRoute path="/requestWebsite" component= {RequestWebsite} user = {this.state.user} />
+
+              <AdminRoute path="/addWebsite" component = {AddWebsite} />
+              <AdminRoute path="/addKeyword" component = { AddKeyword } />
+
               <Route component = { NotFound }/>
+
             </Switch>
             <Footer />
         </div>

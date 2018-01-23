@@ -20,7 +20,6 @@ class Profile extends React.Component {
       this.setState({
         user: this.props.user
       }, function() {
-        console.log(this.props);
         this.searchFull();
       })
     }
@@ -30,7 +29,6 @@ class Profile extends React.Component {
       this.setState({
         user: nextProps.user
       }, function() {
-        console.log(this.props);
         this.searchFull();
       })
     }

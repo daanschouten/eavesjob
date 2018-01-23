@@ -76,7 +76,7 @@ module.exports = warning;
 "use strict";
 
 
-var bind = __webpack_require__(42);
+var bind = __webpack_require__(43);
 var isBuffer = __webpack_require__(105);
 
 /*global toString:true*/
@@ -449,7 +449,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "BrowserRouter", function() { return __WEBPACK_IMPORTED_MODULE_0__BrowserRouter__["a"]; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__HashRouter__ = __webpack_require__(76);
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "HashRouter", function() { return __WEBPACK_IMPORTED_MODULE_1__HashRouter__["a"]; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Link__ = __webpack_require__(37);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Link__ = __webpack_require__(38);
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "Link", function() { return __WEBPACK_IMPORTED_MODULE_2__Link__["a"]; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__MemoryRouter__ = __webpack_require__(78);
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "MemoryRouter", function() { return __WEBPACK_IMPORTED_MODULE_3__MemoryRouter__["a"]; });
@@ -459,7 +459,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "Prompt", function() { return __WEBPACK_IMPORTED_MODULE_5__Prompt__["a"]; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__Redirect__ = __webpack_require__(86);
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "Redirect", function() { return __WEBPACK_IMPORTED_MODULE_6__Redirect__["a"]; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__Route__ = __webpack_require__(38);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__Route__ = __webpack_require__(39);
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "Route", function() { return __WEBPACK_IMPORTED_MODULE_7__Route__["a"]; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__Router__ = __webpack_require__(20);
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "Router", function() { return __WEBPACK_IMPORTED_MODULE_8__Router__["a"]; });
@@ -1012,8 +1012,8 @@ var createPath = function createPath(location) {
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return createLocation; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return locationsAreEqual; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_resolve_pathname__ = __webpack_require__(34);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_value_equal__ = __webpack_require__(35);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_resolve_pathname__ = __webpack_require__(35);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_value_equal__ = __webpack_require__(36);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__PathUtils__ = __webpack_require__(12);
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
@@ -1095,11 +1095,11 @@ exports.locationsAreEqual = exports.createLocation = undefined;
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
-var _resolvePathname = __webpack_require__(34);
+var _resolvePathname = __webpack_require__(35);
 
 var _resolvePathname2 = _interopRequireDefault(_resolvePathname);
 
-var _valueEqual = __webpack_require__(35);
+var _valueEqual = __webpack_require__(36);
 
 var _valueEqual2 = _interopRequireDefault(_valueEqual);
 
@@ -1611,10 +1611,10 @@ function getDefaultAdapter() {
   var adapter;
   if (typeof XMLHttpRequest !== 'undefined') {
     // For browsers use XHR adapter
-    adapter = __webpack_require__(43);
+    adapter = __webpack_require__(44);
   } else if (typeof process !== 'undefined') {
     // For node use HTTP adapter
-    adapter = __webpack_require__(43);
+    adapter = __webpack_require__(44);
   }
   return adapter;
 }
@@ -1688,14 +1688,109 @@ module.exports = defaults;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ }),
-/* 27 */,
+/* 27 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _extends = Object.assign || function (target) {
+  for (var i = 1; i < arguments.length; i++) {
+    var source = arguments[i];for (var key in source) {
+      if (Object.prototype.hasOwnProperty.call(source, key)) {
+        target[key] = source[key];
+      }
+    }
+  }return target;
+};
+
+var _react = __webpack_require__(0);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactRouterDom = __webpack_require__(7);
+
+function _interopRequireDefault(obj) {
+  return obj && obj.__esModule ? obj : { default: obj };
+}
+
+function _objectWithoutProperties(obj, keys) {
+  var target = {};for (var i in obj) {
+    if (keys.indexOf(i) >= 0) continue;if (!Object.prototype.hasOwnProperty.call(obj, i)) continue;target[i] = obj[i];
+  }return target;
+}
+
+var getAuth = function getAuth(role) {
+  var canUseDOM = !!(typeof window !== 'undefined' && window.document && window.document.createElement);
+  if (canUseDOM) {
+    var user = JSON.parse(localStorage.getItem('user'));
+    if (user && role) {
+      if (role === "user" || role == "stranger") {
+        return true;
+      } else if (role === "admin") {
+        if (user._id === "5a62075953a7b0103d06a9e3") {
+          return true;
+        } else {
+          return false;
+        }
+      }
+    } else {
+      return false;
+    }
+  }
+};
+
+var PrivateRoute = function PrivateRoute(_ref) {
+  var Component = _ref.component,
+      rest = _objectWithoutProperties(_ref, ['component']);
+
+  return _react2.default.createElement(_reactRouterDom.Route, _extends({}, rest, { render: function render(props) {
+      return getAuth("user") ? _react2.default.createElement(Component, _extends({}, rest, props)) : _react2.default.createElement(_reactRouterDom.Redirect, { to: {
+          pathname: '/login',
+          state: { from: props.location }
+        } });
+    } }));
+};
+
+var AdminRoute = function AdminRoute(_ref2) {
+  var Component = _ref2.component,
+      rest = _objectWithoutProperties(_ref2, ['component']);
+
+  return _react2.default.createElement(_reactRouterDom.Route, _extends({}, rest, { render: function render(props) {
+      return getAuth("admin") ? _react2.default.createElement(Component, _extends({}, rest, props)) : _react2.default.createElement(_reactRouterDom.Redirect, { to: {
+          pathname: '/',
+          state: { from: props.location }
+        } });
+    } }));
+};
+
+var StrangerRoute = function StrangerRoute(_ref3) {
+  var Component = _ref3.component,
+      rest = _objectWithoutProperties(_ref3, ['component']);
+
+  return _react2.default.createElement(_reactRouterDom.Route, _extends({}, rest, { render: function render(props) {
+      return getAuth("stranger") ? _react2.default.createElement(_reactRouterDom.Redirect, { to: {
+          pathname: '/profile',
+          state: { from: props.location }
+        } }) : _react2.default.createElement(Component, _extends({}, rest, props));
+    } }));
+};
+
+module.exports = {
+  PrivateRoute: PrivateRoute,
+  AdminRoute: AdminRoute,
+  StrangerRoute: StrangerRoute
+};
+
+/***/ }),
 /* 28 */,
 /* 29 */,
 /* 30 */,
 /* 31 */,
 /* 32 */,
 /* 33 */,
-/* 34 */
+/* 34 */,
+/* 35 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1772,7 +1867,7 @@ function resolvePathname(to) {
 /* harmony default export */ __webpack_exports__["default"] = (resolvePathname);
 
 /***/ }),
-/* 35 */
+/* 36 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1817,7 +1912,7 @@ function valueEqual(a, b) {
 /* harmony default export */ __webpack_exports__["default"] = (valueEqual);
 
 /***/ }),
-/* 36 */
+/* 37 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1878,7 +1973,7 @@ var isExtraneousPopstateEvent = exports.isExtraneousPopstateEvent = function isE
 };
 
 /***/ }),
-/* 37 */
+/* 38 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1988,18 +2083,18 @@ Link.contextTypes = {
 /* harmony default export */ __webpack_exports__["a"] = (Link);
 
 /***/ }),
-/* 38 */
+/* 39 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react_router_es_Route__ = __webpack_require__(39);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react_router_es_Route__ = __webpack_require__(40);
 // Written in this round about way for babel-transform-imports
 
 
 /* harmony default export */ __webpack_exports__["a"] = (__WEBPACK_IMPORTED_MODULE_0_react_router_es_Route__["a" /* default */]);
 
 /***/ }),
-/* 39 */
+/* 40 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2148,7 +2243,7 @@ Route.childContextTypes = {
 /* harmony default export */ __webpack_exports__["a"] = (Route);
 
 /***/ }),
-/* 40 */
+/* 41 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2214,7 +2309,7 @@ var isExtraneousPopstateEvent = function isExtraneousPopstateEvent(event) {
 };
 
 /***/ }),
-/* 41 */
+/* 42 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2299,7 +2394,7 @@ module.exports = {
 };
 
 /***/ }),
-/* 42 */
+/* 43 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2317,7 +2412,7 @@ module.exports = function bind(fn, thisArg) {
 
 
 /***/ }),
-/* 43 */
+/* 44 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2328,7 +2423,7 @@ var settle = __webpack_require__(108);
 var buildURL = __webpack_require__(110);
 var parseHeaders = __webpack_require__(111);
 var isURLSameOrigin = __webpack_require__(112);
-var createError = __webpack_require__(44);
+var createError = __webpack_require__(45);
 var btoa = (typeof window !== 'undefined' && window.btoa && window.btoa.bind(window)) || __webpack_require__(113);
 
 module.exports = function xhrAdapter(config) {
@@ -2505,7 +2600,7 @@ module.exports = function xhrAdapter(config) {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ }),
-/* 44 */
+/* 45 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2530,7 +2625,7 @@ module.exports = function createError(message, config, code, request, response) 
 
 
 /***/ }),
-/* 45 */
+/* 46 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2542,7 +2637,7 @@ module.exports = function isCancel(value) {
 
 
 /***/ }),
-/* 46 */
+/* 47 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2568,7 +2663,7 @@ module.exports = Cancel;
 
 
 /***/ }),
-/* 47 */
+/* 48 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2842,7 +2937,7 @@ module.exports = {
 };
 
 /***/ }),
-/* 48 */
+/* 49 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2879,7 +2974,7 @@ module.exports = {
 };
 
 /***/ }),
-/* 49 */
+/* 50 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2905,7 +3000,7 @@ module.exports = {
 };
 
 /***/ }),
-/* 50 */
+/* 51 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2994,19 +3089,19 @@ module.exports = {
 };
 
 /***/ }),
-/* 51 */
+/* 52 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-__webpack_require__(52);
+__webpack_require__(53);
 
 var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactDom = __webpack_require__(27);
+var _reactDom = __webpack_require__(28);
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
@@ -3027,13 +3122,13 @@ function _interopRequireDefault(obj) {
 _reactDom2.default.hydrate(_react2.default.createElement(_reactRouterDom.BrowserRouter, null, _react2.default.createElement(_App2.default, { data: window.__PRELOADED_STATE__ })), document.getElementById('root'));
 
 /***/ }),
-/* 52 */
+/* 53 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(53);
+var content = __webpack_require__(54);
 if(typeof content === 'string') content = [[module.i, content, '']];
 // Prepare cssTransformation
 var transform;
@@ -3058,40 +3153,17 @@ if(false) {
 }
 
 /***/ }),
-/* 53 */
+/* 54 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var escape = __webpack_require__(54);
-exports = module.exports = __webpack_require__(55)(false);
+exports = module.exports = __webpack_require__(55)(undefined);
 // imports
 
 
 // module
-exports.push([module.i, "body,\ndiv,\nh1,\nh2,\nh3,\np,\nheader {\n  margin: 0;\n  padding: 0;\n  box-sizing: border-box;\n}\ndiv,\nheader,\nform,\nbutton,\ninput,\nfooter {\n  display: flex;\n  box-sizing: border-box;\n}\nbody {\n  background-color: #f5f5f5;\n}\n@font-face {\n  font-family: RobotoCondensed;\n  src: url(" + escape(__webpack_require__(56)) + ");\n}\n@font-face {\n  font-family: RobotoLight;\n  src: url(" + escape(__webpack_require__(57)) + ");\n}\n@font-face {\n  font-family: RobotoRegular;\n  src: url(" + escape(__webpack_require__(58)) + ");\n}\n@font-face {\n  font-family: RobotoCondensedRegular;\n  src: url(" + escape(__webpack_require__(59)) + ");\n}\nh1,\nh2,\nh3,\nh4,\nh5 {\n  font-family: RobotoCondensed;\n}\np,\ninput {\n  font-family: RobotoRegular;\n}\n#main {\n  width: 100%;\n  flex-flow: column;\n}\nheader {\n  width: 100%;\n  justify-content: space-between;\n  align-content: center;\n  padding: 0 40px;\n  height: 55px;\n  background: #619B8A;\n  color: white;\n}\nheader a {\n  font-family: RobotoRegular;\n  margin: 0 15px;\n  font-size: 1.1em;\n  text-decoration: none;\n  color: white;\n}\nheader a#header-sign-up {\n  padding: 5px 20px;\n  margin: 0 20px;\n  border: 2px solid #619B8A;\n}\nheader #logo {\n  align-items: center;\n}\nheader #menu {\n  align-items: center;\n}\n.container-single {\n  width: 100%;\n  min-height: 100vh;\n  margin-top: 15vh;\n  justify-content: center;\n}\n.container-single .container-center {\n  width: 100%;\n  align-items: center;\n  flex-flow: column;\n}\n.container-single .container-center h1.title {\n  font-size: 55px;\n  margin: 0;\n  font-family: RobotoCondensed;\n  text-align: center;\n}\n.container-single .container-center p {\n  font-family: RobotoCondensedRegular;\n  font-size: 1.4em;\n  line-height: 1.4em;\n  max-width: 450px;\n  margin-bottom: 20px;\n  text-align: justify;\n}\n.container-single .container-center p:first-of-type {\n  margin: 50px 0 20px 0;\n}\n.container-single .container-center #front-buttons {\n  justify-content: space-between;\n  margin: 10px 0;\n}\n.container-single .container-center #front-buttons button {\n  font-family: RobotoRegular;\n  font-size: 1.1em;\n  padding: 10px 20px;\n  border: 0px;\n  background: #619B8A;\n  color: white;\n  margin: 0 20px;\n  border-radius: 5px;\n  outline: none;\n}\n.container-single .container-center #front-buttons button:hover {\n  color: black;\n  cursor: pointer;\n}\n.container-double {\n  width: 100%;\n  min-height: 100vh;\n  margin-top: 15vh;\n  justify-content: space-around;\n}\n.container-double .container-left {\n  align-items: center;\n  flex-flow: column;\n  width: 50%;\n  margin-top: 10px;\n}\n.container-double .container-left h2.title {\n  font-size: 50px;\n  margin: 0;\n  font-family: RobotoCondensed;\n  text-align: center;\n}\n.container-double .container-left p {\n  font-family: RobotoCondensedRegular;\n  font-size: 1.4em;\n  text-align: justify;\n  max-width: 450px;\n  line-height: 1.4em;\n  margin-bottom: 20px;\n}\n.container-double .container-left p:first-of-type {\n  margin: 50px 0 20px 0;\n}\n#browse-page {\n  width: 100%;\n  min-height: 100vh;\n  padding: 40px 50px;\n  justify-content: space-between;\n}\n#browse-page #browse-left {\n  width: 70%;\n  flex-flow: column;\n}\n#browse-page #browse-left #search-website {\n  padding: 30px 5%;\n  background: #FFFFFF;\n  border: 1px solid #EAEAEA;\n  border-radius: 5px;\n  margin-bottom: 30px;\n  justify-content: space-between;\n  align-items: center;\n  font-family: RobotoLight;\n}\n#browse-page #browse-left #search-website .search-div {\n  height: 40px;\n  width: 50%;\n}\n#browse-page #browse-left #search-website .search-div .search-form {\n  width: 100%;\n}\n#browse-page #browse-left #search-website .search-div .search-form .search-bar {\n  width: 100%;\n  justify-content: space-between;\n  background: #e6e6e6;\n}\n#browse-page #browse-left #search-website .search-div .search-form .search-bar input {\n  flex: 10 1 50%;\n  border: none;\n  padding: 0 10px;\n  background: none;\n  outline: none;\n  font-size: 1.1em;\n  font-family: RobotoLight;\n}\n#browse-page #browse-left #search-website .search-div .search-form .search-bar button {\n  border: none;\n  width: 60px;\n  justify-content: center;\n  padding: 0;\n  background: none;\n}\n#browse-page #browse-left #search-website .search-div .search-form .search-bar button :hover {\n  cursor: pointer;\n}\n#browse-page #browse-left #search-website .search-div .search-form .search-bar button img {\n  width: 35%;\n  height: auto;\n}\n#browse-page #browse-left #website-list {\n  padding: 30px 0;\n  flex-flow: column;\n  background: #FFFFFF;\n  align-items: center;\n  border: 1px solid #EAEAEA;\n  border-radius: 5px;\n}\n#browse-page #browse-left #website-list .single-website {\n  width: 100%;\n  border-bottom: 0.5px solid #EAEAEA;\n  justify-content: space-between;\n  align-items: center;\n  padding: 12px 5%;\n  font-size: 1.1em;\n}\n#browse-page #browse-left #website-list .single-website .single-logo {\n  width: 10%;\n  justify-content: flex-start;\n}\n#browse-page #browse-left #website-list .single-website .single-monitor {\n  width: 10%;\n  justify-content: center;\n}\n#browse-page #browse-left #website-list .single-website .single-monitor img {\n  height: 20px;\n  width: auto;\n}\n#browse-page #browse-left #website-list .single-website .single-monitor img:hover {\n  cursor: pointer;\n}\n#browse-page #browse-left #website-list .single-website .single-date {\n  width: 25%;\n  justify-content: flex-end;\n}\n#browse-page #browse-left #website-list .single-website .single-name {\n  width: 55%;\n}\n#browse-page #browse-left #website-list .single-website:nth-child(even) {\n  background: linear-gradient(to right, #e6e6e6, #FFFFFF);\n}\n#browse-page #browse-left #website-list .single-website:hover {\n  background: #619B8A;\n}\n#browse-page #browse-left #website-list .single-website:first-of-type:hover {\n  background: #FFFFFF;\n}\n#browse-page #browse-left #profile-premium {\n  padding: 30px 5%;\n  background: #FFFFFF;\n  border: 1px solid #EAEAEA;\n  border-radius: 5px;\n  margin: 30px 0;\n  justify-content: space-between;\n  align-items: center;\n  font-family: RobotoLight;\n}\n#browse-page #browse-left #no-results {\n  display: none;\n  padding: 30px 5%;\n  background: #FFFFFF;\n  border: 1px solid #EAEAEA;\n  border-radius: 5px;\n  flex-flow: column;\n  align-items: center;\n  font-family: RobotoLight;\n}\n#browse-page #browse-left #no-results #results-text {\n  width: 100%;\n  justify-content: space-between;\n  align-items: center;\n  margin: 30px 0;\n}\n#browse-page #browse-left #no-results #results-text h2 {\n  min-width: 100px;\n  margin-right: 30px;\n}\n#browse-page #browse-left #no-results #results-text p {\n  font-size: 1.1em;\n}\n#browse-page #browse-left #no-results #results-text i {\n  color: #619B8A;\n}\n#browse-page #browse-left #no-results #request-website form {\n  flex-flow: column;\n}\n#browse-page .right-sidebar {\n  width: 25%;\n  flex-flow: column;\n}\n#browse-page .right-sidebar #monitored-websites,\n#browse-page .right-sidebar .request-website,\n#browse-page .right-sidebar #welcome-user {\n  background: #FFFFFF;\n  border: 1px solid #EAEAEA;\n  border-radius: 5px;\n  margin-bottom: 30px;\n  flex-flow: column;\n}\n#browse-page .right-sidebar #monitored-websites .right-sidebar-title,\n#browse-page .right-sidebar .request-website .right-sidebar-title,\n#browse-page .right-sidebar #welcome-user .right-sidebar-title {\n  width: 100%;\n  padding: 30px 5%;\n  height: 100px;\n  align-items: center;\n  justify-content: space-between;\n}\n#browse-page .right-sidebar #monitored-websites .right-sidebar-title p,\n#browse-page .right-sidebar .request-website .right-sidebar-title p,\n#browse-page .right-sidebar #welcome-user .right-sidebar-title p {\n  font-size: 1.1em;\n}\n#browse-page .right-sidebar #monitored-websites .right-sidebar-title button,\n#browse-page .right-sidebar .request-website .right-sidebar-title button,\n#browse-page .right-sidebar #welcome-user .right-sidebar-title button {\n  font-family: RobotoRegular;\n  font-size: 1.1em;\n  padding: 10px 20px;\n  border: 0px;\n  background: #619B8A;\n  border-radius: 5px;\n  margin: 10px 0;\n  outline: none;\n}\n#browse-page .right-sidebar #monitored-websites .right-sidebar-title button:hover,\n#browse-page .right-sidebar .request-website .right-sidebar-title button:hover,\n#browse-page .right-sidebar #welcome-user .right-sidebar-title button:hover {\n  cursor: pointer;\n}\n#browse-page .right-sidebar #monitored-websites .single-website,\n#browse-page .right-sidebar .request-website .single-website,\n#browse-page .right-sidebar #welcome-user .single-website {\n  width: 100%;\n  border-bottom: 0.5px solid #EAEAEA;\n  justify-content: space-between;\n  align-items: center;\n  padding: 12px 5%;\n  font-size: 1.1em;\n}\n#browse-page .right-sidebar #monitored-websites .single-website .single-logo,\n#browse-page .right-sidebar .request-website .single-website .single-logo,\n#browse-page .right-sidebar #welcome-user .single-website .single-logo {\n  display: none;\n}\n#browse-page .right-sidebar #monitored-websites .single-website .single-monitor,\n#browse-page .right-sidebar .request-website .single-website .single-monitor,\n#browse-page .right-sidebar #welcome-user .single-website .single-monitor {\n  width: 30%;\n  justify-content: flex-end;\n}\n#browse-page .right-sidebar #monitored-websites .single-website .single-monitor img,\n#browse-page .right-sidebar .request-website .single-website .single-monitor img,\n#browse-page .right-sidebar #welcome-user .single-website .single-monitor img {\n  height: 20px;\n  width: auto;\n}\n#browse-page .right-sidebar #monitored-websites .single-website .single-monitor img:hover,\n#browse-page .right-sidebar .request-website .single-website .single-monitor img:hover,\n#browse-page .right-sidebar #welcome-user .single-website .single-monitor img:hover {\n  cursor: pointer;\n}\n#browse-page .right-sidebar #monitored-websites .single-website .single-date,\n#browse-page .right-sidebar .request-website .single-website .single-date,\n#browse-page .right-sidebar #welcome-user .single-website .single-date {\n  display: none;\n}\n#browse-page .right-sidebar #monitored-websites .single-text,\n#browse-page .right-sidebar .request-website .single-text,\n#browse-page .right-sidebar #welcome-user .single-text {\n  width: 100%;\n  border-bottom: 0.5px solid #EAEAEA;\n  justify-content: space-between;\n  padding: 0 5% 12px 5%;\n  font-size: 1.1em;\n  justify-content: center;\n}\n#browse-page .right-sidebar #monitored-websites .single-text button,\n#browse-page .right-sidebar .request-website .single-text button,\n#browse-page .right-sidebar #welcome-user .single-text button {\n  font-family: RobotoRegular;\n  font-size: 1.1em;\n  padding: 10px 20px;\n  border: 0px;\n  background: #619B8A;\n  border-radius: 5px;\n  margin: 10px 0;\n  outline: none;\n}\n#browse-page .right-sidebar #monitored-websites .single-text button:hover,\n#browse-page .right-sidebar .request-website .single-text button:hover,\n#browse-page .right-sidebar #welcome-user .single-text button:hover {\n  cursor: pointer;\n}\n#browse-page .right-sidebar #monitored-websites .single-website:nth-child(even),\n#browse-page .right-sidebar .request-website .single-website:nth-child(even),\n#browse-page .right-sidebar #welcome-user .single-website:nth-child(even) {\n  background: linear-gradient(to right, #e6e6e6, #FFFFFF 90%);\n}\n#browse-page .right-sidebar #monitored-websites .single-website:hover,\n#browse-page .right-sidebar .request-website .single-website:hover,\n#browse-page .right-sidebar #welcome-user .single-website:hover {\n  background: #619B8A;\n}\n#browse-page .right-sidebar #monitored-websites .single-website:first-of-type:hover,\n#browse-page .right-sidebar .request-website .single-website:first-of-type:hover,\n#browse-page .right-sidebar #welcome-user .single-website:first-of-type:hover {\n  background: #FFFFFF;\n}\n.container-right {\n  width: 50%;\n}\n.container-center,\n.container-right {\n  flex-flow: column;\n  align-items: center;\n}\n.container-center .single,\n.container-right .single {\n  width: 500px;\n  flex-flow: column;\n  background: #FFFFFF;\n  align-items: center;\n  border: 1px solid #EAEAEA;\n  border-radius: 5px;\n  margin-bottom: 20px;\n}\n.container-center .single .form-redirect,\n.container-right .single .form-redirect {\n  width: 80%;\n  justify-content: space-between;\n  align-items: center;\n  padding: 20px 0;\n}\n.container-center .single .form-redirect button,\n.container-right .single .form-redirect button {\n  width: 48%;\n}\n.container-center .single .form-title,\n.container-right .single .form-title {\n  width: 80%;\n  margin-top: 20px;\n  justify-content: flex-start;\n}\n.container-center .single .form-title p,\n.container-right .single .form-title p {\n  font-size: 1.1em;\n}\n.container-center .single .form-title-vertical,\n.container-right .single .form-title-vertical {\n  width: 80%;\n  margin: 20px 0;\n  justify-content: flex-start;\n  flex-flow: column;\n}\n.container-center .single .form-title-vertical p,\n.container-right .single .form-title-vertical p {\n  margin-top: 10px;\n  font-size: 1.1em;\n}\n.container-center .single .form-title-vertical a,\n.container-right .single .form-title-vertical a {\n  color: #619B8A;\n}\n.container-center .single .form-small,\n.container-right .single .form-small {\n  flex-flow: column;\n  width: 80%;\n  padding: 10px 0;\n}\n.container-center .single .form-small .form-group,\n.container-right .single .form-small .form-group {\n  justify-content: space-between;\n}\n.container-center .single .form-small .form-group input,\n.container-right .single .form-small .form-group input {\n  width: 100%;\n}\n.container-center .single .form-small .form-group input.half,\n.container-right .single .form-small .form-group input.half {\n  width: 48%;\n}\n.container-center .single .form-small .form-group button,\n.container-right .single .form-small .form-group button,\n.container-center .single .form-small .form-group p,\n.container-right .single .form-small .form-group p {\n  width: 100%;\n  margin: 15px 0;\n  font-size: 1.1em;\n}\n.big-input {\n  height: 45px;\n  padding: 10px;\n  margin-top: 15px;\n  font-size: 1em;\n  background: #e6e6e6;\n  border: 1px solid #e6e6e6;\n  outline: none;\n  border-radius: 5px;\n}\n.big-button {\n  height: 45px;\n  padding: 10px;\n  background: #e6e6e6;\n  outline: none;\n  border-radius: 5px;\n  background: #619B8A;\n  font-size: 1.1em;\n  justify-content: center;\n}\n.big-button a {\n  text-decoration: none;\n  color: black;\n}\nbutton:hover,\nbutton:focus {\n  cursor: pointer;\n  color: white;\n}\nbutton:hover a,\nbutton:focus a {\n  cursor: pointer;\n  color: white;\n}\ninput:focus,\ninput:hover {\n  border: 1px solid #619B8A;\n}\n.switch {\n  display: inline-block;\n  position: relative;\n  cursor: pointer;\n  width: 40px;\n  height: calc(20px);\n  border-radius: 60px;\n  background-color: #619B8A;\n}\n.switch .switch__toggle {\n  width: 0;\n  height: 0;\n  opacity: 0;\n  position: absolute;\n  top: 0;\n  left: 0;\n}\n.switch .switch__toggle:checked ~ .switch__label:before {\n  transform: scale(0);\n  opacity: .7;\n}\n.switch .switch__toggle:checked ~ .switch__label:after {\n  transform: translate3d(100%, -50%, 0);\n}\n.switch .switch__toggle:checked ~ .switch__label {\n  box-shadow: 0 0 0 1px white;\n}\n.switch .switch__label {\n  display: block;\n  width: 100%;\n  height: 100%;\n  border-radius: 60px;\n  box-shadow: 0 0 0 1px #619B8A;\n}\n.switch .switch__label:before,\n.switch .switch__label:after {\n  content: \"\";\n  cursor: pointer;\n  position: absolute;\n  top: 0;\n  left: 0;\n  background: #f5f5f5;\n}\n.switch .switch__label:before {\n  width: 100%;\n  height: 100%;\n  box-sizing: border-box;\n  border-radius: 60px;\n  transition: opacity 0.2s ease-out 0.1s, transform 0.2s ease-out 0.1s;\n  transform: scale(1);\n  opacity: 1;\n}\n.switch .switch__label:after {\n  top: 50%;\n  z-index: 3;\n  transition: transform 0.4s cubic-bezier(0.44, -0.12, 0.07, 1.15);\n  width: calc(20px);\n  height: calc(20px);\n  transform: translate3d(0, -50%, 0);\n  border-radius: 100%;\n  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);\n}\nfooter {\n  width: 100%;\n  padding: 30px 10%;\n  height: 300px;\n  background: #619B8A;\n  justify-content: space-between;\n}\nfooter #footer-left {\n  width: 40%;\n}\nfooter #footer-left .footer-column {\n  width: 80%;\n  height: 100%;\n}\nfooter #footer-right {\n  width: 60%;\n  justify-content: space-between;\n  padding-left: 10%;\n}\nfooter #footer-right .footer-column {\n  width: 40%;\n  height: 100%;\n}\nfooter #footer-right,\nfooter #footer-left {\n  height: 100%;\n}\n", ""]);
+exports.push([module.i, "body,\ndiv,\nh1,\nh2,\nh3,\np,\nheader {\n  margin: 0;\n  padding: 0;\n  box-sizing: border-box;\n}\ndiv,\nheader,\nform,\nbutton,\ninput,\nfooter {\n  display: flex;\n  box-sizing: border-box;\n}\nbody {\n  background-color: #f5f5f5;\n}\n@font-face {\n  font-family: RobotoCondensed;\n  src: url(" + __webpack_require__(56) + ");\n}\n@font-face {\n  font-family: RobotoLight;\n  src: url(" + __webpack_require__(57) + ");\n}\n@font-face {\n  font-family: RobotoRegular;\n  src: url(" + __webpack_require__(58) + ");\n}\n@font-face {\n  font-family: RobotoCondensedRegular;\n  src: url(" + __webpack_require__(59) + ");\n}\nh1,\nh2,\nh3,\nh4,\nh5 {\n  font-family: RobotoCondensed;\n}\np,\ninput {\n  font-family: RobotoRegular;\n}\n#main {\n  width: 100%;\n  flex-flow: column;\n}\nheader {\n  width: 100%;\n  justify-content: space-between;\n  align-content: center;\n  padding: 0 40px;\n  height: 55px;\n  background: #619B8A;\n  color: white;\n}\nheader a {\n  font-family: RobotoRegular;\n  margin: 0 15px;\n  font-size: 1.1em;\n  text-decoration: none;\n  color: white;\n}\nheader a#header-sign-up {\n  padding: 5px 20px;\n  margin: 0 20px;\n  border: 2px solid #619B8A;\n}\nheader #logo {\n  align-items: center;\n}\nheader #menu {\n  align-items: center;\n}\n.container-single {\n  width: 100%;\n  min-height: 100vh;\n  margin-top: 15vh;\n  justify-content: center;\n}\n.container-single .container-center {\n  width: 100%;\n  align-items: center;\n  flex-flow: column;\n}\n.container-single .container-center h1.title {\n  font-size: 55px;\n  margin: 0;\n  font-family: RobotoCondensed;\n  text-align: center;\n}\n.container-single .container-center p {\n  font-family: RobotoCondensedRegular;\n  font-size: 1.4em;\n  line-height: 1.4em;\n  max-width: 450px;\n  margin-bottom: 20px;\n  text-align: justify;\n}\n.container-single .container-center p:first-of-type {\n  margin: 50px 0 20px 0;\n}\n.container-single .container-center #front-buttons {\n  justify-content: space-between;\n  margin: 10px 0;\n}\n.container-single .container-center #front-buttons button {\n  font-family: RobotoRegular;\n  font-size: 1.1em;\n  padding: 10px 20px;\n  border: 0px;\n  background: #619B8A;\n  color: white;\n  margin: 0 20px;\n  border-radius: 5px;\n  outline: none;\n}\n.container-single .container-center #front-buttons button:hover {\n  color: black;\n  cursor: pointer;\n}\n.container-double {\n  width: 100%;\n  min-height: 100vh;\n  margin-top: 15vh;\n  justify-content: space-around;\n}\n.container-double .container-left {\n  align-items: center;\n  flex-flow: column;\n  width: 50%;\n  margin-top: 10px;\n}\n.container-double .container-left h2.title {\n  font-size: 50px;\n  margin: 0;\n  font-family: RobotoCondensed;\n  text-align: center;\n}\n.container-double .container-left p {\n  font-family: RobotoCondensedRegular;\n  font-size: 1.4em;\n  text-align: justify;\n  max-width: 450px;\n  line-height: 1.4em;\n  margin-bottom: 20px;\n}\n.container-double .container-left p:first-of-type {\n  margin: 50px 0 20px 0;\n}\n#browse-page {\n  width: 100%;\n  min-height: 100vh;\n  padding: 40px 50px;\n  justify-content: space-between;\n}\n#browse-page #browse-left {\n  width: 70%;\n  flex-flow: column;\n}\n#browse-page #browse-left #search-website {\n  padding: 30px 5%;\n  background: #FFFFFF;\n  border: 1px solid #EAEAEA;\n  border-radius: 5px;\n  margin-bottom: 30px;\n  justify-content: space-between;\n  align-items: center;\n  font-family: RobotoLight;\n}\n#browse-page #browse-left #search-website .search-div {\n  height: 40px;\n  width: 50%;\n}\n#browse-page #browse-left #search-website .search-div .search-form {\n  width: 100%;\n}\n#browse-page #browse-left #search-website .search-div .search-form .search-bar {\n  width: 100%;\n  justify-content: space-between;\n  background: #e6e6e6;\n}\n#browse-page #browse-left #search-website .search-div .search-form .search-bar input {\n  flex: 10 1 50%;\n  border: none;\n  padding: 0 10px;\n  background: none;\n  outline: none;\n  font-size: 1.1em;\n  font-family: RobotoLight;\n}\n#browse-page #browse-left #search-website .search-div .search-form .search-bar button {\n  border: none;\n  width: 60px;\n  justify-content: center;\n  padding: 0;\n  background: none;\n}\n#browse-page #browse-left #search-website .search-div .search-form .search-bar button :hover {\n  cursor: pointer;\n}\n#browse-page #browse-left #search-website .search-div .search-form .search-bar button img {\n  width: 35%;\n  height: auto;\n}\n#browse-page #browse-left #website-list {\n  padding: 30px 0;\n  flex-flow: column;\n  background: #FFFFFF;\n  align-items: center;\n  border: 1px solid #EAEAEA;\n  border-radius: 5px;\n}\n#browse-page #browse-left #website-list .single-website {\n  width: 100%;\n  border-bottom: 0.5px solid #EAEAEA;\n  justify-content: space-between;\n  align-items: center;\n  padding: 12px 5%;\n  font-size: 1.1em;\n}\n#browse-page #browse-left #website-list .single-website .single-logo {\n  width: 10%;\n  justify-content: flex-start;\n}\n#browse-page #browse-left #website-list .single-website .single-monitor {\n  width: 10%;\n  justify-content: center;\n}\n#browse-page #browse-left #website-list .single-website .single-monitor img {\n  height: 20px;\n  width: auto;\n}\n#browse-page #browse-left #website-list .single-website .single-monitor img:hover {\n  cursor: pointer;\n}\n#browse-page #browse-left #website-list .single-website .single-date {\n  width: 25%;\n  justify-content: flex-end;\n}\n#browse-page #browse-left #website-list .single-website .single-name {\n  width: 55%;\n}\n#browse-page #browse-left #website-list .single-website:nth-child(even) {\n  background: linear-gradient(to right, #e6e6e6, #FFFFFF);\n}\n#browse-page #browse-left #website-list .single-website:hover {\n  background: #619B8A;\n}\n#browse-page #browse-left #website-list .single-website:first-of-type:hover {\n  background: #FFFFFF;\n}\n#browse-page #browse-left #profile-premium {\n  padding: 30px 5%;\n  background: #FFFFFF;\n  border: 1px solid #EAEAEA;\n  border-radius: 5px;\n  margin: 30px 0;\n  justify-content: space-between;\n  align-items: center;\n  font-family: RobotoLight;\n}\n#browse-page #browse-left #no-results {\n  display: none;\n  padding: 30px 5%;\n  background: #FFFFFF;\n  border: 1px solid #EAEAEA;\n  border-radius: 5px;\n  flex-flow: column;\n  align-items: center;\n  font-family: RobotoLight;\n}\n#browse-page #browse-left #no-results #results-text {\n  width: 100%;\n  justify-content: space-between;\n  align-items: center;\n  margin: 30px 0;\n}\n#browse-page #browse-left #no-results #results-text h2 {\n  min-width: 100px;\n  margin-right: 30px;\n}\n#browse-page #browse-left #no-results #results-text p {\n  font-size: 1.1em;\n}\n#browse-page #browse-left #no-results #results-text i {\n  color: #619B8A;\n}\n#browse-page #browse-left #no-results #request-website form {\n  flex-flow: column;\n}\n#browse-page .right-sidebar {\n  width: 25%;\n  flex-flow: column;\n}\n#browse-page .right-sidebar #monitored-websites,\n#browse-page .right-sidebar .request-website,\n#browse-page .right-sidebar #welcome-user {\n  background: #FFFFFF;\n  border: 1px solid #EAEAEA;\n  border-radius: 5px;\n  margin-bottom: 30px;\n  flex-flow: column;\n}\n#browse-page .right-sidebar #monitored-websites .right-sidebar-title,\n#browse-page .right-sidebar .request-website .right-sidebar-title,\n#browse-page .right-sidebar #welcome-user .right-sidebar-title {\n  width: 100%;\n  padding: 30px 5%;\n  height: 100px;\n  align-items: center;\n  justify-content: space-between;\n}\n#browse-page .right-sidebar #monitored-websites .right-sidebar-title p,\n#browse-page .right-sidebar .request-website .right-sidebar-title p,\n#browse-page .right-sidebar #welcome-user .right-sidebar-title p {\n  font-size: 1.1em;\n}\n#browse-page .right-sidebar #monitored-websites .right-sidebar-title button,\n#browse-page .right-sidebar .request-website .right-sidebar-title button,\n#browse-page .right-sidebar #welcome-user .right-sidebar-title button {\n  font-family: RobotoRegular;\n  font-size: 1.1em;\n  padding: 10px 20px;\n  border: 0px;\n  background: #619B8A;\n  border-radius: 5px;\n  margin: 10px 0;\n  outline: none;\n}\n#browse-page .right-sidebar #monitored-websites .right-sidebar-title button:hover,\n#browse-page .right-sidebar .request-website .right-sidebar-title button:hover,\n#browse-page .right-sidebar #welcome-user .right-sidebar-title button:hover {\n  cursor: pointer;\n}\n#browse-page .right-sidebar #monitored-websites .single-website,\n#browse-page .right-sidebar .request-website .single-website,\n#browse-page .right-sidebar #welcome-user .single-website {\n  width: 100%;\n  border-bottom: 0.5px solid #EAEAEA;\n  justify-content: space-between;\n  align-items: center;\n  padding: 12px 5%;\n  font-size: 1.1em;\n}\n#browse-page .right-sidebar #monitored-websites .single-website .single-logo,\n#browse-page .right-sidebar .request-website .single-website .single-logo,\n#browse-page .right-sidebar #welcome-user .single-website .single-logo {\n  display: none;\n}\n#browse-page .right-sidebar #monitored-websites .single-website .single-monitor,\n#browse-page .right-sidebar .request-website .single-website .single-monitor,\n#browse-page .right-sidebar #welcome-user .single-website .single-monitor {\n  width: 30%;\n  justify-content: flex-end;\n}\n#browse-page .right-sidebar #monitored-websites .single-website .single-monitor img,\n#browse-page .right-sidebar .request-website .single-website .single-monitor img,\n#browse-page .right-sidebar #welcome-user .single-website .single-monitor img {\n  height: 20px;\n  width: auto;\n}\n#browse-page .right-sidebar #monitored-websites .single-website .single-monitor img:hover,\n#browse-page .right-sidebar .request-website .single-website .single-monitor img:hover,\n#browse-page .right-sidebar #welcome-user .single-website .single-monitor img:hover {\n  cursor: pointer;\n}\n#browse-page .right-sidebar #monitored-websites .single-website .single-date,\n#browse-page .right-sidebar .request-website .single-website .single-date,\n#browse-page .right-sidebar #welcome-user .single-website .single-date {\n  display: none;\n}\n#browse-page .right-sidebar #monitored-websites .single-text,\n#browse-page .right-sidebar .request-website .single-text,\n#browse-page .right-sidebar #welcome-user .single-text {\n  width: 100%;\n  border-bottom: 0.5px solid #EAEAEA;\n  justify-content: space-between;\n  padding: 0 5% 12px 5%;\n  font-size: 1.1em;\n  justify-content: center;\n}\n#browse-page .right-sidebar #monitored-websites .single-text button,\n#browse-page .right-sidebar .request-website .single-text button,\n#browse-page .right-sidebar #welcome-user .single-text button {\n  font-family: RobotoRegular;\n  font-size: 1.1em;\n  padding: 10px 20px;\n  border: 0px;\n  background: #619B8A;\n  border-radius: 5px;\n  margin: 10px 0;\n  outline: none;\n}\n#browse-page .right-sidebar #monitored-websites .single-text button:hover,\n#browse-page .right-sidebar .request-website .single-text button:hover,\n#browse-page .right-sidebar #welcome-user .single-text button:hover {\n  cursor: pointer;\n}\n#browse-page .right-sidebar #monitored-websites .single-website:nth-child(even),\n#browse-page .right-sidebar .request-website .single-website:nth-child(even),\n#browse-page .right-sidebar #welcome-user .single-website:nth-child(even) {\n  background: linear-gradient(to right, #e6e6e6, #FFFFFF 90%);\n}\n#browse-page .right-sidebar #monitored-websites .single-website:hover,\n#browse-page .right-sidebar .request-website .single-website:hover,\n#browse-page .right-sidebar #welcome-user .single-website:hover {\n  background: #619B8A;\n}\n#browse-page .right-sidebar #monitored-websites .single-website:first-of-type:hover,\n#browse-page .right-sidebar .request-website .single-website:first-of-type:hover,\n#browse-page .right-sidebar #welcome-user .single-website:first-of-type:hover {\n  background: #FFFFFF;\n}\n.container-right {\n  width: 50%;\n}\n.container-center,\n.container-right {\n  flex-flow: column;\n  align-items: center;\n}\n.container-center .single,\n.container-right .single {\n  width: 500px;\n  flex-flow: column;\n  background: #FFFFFF;\n  align-items: center;\n  border: 1px solid #EAEAEA;\n  border-radius: 5px;\n  margin-bottom: 20px;\n}\n.container-center .single .form-redirect,\n.container-right .single .form-redirect {\n  width: 80%;\n  justify-content: space-between;\n  align-items: center;\n  padding: 20px 0;\n}\n.container-center .single .form-redirect button,\n.container-right .single .form-redirect button {\n  width: 48%;\n}\n.container-center .single .form-title,\n.container-right .single .form-title {\n  width: 80%;\n  margin-top: 20px;\n  justify-content: flex-start;\n}\n.container-center .single .form-title p,\n.container-right .single .form-title p {\n  font-size: 1.1em;\n}\n.container-center .single .form-title-vertical,\n.container-right .single .form-title-vertical {\n  width: 80%;\n  margin: 20px 0;\n  justify-content: flex-start;\n  flex-flow: column;\n}\n.container-center .single .form-title-vertical p,\n.container-right .single .form-title-vertical p {\n  margin-top: 10px;\n  font-size: 1.1em;\n}\n.container-center .single .form-title-vertical a,\n.container-right .single .form-title-vertical a {\n  color: #619B8A;\n}\n.container-center .single .form-small,\n.container-right .single .form-small {\n  flex-flow: column;\n  width: 80%;\n  padding: 10px 0;\n}\n.container-center .single .form-small .form-group,\n.container-right .single .form-small .form-group {\n  justify-content: space-between;\n}\n.container-center .single .form-small .form-group input,\n.container-right .single .form-small .form-group input {\n  width: 100%;\n}\n.container-center .single .form-small .form-group input.half,\n.container-right .single .form-small .form-group input.half {\n  width: 48%;\n}\n.container-center .single .form-small .form-group button,\n.container-right .single .form-small .form-group button,\n.container-center .single .form-small .form-group p,\n.container-right .single .form-small .form-group p {\n  width: 100%;\n  margin: 15px 0;\n  font-size: 1.1em;\n}\n.big-input {\n  height: 45px;\n  padding: 10px;\n  margin-top: 15px;\n  font-size: 1em;\n  background: #e6e6e6;\n  border: 1px solid #e6e6e6;\n  outline: none;\n  border-radius: 5px;\n}\n.big-button {\n  height: 45px;\n  padding: 10px;\n  background: #e6e6e6;\n  outline: none;\n  border-radius: 5px;\n  background: #619B8A;\n  font-size: 1.1em;\n  justify-content: center;\n}\n.big-button a {\n  text-decoration: none;\n  color: black;\n}\nbutton:hover,\nbutton:focus {\n  cursor: pointer;\n  color: white;\n}\nbutton:hover a,\nbutton:focus a {\n  cursor: pointer;\n  color: white;\n}\ninput:focus,\ninput:hover {\n  border: 1px solid #619B8A;\n}\n.switch {\n  display: inline-block;\n  position: relative;\n  cursor: pointer;\n  width: 40px;\n  height: calc(20px);\n  border-radius: 60px;\n  background-color: #619B8A;\n}\n.switch .switch__toggle {\n  width: 0;\n  height: 0;\n  opacity: 0;\n  position: absolute;\n  top: 0;\n  left: 0;\n}\n.switch .switch__toggle:checked ~ .switch__label:before {\n  transform: scale(0);\n  opacity: .7;\n}\n.switch .switch__toggle:checked ~ .switch__label:after {\n  transform: translate3d(100%, -50%, 0);\n}\n.switch .switch__toggle:checked ~ .switch__label {\n  box-shadow: 0 0 0 1px white;\n}\n.switch .switch__label {\n  display: block;\n  width: 100%;\n  height: 100%;\n  border-radius: 60px;\n  box-shadow: 0 0 0 1px #619B8A;\n}\n.switch .switch__label:before,\n.switch .switch__label:after {\n  content: \"\";\n  cursor: pointer;\n  position: absolute;\n  top: 0;\n  left: 0;\n  background: #f5f5f5;\n}\n.switch .switch__label:before {\n  width: 100%;\n  height: 100%;\n  box-sizing: border-box;\n  border-radius: 60px;\n  transition: opacity 0.2s ease-out 0.1s, transform 0.2s ease-out 0.1s;\n  transform: scale(1);\n  opacity: 1;\n}\n.switch .switch__label:after {\n  top: 50%;\n  z-index: 3;\n  transition: transform 0.4s cubic-bezier(0.44, -0.12, 0.07, 1.15);\n  width: calc(20px);\n  height: calc(20px);\n  transform: translate3d(0, -50%, 0);\n  border-radius: 100%;\n  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);\n}\nfooter {\n  width: 100%;\n  padding: 30px 10%;\n  height: 300px;\n  background: #619B8A;\n  justify-content: space-between;\n}\nfooter #footer-left {\n  width: 40%;\n}\nfooter #footer-left .footer-column {\n  width: 80%;\n  height: 100%;\n}\nfooter #footer-right {\n  width: 60%;\n  justify-content: space-between;\n  padding-left: 10%;\n}\nfooter #footer-right .footer-column {\n  width: 40%;\n  height: 100%;\n}\nfooter #footer-right,\nfooter #footer-left {\n  height: 100%;\n}\n", ""]);
 
 // exports
-
-
-/***/ }),
-/* 54 */
-/***/ (function(module, exports) {
-
-module.exports = function escape(url) {
-    if (typeof url !== 'string') {
-        return url
-    }
-    // If url is already wrapped in quotes, remove them
-    if (/^['"].*['"]$/.test(url)) {
-        url = url.slice(1, -1);
-    }
-    // Should url be wrapped?
-    // See https://drafts.csswg.org/css-values-3/#urls
-    if (/["'() \t\n]/.test(url)) {
-        return '"' + url.replace(/"/g, '\\"').replace(/\n/g, '\\n') + '"'
-    }
-
-    return url
-}
 
 
 /***/ }),
@@ -3775,7 +3847,7 @@ var _createTransitionManager = __webpack_require__(19);
 
 var _createTransitionManager2 = _interopRequireDefault(_createTransitionManager);
 
-var _DOMUtils = __webpack_require__(36);
+var _DOMUtils = __webpack_require__(37);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -4152,7 +4224,7 @@ var _createTransitionManager = __webpack_require__(19);
 
 var _createTransitionManager2 = _interopRequireDefault(_createTransitionManager);
 
-var _DOMUtils = __webpack_require__(36);
+var _DOMUtils = __webpack_require__(37);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -4718,8 +4790,8 @@ exports.default = createMemoryHistory;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_prop_types__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_prop_types___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_prop_types__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Route__ = __webpack_require__(38);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Link__ = __webpack_require__(37);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Route__ = __webpack_require__(39);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Link__ = __webpack_require__(38);
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
@@ -5491,7 +5563,7 @@ Redirect.contextTypes = {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__LocationUtils__ = __webpack_require__(15);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__PathUtils__ = __webpack_require__(12);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__createTransitionManager__ = __webpack_require__(23);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__DOMUtils__ = __webpack_require__(40);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__DOMUtils__ = __webpack_require__(41);
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
@@ -5795,7 +5867,7 @@ var createBrowserHistory = function createBrowserHistory() {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__LocationUtils__ = __webpack_require__(15);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__PathUtils__ = __webpack_require__(12);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__createTransitionManager__ = __webpack_require__(23);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__DOMUtils__ = __webpack_require__(40);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__DOMUtils__ = __webpack_require__(41);
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 
@@ -6604,7 +6676,7 @@ Switch.propTypes = {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_prop_types___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_prop_types__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_hoist_non_react_statics__ = __webpack_require__(99);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_hoist_non_react_statics___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_hoist_non_react_statics__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Route__ = __webpack_require__(39);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Route__ = __webpack_require__(40);
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
@@ -6773,35 +6845,44 @@ function _inherits(subClass, superClass) {
   }subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } });if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
 }
 
-var _require = __webpack_require__(41),
+var _require = __webpack_require__(42),
     Home = _require.Home;
 
-var _require2 = __webpack_require__(41),
+var _require2 = __webpack_require__(42),
     RegisterHome = _require2.RegisterHome;
 
-var _require3 = __webpack_require__(47),
+var _require3 = __webpack_require__(48),
     Browse = _require3.Browse;
 
 var _require4 = __webpack_require__(123),
     Profile = _require4.Profile;
 
-var _require5 = __webpack_require__(48),
+var _require5 = __webpack_require__(49),
     Login = _require5.Login;
 
-var _require6 = __webpack_require__(48),
+var _require6 = __webpack_require__(49),
     Register = _require6.Register;
 
-var _require7 = __webpack_require__(49),
+var _require7 = __webpack_require__(50),
     RequestWebsite = _require7.RequestWebsite;
 
-var _require8 = __webpack_require__(49),
+var _require8 = __webpack_require__(50),
     Contact = _require8.Contact;
 
-var _require9 = __webpack_require__(50),
+var _require9 = __webpack_require__(51),
     AddWebsite = _require9.AddWebsite;
 
-var _require10 = __webpack_require__(50),
+var _require10 = __webpack_require__(51),
     AddKeyword = _require10.AddKeyword;
+
+var _require11 = __webpack_require__(27),
+    PrivateRoute = _require11.PrivateRoute;
+
+var _require12 = __webpack_require__(27),
+    StrangerRoute = _require12.StrangerRoute;
+
+var _require13 = __webpack_require__(27),
+    AdminRoute = _require13.AdminRoute;
 
 var App = function (_React$Component) {
   _inherits(App, _React$Component);
@@ -6842,20 +6923,7 @@ var App = function (_React$Component) {
       return _react2.default.createElement('div', { id: 'main' }, _react2.default.createElement(_Header2.default, { user: this.state.user }), _react2.default.createElement(_reactRouterDom.Switch, null, _react2.default.createElement(_reactRouterDom.Route, { path: '/', exact: true, render: function render(props) {
           return _react2.default.createElement(RegisterHome, {
             onRegister: _this2.onRegister });
-        } }), _react2.default.createElement(_reactRouterDom.Route, { path: '/login', render: function render(props) {
-          return _react2.default.createElement(Login, {
-            onLogin: _this2.onLogin });
-        } }), _react2.default.createElement(_reactRouterDom.Route, { path: '/register', render: function render(props) {
-          return _react2.default.createElement(Register, {
-            onRegister: _this2.onRegister });
-        } }), _react2.default.createElement(_reactRouterDom.Route, { path: '/browse', render: function render(props) {
-          return _react2.default.createElement(Browse, {
-            user: _this2.state.user });
-        } }), _react2.default.createElement(_reactRouterDom.Route, { path: '/profile', render: function render(props) {
-          return _react2.default.createElement(Profile, {
-            user: _this2.state.user,
-            handleLogout: _this2.onLogout });
-        } }), _react2.default.createElement(_reactRouterDom.Route, { path: '/addKeyword', component: AddKeyword }), _react2.default.createElement(_reactRouterDom.Route, { path: '/requestwebsite', component: RequestWebsite }), _react2.default.createElement(_reactRouterDom.Route, { path: '/addwebsite', component: AddWebsite }), _react2.default.createElement(_reactRouterDom.Route, { path: '/contact', component: Contact }), _react2.default.createElement(_reactRouterDom.Route, { component: _2.default })), _react2.default.createElement(_Footer2.default, null));
+        } }), _react2.default.createElement(_reactRouterDom.Route, { path: '/contact', component: Contact }), _react2.default.createElement(StrangerRoute, { path: '/login', component: Login, onLogin: this.onLogin }), _react2.default.createElement(StrangerRoute, { path: '/register', component: Register, onRegister: this.onRegister }), _react2.default.createElement(PrivateRoute, { path: '/browse', component: Browse, user: this.state.user }), _react2.default.createElement(PrivateRoute, { path: '/profile', component: Profile, user: this.state.user, handleLogout: this.onLogout }), _react2.default.createElement(PrivateRoute, { path: '/requestWebsite', component: RequestWebsite, user: this.state.user }), _react2.default.createElement(AdminRoute, { path: '/addWebsite', component: AddWebsite }), _react2.default.createElement(AdminRoute, { path: '/addKeyword', component: AddKeyword }), _react2.default.createElement(_reactRouterDom.Route, { component: _2.default })), _react2.default.createElement(_Footer2.default, null));
     }
   }, {
     key: 'redirectUser',
@@ -7112,7 +7180,7 @@ exports.default = NotFound;
 
 
 var utils = __webpack_require__(4);
-var bind = __webpack_require__(42);
+var bind = __webpack_require__(43);
 var Axios = __webpack_require__(106);
 var defaults = __webpack_require__(26);
 
@@ -7147,9 +7215,9 @@ axios.create = function create(instanceConfig) {
 };
 
 // Expose Cancel & CancelToken
-axios.Cancel = __webpack_require__(46);
+axios.Cancel = __webpack_require__(47);
 axios.CancelToken = __webpack_require__(120);
-axios.isCancel = __webpack_require__(45);
+axios.isCancel = __webpack_require__(46);
 
 // Expose all/spread
 axios.all = function all(promises) {
@@ -7302,7 +7370,7 @@ module.exports = function normalizeHeaderName(headers, normalizedName) {
 "use strict";
 
 
-var createError = __webpack_require__(44);
+var createError = __webpack_require__(45);
 
 /**
  * Resolve or reject a Promise based on response status.
@@ -7737,7 +7805,7 @@ module.exports = InterceptorManager;
 
 var utils = __webpack_require__(4);
 var transformData = __webpack_require__(117);
-var isCancel = __webpack_require__(45);
+var isCancel = __webpack_require__(46);
 var defaults = __webpack_require__(26);
 var isAbsoluteURL = __webpack_require__(118);
 var combineURLs = __webpack_require__(119);
@@ -7897,7 +7965,7 @@ module.exports = function combineURLs(baseURL, relativeURL) {
 "use strict";
 
 
-var Cancel = __webpack_require__(46);
+var Cancel = __webpack_require__(47);
 
 /**
  * A `CancelToken` is an object that can be used to request cancellation of an operation.
@@ -8062,7 +8130,7 @@ var PropTypes = __webpack_require__(1);
 var _require = __webpack_require__(7),
     Link = _require.Link;
 
-var _require2 = __webpack_require__(47),
+var _require2 = __webpack_require__(48),
     Available = _require2.Available;
 
 var Profile = function (_React$Component) {
@@ -8089,7 +8157,6 @@ var Profile = function (_React$Component) {
         this.setState({
           user: this.props.user
         }, function () {
-          console.log(this.props);
           this.searchFull();
         });
       }
@@ -8101,7 +8168,6 @@ var Profile = function (_React$Component) {
         this.setState({
           user: nextProps.user
         }, function () {
-          console.log(this.props);
           this.searchFull();
         });
       }
@@ -8159,4 +8225,4 @@ module.exports = {
 };
 
 /***/ })
-],[51]);
+],[52]);
