@@ -5,8 +5,6 @@ module.exports = [{
       name: "client",
       entry: {
         app: "./public/js/app",
-        browse: "./public/js/browse",
-        profile: "./public/js/profile",
         vendor: [
           'react',
           'react-dom',
@@ -14,7 +12,7 @@ module.exports = [{
         ]
       },
       output: {
-        publicPath: "http://localhost:3000/build/", // Development Server
+        publicPath: "http://localhost:8080/build/", // Development Server
         // publicPath: "http://example.com/", // Production Server
         path: path.resolve(__dirname, 'public/build'),
         filename: '[name].bundle.js'
