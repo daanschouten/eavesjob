@@ -4,7 +4,14 @@ const { RequestWebsiteForm } = require('../Forms');
 
 function Contact(props) {
   return (
-    <div> Contact </div>
+    <div id="two-thirds-page">
+      <div id="two-thirds-left">
+        
+      </div>
+      <div className="right-sidebar">
+
+      </div>
+    </div>
   )
 }
 

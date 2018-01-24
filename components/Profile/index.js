@@ -67,8 +67,8 @@ class Profile extends React.Component {
   }
   render() {
     return (
-        <div id="browse-page">
-          <div id="browse-left">
+        <div id="two-thirds-page">
+          <div id="two-thirds-left">
             <div id="search-website">
               <h2>selected career pages</h2>
             </div>

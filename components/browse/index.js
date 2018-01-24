@@ -251,8 +251,8 @@ class Browse extends React.Component {
   }
   render() {
     return (
-      <div id="browse-page">
-        <div id="browse-left">
+      <div id="two-thirds-page">
+        <div id="two-thirds-left">
           <Search onQueryChange = {this.onQueryChange} />
           <Available
           onChangeSubscribe = {this.onChangeSubscribe}

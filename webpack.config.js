@@ -5,8 +5,6 @@ module.exports = [{
       name: "client",
       entry: {
         app: "./public/js/app",
-        browse: "./public/js/browse",
-        profile: "./public/js/profile",
         vendor: [
           'react',
           'react-dom',
