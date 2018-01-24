@@ -13,14 +13,14 @@ class Profile extends React.Component {
       monitored: []
     };
     this.onChangeSubscribe = this.onChangeSubscribe.bind(this);
-    this.searchFull = this.searchFull.bind(this);
+    this.searchMonitored = this.searchMonitored.bind(this);
   }
   componentDidMount() {
     if (this.props.user) {
       this.setState({
         user: this.props.user
       }, function() {
-        this.searchFull();
+        this.searchMonitored();
       })
     }
   }
@@ -29,7 +29,7 @@ class Profile extends React.Component {
       this.setState({
         user: nextProps.user
       }, function() {
-        this.searchFull();
+        this.searchMonitored();
       })
     }
   }
@@ -42,7 +42,7 @@ class Profile extends React.Component {
         })
         .then((response) => {
           // perform an entire search, reload all of it
-          this.searchFull();
+          this.searchMonitored();
         })
         .catch((error) => {
           console.log("error fetching and parsing data", error);
@@ -50,9 +50,9 @@ class Profile extends React.Component {
       }
     }
   }
-  searchFull() {
+  searchMonitored() {
     // refresh both monitored & available
-    axios.post(`http://localhost:3000/browse/${this.state.user._id}`, {
+    axios.post(`http://localhost:3000/updateMonitored/${this.state.user._id}`, {
       query: this.state.query
     })
     .then((response) => {

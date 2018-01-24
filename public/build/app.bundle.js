@@ -2755,6 +2755,7 @@ function Subscribed(props) {
 }
 
 function Available(props) {
+  console.log(props.available);
   return React.createElement('div', { id: 'website-list' }, React.createElement('div', { className: 'single-website' }, React.createElement('div', { className: 'single-name' }, React.createElement('p', null, ' name ')), React.createElement('div', { className: 'single-date' }, React.createElement('p', null, ' new career opportunity ')), React.createElement('div', { className: 'single-monitor' })), props.available ? props.available.length > 0 ? props.available.map(function (website) {
     return React.createElement(SingleSite, {
       onChangeSubscribe: props.onChangeSubscribe,
@@ -8146,7 +8147,7 @@ var Profile = function (_React$Component) {
       monitored: []
     };
     _this.onChangeSubscribe = _this.onChangeSubscribe.bind(_this);
-    _this.searchFull = _this.searchFull.bind(_this);
+    _this.searchMonitored = _this.searchMonitored.bind(_this);
     return _this;
   }
 
@@ -8157,7 +8158,7 @@ var Profile = function (_React$Component) {
         this.setState({
           user: this.props.user
         }, function () {
-          this.searchFull();
+          this.searchMonitored();
         });
       }
     }
@@ -8168,7 +8169,7 @@ var Profile = function (_React$Component) {
         this.setState({
           user: nextProps.user
         }, function () {
-          this.searchFull();
+          this.searchMonitored();
         });
       }
     }
@@ -8184,7 +8185,7 @@ var Profile = function (_React$Component) {
             id: site
           }).then(function (response) {
             // perform an entire search, reload all of it
-            _this2.searchFull();
+            _this2.searchMonitored();
           }).catch(function (error) {
             console.log("error fetching and parsing data", error);
           });
@@ -8192,12 +8193,12 @@ var Profile = function (_React$Component) {
       }
     }
   }, {
-    key: 'searchFull',
-    value: function searchFull() {
+    key: 'searchMonitored',
+    value: function searchMonitored() {
       var _this3 = this;
 
       // refresh both monitored & available
-      _axios2.default.post('http://localhost:3000/browse/' + this.state.user._id, {
+      _axios2.default.post('http://localhost:3000/updateMonitored/' + this.state.user._id, {
         query: this.state.query
       }).then(function (response) {
         var data = response.data;
