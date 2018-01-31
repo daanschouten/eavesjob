@@ -192,7 +192,7 @@ class Browse extends React.Component {
       if (this.state.monitored[i]._id === site) {
         isMonitored = true;
         // remove from monitor
-        axios.post(`http://localhost:3000/removeSubscribe/${this.props.user._id}`, {
+        axios.post(`http://localhost:3000/removeSubscribe/${this.props.user.token}`, {
           id: site
         })
         .then((response) => {
@@ -206,7 +206,7 @@ class Browse extends React.Component {
     }
     if (!isMonitored) {
       // add site to monitor
-      axios.post(`http://localhost:3000/addSubscribe/${this.props.user._id}`, {
+      axios.post(`http://localhost:3000/addSubscribe/${this.props.user.token}`, {
         id: site
       })
       .then((response) => {
@@ -220,7 +220,7 @@ class Browse extends React.Component {
   }
   searchAvailable() {
     // refresh only available
-    axios.post(`http://localhost:3000/search/${this.state.user._id}`, {
+    axios.post(`http://localhost:3000/search/${this.state.user.token}`, {
       query: this.state.query
     })
     .then((response) => {
@@ -235,7 +235,7 @@ class Browse extends React.Component {
   }
   searchFull() {
     // refresh both monitored & available
-    axios.post(`http://localhost:3000/browse/${this.state.user._id}`, {
+    axios.post(`http://localhost:3000/browse/${this.state.user.token}`, {
       query: this.state.query
     })
     .then((response) => {
