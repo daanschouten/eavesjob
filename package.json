@@ -9,7 +9,8 @@
     "build:watch:client": "webpack --config ./webpack.config.js/ --watch",
     "build:prod": "npm run build && npm run build:client",
     "start": "npm run build:prod && NODE_ENV=production node ./build/server/index.js",
-    "start:dev": "parallelshell 'npm run build:watch' 'npm run build:watch:client' 'nodemon ./build/server/index.js'"
+    "start:dev": "parallelshell 'npm run build:watch' 'npm run build:watch:client' 'nodemon ./build/server/index.js'",
+    "test": "mocha"
   },
   "author": "Daan_Schouten",
   "license": "ISC",
@@ -30,6 +31,7 @@
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "babel-preset-es2015": "^6.24.1",
     "babel-preset-react": "^6.24.1",
+    "chai": "^4.1.2",
     "css-loader": "^0.28.9",
     "enzyme": "^2.9.1",
     "enzyme-to-json": "^1.5.1",
@@ -38,6 +40,7 @@
     "jest": "^20.0.4",
     "less": "^2.7.3",
     "less-loader": "^4.0.5",
+    "mocha": "^5.0.0",
     "nodemon": "^1.11.0",
     "parallelshell": "^3.0.1",
     "react-svg-loader": "^2.1.0",

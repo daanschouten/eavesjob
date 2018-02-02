@@ -40,8 +40,15 @@ module.exports = {
               loader: 'file-loader?name=fonts/[name].[ext]'
             },
             {
-              test: /\.(png|jp|svg)$/,
-              loader: 'url-loader?limit=8192'
+              test: /\.(jpg|png|gif|svg|pdf|ico)$/,
+              use: [
+                  {
+                      loader: 'file-loader',
+                      options: {
+                          name: 'img/[name]-[hash:8].[ext]'
+                      },
+                  },
+              ]
             },
             {
               test: /\.less$/,

@@ -25,20 +25,9 @@ body {
 }
 
 @font-face {
-    font-family: RobotoLight;
-    src: url(./fonts/RobotoCondensed-Light.ttf);
-}
-
-@font-face {
     font-family: RobotoRegular;
     src: url(./fonts/Roboto-Regular.ttf);
 }
-
-@font-face {
-    font-family: RobotoCondensedRegular;
-    src: url(./fonts/RobotoCondensed-Regular.ttf);
-}
-
 
 h1, h2, h3, h4, h5 {
   font-family: RobotoCondensed;
@@ -85,11 +74,17 @@ header {
   }
 }
 
+#gif-list {
+  width: 100%;
+  flex-flow: column;
+  background: #FFFFFF;
+  align-items: center;
+}
+
 .container-single {
   width: 100%;
-  min-height: 100vh;
+  flex-flow: column;
   margin-top: 15vh;
-  justify-content: center;
 
   .container-center {
     width: 100%;
@@ -105,8 +100,7 @@ header {
 
     p  {
       font-family: RobotoRegular;
-      font-size: 1.4em;
-      line-height: 1.4em;
+      font-size: 1.2em;
       max-width: 450px;
       margin-bottom: 20px;
       text-align: justify;
@@ -115,58 +109,32 @@ header {
     p:first-of-type {
       margin: 50px 0 20px 0;
     }
-
-    #front-buttons {
-      justify-content: space-between;
-      margin: 10px 0;
-
-      button {
-        font-family: RobotoCondensedRegular;
-        font-size: 1.1em;
-        padding: 10px 20px;
-        border: 0px;
-        background: @base;
-        color: white;
-        margin: 0 20px;
-        border-radius: 5px;
-        outline: none;
-      }
-
-      button:hover {
-        color: black;
-        cursor: pointer;
-      }
-
-    }
   }
-
 }
 
 .container-double {
   width: 100%;
-  min-height: 100vh;
-  margin-top: 15vh;
   justify-content: space-around;
 
     .container-left {
       align-items: center;
       flex-flow: column;
-      width: 50%;
+      width: 55%;
       margin-top: 10px;
 
-        h2.title {
-          font-size: 50px;
+        h1.title {
+          font-size: 60px;
           margin: 0;
           font-family: RobotoCondensed;
           text-align: center;
         }
 
         p  {
-          font-family: RobotoCondensedRegular;
-          font-size: 1.4em;
+          font-family: RobotoRegular;
           text-align: justify;
-          max-width: 450px;
-          margin-bottom: 20px;
+          line-height: normal;
+          font-size: 1.3em;
+          max-width: 420px;
         }
 
         p:first-of-type {
@@ -177,7 +145,6 @@ header {
 
 #two-thirds-page {
   width: 100%;
-  min-height: 100vh;
   padding: 40px 50px;
   justify-content: space-between;
 
@@ -193,7 +160,6 @@ header {
       margin-bottom: 30px;
       justify-content: space-between;
       align-items: center;
-      font-family: RobotoLight;
 
       .search-div {
         height: 40px;
@@ -214,7 +180,6 @@ header {
               background: none;
               outline: none;
               font-size: 1.1em;
-              font-family: RobotoLight;
             }
 
             button {
@@ -311,7 +276,6 @@ header {
       margin: 30px 0;
       justify-content: space-between;
       align-items: center;
-      font-family: RobotoLight;
     }
 
     #no-results {
@@ -322,7 +286,6 @@ header {
       border-radius: 5px;
       flex-flow: column;
       align-items: center;
-      font-family: RobotoLight;
 
       #results-text {
         width: 100%;
@@ -470,7 +433,7 @@ header {
 }
 
 .container-right {
-  width: 50%;
+  width: 45%;
 }
 
 .container-center, .container-right {
@@ -576,7 +539,6 @@ header {
     text-decoration: none;
     color: black;
   }
-
 }
 
 button:hover, button:focus {
