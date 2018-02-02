@@ -2,7 +2,7 @@ const React = require('react');
 const PropTypes = require('prop-types');
 const { RegisterForm } = require('../Forms');
 
-// import searchIcon from '../../img/searchIcon.svg';
+// let { searchIcon } = require('../../img');
 
 // class Home extends React.Component {
 //   constructor(props) {
@@ -38,6 +38,7 @@ class HowItWorks extends React.Component {
       <div className="container-single">
         <h1> see how it works </h1>
         <div className="container-center">
+          <img src="../../img/clickWebsite.png"/>
         </div>
       </div>
     )

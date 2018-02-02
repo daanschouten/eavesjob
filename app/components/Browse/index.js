@@ -82,17 +82,6 @@ function Subscribed(props) {
   )
 }
 
-function HowItWorks(props) {
-    return (
-      <div className="container-single">
-        <h1> see how it works </h1>
-        <div className="container-center">
-
-        </div>
-      </div>
-    )
-}
-
 function Available(props) {
   return (
     <div id="website-list">
@@ -147,6 +136,7 @@ class Search extends React.Component {
             <div className="search-bar">
               <input id="search-input" type="text" placeholder="organisation / company name" name="query" value={this.state.query}  onChange={this.handleChange}/>
               <button disabled="disabled">
+                <img src="../../img/searchIcon.svg"/>
               </button>
             </div>
           </form>
