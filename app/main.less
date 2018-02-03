@@ -19,6 +19,10 @@ body {
   background-color: #f5f5f5;
 }
 
+p {
+  font-size: 1.2em;
+}
+
 @font-face {
     font-family: RobotoCondensed;
     src: url(./fonts/RobotoCondensed-Bold.ttf);
@@ -74,13 +78,6 @@ header {
   }
 }
 
-#gif-list {
-  width: 100%;
-  flex-flow: column;
-  background: #FFFFFF;
-  align-items: center;
-}
-
 .container-single {
   width: 100%;
   flex-flow: column;
@@ -98,16 +95,35 @@ header {
       text-align: center;
     }
 
-    p  {
+    p.subtitle {
       font-family: RobotoRegular;
-      font-size: 1.2em;
       max-width: 450px;
       margin-bottom: 20px;
       text-align: justify;
     }
 
-    p:first-of-type {
+    p.subtitle:first-of-type {
       margin: 50px 0 20px 0;
+    }
+
+    .explain-single {
+      width: 100%;
+      flex-flow: column;
+      align-items: center;
+      margin: 30px 0;
+
+      .explain-text {
+        align-items: center;
+        margin: 20px 0;
+
+        img {
+          margin: 0 10px;
+          width: 30px;
+          height: 30px;
+        }
+
+      }
+
     }
   }
 }
@@ -133,8 +149,7 @@ header {
           font-family: RobotoRegular;
           text-align: justify;
           line-height: normal;
-          font-size: 1.3em;
-          max-width: 420px;
+          max-width: 380px;
         }
 
         p:first-of-type {
@@ -147,6 +162,10 @@ header {
   width: 100%;
   padding: 40px 50px;
   justify-content: space-between;
+
+  p {
+    font-size: 1em;
+  }
 
   #two-thirds-left {
     width: 70%;
@@ -248,9 +267,6 @@ header {
         .single-name {
           width: 55%;
 
-          p {
-
-          }
         }
       }
 
@@ -298,10 +314,6 @@ header {
             margin-right: 30px;
         }
 
-        p {
-          font-size: 1.1em;
-        }
-
         i {
           color: @base;
         }
@@ -333,10 +345,6 @@ header {
         height: 100px;
         align-items: center;
         justify-content: space-between;
-
-        p {
-          font-size: 1.1em;
-        }
 
         button {
           font-family: RobotoRegular;
@@ -466,9 +474,6 @@ header {
       margin-top: 20px;
       justify-content: flex-start;
 
-      p {
-        font-size: 1.1em;
-      }
     }
 
     .form-title-vertical {
@@ -479,7 +484,6 @@ header {
 
       p {
         margin-top: 10px;
-        font-size: 1.1em;
       }
 
       a {
@@ -503,7 +507,7 @@ header {
           width: 48%;
         }
 
-        button, p {
+        button {
           width: 100%;
           margin: 15px 0;
           font-size: 1.1em;
@@ -629,31 +633,28 @@ input:focus, input:hover {
 footer {
   width: 100%;
   padding: 30px 10%;
-  height: 300px;
   background: @base;
   justify-content: space-between;
+  margin-top: 50px;
 
-  #footer-left {
-    width: 40%;
-
-    .footer-column {
-      width: 80%;
-      height: 100%;
-    }
-  }
-
-  #footer-right {
-    width: 60%;
-    justify-content: space-between;
-    padding-left: 10%;
-
-    .footer-column {
-      width: 40%;
-      height: 100%;
-    }
-  }
-
-  #footer-right, #footer-left {
+  .footer-column {
+    padding-left: 5%;
     height: 100%;
+    flex-flow: column;
+    width: 25%;
+
+    a {
+      font-family: RobotoRegular;
+      margin: 3px 0;
+      font-size: 1.1em;
+      text-decoration: none;
+      color: white;
+    }
+
+    h1, h4 {
+      color: white;
+      margin: 15px 0;
+    }
+
   }
 }
