@@ -11,6 +11,7 @@ import Header from './Header';
 import Footer from './Footer';
 import NotFound from './404';
 import Profile from './Profile';
+import Support from './Support';
 
 const { Browse } = require('./Browse');
 const { Login } = require('./Auth');
@@ -30,10 +31,6 @@ class App extends React.Component {
       this.state = {
         user: {}
       }
-      this.redirectUser = this.redirectUser.bind(this);
-      this.onLogout = this.onLogout.bind(this);
-      this.onRegister = this.onRegister.bind(this);
-      this.onLogin = this.onLogin.bind(this);
     }
     componentDidMount() {
       let canUseDOM = !!(
@@ -59,6 +56,7 @@ class App extends React.Component {
             <Route path="/" exact render={props => <RegisterHome
               onRegister = {this.onRegister} />} />
             <Route path="/contact" component={Contact} />
+            <Route path="/support" component={Support} />
 
             <StrangerRoute path="/login" component = {Login} onLogin = {this.onLogin} />
             <StrangerRoute path="/register" component= {Register} onRegister = {this.onRegister} />
@@ -76,10 +74,7 @@ class App extends React.Component {
         </div>
       )
     }
-    redirectUser(to) {
-      this.props.history.push(to);
-    }
-    onLogout() {
+    onLogout = () => {
       if (this.state.user) {
         localStorage.removeItem('user');
         this.setState({
@@ -88,13 +83,13 @@ class App extends React.Component {
       }
       this.redirectUser('/');
     }
-    onRegister(user) {
+    onRegister = (user) => {
       this.setState({
         user: user
       });
       this.redirectUser('/browse');
     }
-    onLogin(user) {
+    onLogin = (user) => {
       this.setState({
         user: user
       });

@@ -1,9 +1,8 @@
 const React = require('react');
 const PropTypes = require('prop-types');
-
 const { RegisterForm } = require('../Forms');
 const { LoginForm } = require('../Forms');
-import HandleRedirect from '../Redirect';
+const { Link } = require('react-router-dom');
 
 function Login(props) {
   return (
@@ -15,7 +14,12 @@ function Login(props) {
           </div>
           <LoginForm onLogin = {props.onLogin}/>
         </div>
-        <HandleRedirect destination ='/register' title='Not yet Member?' message='Sign Up' />
+        <div className="single">
+            <div className="form-redirect">
+              <h2> Not member yet? </h2>
+              <button className="big-button"><Link to='/register'>Register</Link> </button>
+            </div>
+        </div>
       </div>
     </div>
   );
@@ -31,7 +35,12 @@ function Register(props) {
             </div>
             <RegisterForm onRegister = {props.onRegister} />
           </div>
-          <HandleRedirect destination ='/login' title='Already a Member?' message='Login' />
+          <div className="single">
+              <div className="form-redirect">
+                <h2> Log In </h2>
+                <button className="big-button"><Link to='/login'>Already a member?</Link> </button>
+              </div>
+          </div>
         </div>
       </div>
     )

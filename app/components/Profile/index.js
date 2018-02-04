@@ -12,8 +12,6 @@ export default class Profile extends React.Component {
       user: {},
       monitored: []
     };
-    this.onChangeSubscribe = this.onChangeSubscribe.bind(this);
-    this.searchMonitored = this.searchMonitored.bind(this);
   }
   componentDidMount() {
     if (this.props.user) {
@@ -33,7 +31,7 @@ export default class Profile extends React.Component {
       })
     }
   }
-  onChangeSubscribe(site) {
+  onChangeSubscribe = (site) => {
     for (var i = 0; i < this.state.monitored.length; i++) {
       if (this.state.monitored[i]._id === site) {
         // remove from monitor
@@ -50,7 +48,7 @@ export default class Profile extends React.Component {
       }
     }
   }
-  searchMonitored() {
+  searchMonitored = () => {
     // refresh both monitored & available
     axios.post(`http://localhost:3000/updateMonitored/${this.state.user.token}`, {
       query: this.state.query

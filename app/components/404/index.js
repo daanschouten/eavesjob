@@ -1,5 +1,5 @@
 import React from 'react';
-import Redirect from '../Redirect';
+const { Link } = require('react-router-dom');
 
 export default class NotFound extends React.Component {
   render() {
@@ -12,7 +12,12 @@ export default class NotFound extends React.Component {
             </div>
             <p> The page you're attempting to visit doesn't exist. Are you sure you should be here? </p>
           </div>
-          <Redirect destination= '/' title='Back to Safety' message='Visit Homepage'/>
+          <div className="single">
+              <div className="form-redirect">
+                <h2> Back to Safety </h2>
+                <button className="big-button"><Link to='/'>Visit Homepage</Link> </button>
+              </div>
+          </div>
         </div>
       </div>
     )

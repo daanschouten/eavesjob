@@ -3,11 +3,8 @@ const PropTypes = require('prop-types');
 import axios from 'axios';
 const { Link } = require('react-router-dom');
 
-import HandleRedirect from '../Redirect';
 const { RequestWebsiteForm } = require('../Forms');
 const { Toggle } = require('../Toggle');
-
-// <img src={require('../../img/search.svg')} />
 
 function StartSearching() {
   return (
@@ -22,7 +19,6 @@ function NoResults() {
 }
 
 function RequestWebsite(props) {
-  // render actual form here instead of redirect?
   return (
     <div className="request-website">
       <div className="right-sidebar-title">
@@ -118,9 +114,8 @@ class Search extends React.Component {
     this.state = {
       query: ""
     }
-    this.handleChange = this.handleChange.bind(this);
   }
-  handleChange(e) {
+  handleChange = (e) => {
     let returnObj = {};
     returnObj[e.target.name] = e.target.value;
     this.setState(returnObj, function() {
@@ -155,12 +150,8 @@ class Browse extends React.Component {
       available: [],
       monitored: []
     };
-    this.onQueryChange = this.onQueryChange.bind(this);
-    this.onChangeSubscribe = this.onChangeSubscribe.bind(this);
-    this.searchFull = this.searchFull.bind(this);
-    this.searchAvailable = this.searchAvailable.bind(this);
   }
-  componentDidMount() {
+  componentDidMount = () => {
     if (this.props.user) {
       this.setState({
         user: this.props.user
@@ -169,7 +160,7 @@ class Browse extends React.Component {
       })
     }
   }
-  componentWillReceiveProps(nextProps) {
+  componentWillReceiveProps = (nextProps) => {
     if (nextProps.user !== this.props.user ) {
       this.setState({
         user: nextProps.user
@@ -178,7 +169,7 @@ class Browse extends React.Component {
       })
     }
   }
-  onQueryChange(query) {
+  onQueryChange = (query) => {
     this.setState({
       query: query,
       available: []
@@ -188,7 +179,7 @@ class Browse extends React.Component {
     }
     );
   }
-  onChangeSubscribe(site) {
+  onChangeSubscribe = (site) => {
     let isMonitored = false;
     for (var i = 0; i < this.state.monitored.length; i++) {
       if (this.state.monitored[i]._id === site) {
@@ -220,7 +211,7 @@ class Browse extends React.Component {
       })
     }
   }
-  searchAvailable() {
+  searchAvailable = () => {
     // refresh only available
     axios.post(`http://localhost:3000/search/${this.state.user.token}`, {
       query: this.state.query
@@ -235,7 +226,7 @@ class Browse extends React.Component {
       console.log("error fetching and parsing data", error);
     })
   }
-  searchFull() {
+  searchFull = () => {
     // refresh both monitored & available
     axios.post(`http://localhost:3000/browse/${this.state.user.token}`, {
       query: this.state.query

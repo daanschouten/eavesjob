@@ -24,11 +24,11 @@ module.exports = {
           filename: 'vendor.bundle.js',
           minChunks: Infinity}),
         new webpack.optimize.UglifyJsPlugin({
-        minimize: true,
-        compress: {
-            warnings: false
-          }
-        }),
+          minimize: true,
+          compress: {
+              warnings: false
+            }
+          }),
         new BundleAnalyzerPlugin()
     ],
     module: {
