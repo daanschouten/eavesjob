@@ -12,9 +12,6 @@ class AddWebsiteForm extends React.Component {
       secondLink: "",
       thirdLink: ""
     }
-    this.performAddWebsite = this.performAddWebsite.bind(this);
-    this.performRemoveRequest = this.performRemoveRequest.bind(this);
-    this.handleChange = this.handleChange.bind(this);
   }
   componentDidMount() {
     axios.get('http://localhost:3000/addWebsite')
@@ -37,12 +34,12 @@ class AddWebsiteForm extends React.Component {
         console.log("error fetching and parsing data", error);
       })
   }
-  handleChange(e) {
+  handleChange = (e) => {
     let returnObj = {};
     returnObj[e.target.name] = e.target.value;
     this.setState(returnObj);
   }
-  performAddWebsite(e) {
+  performAddWebsite = (e) => {
     e.preventDefault();
     e.currentTarget.reset();
     axios.post('http://localhost:3000/addWebsite', {
@@ -63,7 +60,7 @@ class AddWebsiteForm extends React.Component {
       console.log(error);
     });
   }
-  performRemoveRequest(e) {
+  performRemoveRequest = (e) => {
     axios.post('http://localhost:3000/removeRequest', {
       name: this.state.name,
       firstLink: this.state.firstLink,
@@ -131,15 +128,25 @@ class RequestWebsiteForm extends React.Component {
       secondLink: "",
       thirdLink: ""
     }
-    this.performRequestWebsite = this.performRequestWebsite.bind(this);
-    this.handleChange = this.handleChange.bind(this);
   }
-  handleChange(e) {
+  componentDidMount = (props) => {
+    this.setState({
+      name: this.props.query
+    })
+  }
+  componentWillReceiveProps = (nextProps) => {
+    if (nextProps.query !== this.props.query ) {
+      this.setState({
+        name: nextProps.query
+      })
+    }
+  }
+  handleChange = (e) => {
     let returnObj = {};
     returnObj[e.target.name] = e.target.value;
     this.setState(returnObj);
   }
-  performRequestWebsite(e) {
+  performRequestWebsite = (e) => {
     e.preventDefault();
     e.currentTarget.reset();
     axios.post('http://localhost:3000/requestWebsite', {
@@ -164,26 +171,34 @@ class RequestWebsiteForm extends React.Component {
   }
   render() {
     return(
-      <form className="form-small" onSubmit={this.performRequestWebsite}>
-        <div className="form-group">
-          <input style={{marginBottom: "20px"}} type="text" placeholder="Website Name" className="big-input" name="name" value={this.state.name} onChange={this.handleChange} />
-        </div>
-        <div className="form-group">
-          <input type="text" placeholder="Career Page URL (1)" name="firstLink" className="big-input" value={this.state.firstLink} onChange={this.handleChange}/>
-        </div>
-        <div className="form-group">
-          <input type="text" placeholder="Career Page URL (2) (optional)" name="secondLink" className="big-input" value={this.state.secondLink} onChange={this.handleChange} />
-        </div>
-        <div className="form-group">
-          <input type="text" placeholder="Career Page URL (3) (optional)" name="thirdLink" className="big-input" value={this.state.thirdLink} onChange={this.handleChange} />
-        </div>
-        <div className="form-group">
-          <p>Once the the request comes through, we'll add the company to your subscribes automatically. Keep in mind this might take up to 24 hours.</p>
-        </div>
-        <div className="form-group">
-          <button type="submit" className="big-button">Submit Website</button>
-        </div>
-      </form>
+      <div className="single" style={{width: '100%'}}>
+        <form className="form-small" onSubmit={this.performRequestWebsite}>
+          <div className="form-group">
+            <p> It appears {this.props.query} is not in the database yet. Want to add it? </p>
+          </div>
+          <div className="form-group">
+            <input type="text" placeholder="Website Name" className="big-input" name="name" value={this.state.name} onChange={this.handleChange} />
+          </div>
+          <div className="form-group">
+            <p> It's easiest to copy the URL from your address bar. Make sure to include the http:// or https:// part. </p>
+          </div>
+          <div className="form-group">
+            <input type="text" placeholder="Career Page URL (1)" name="firstLink" className="big-input" value={this.state.firstLink} onChange={this.handleChange}/>
+          </div>
+          <div className="form-group">
+            <input type="text" placeholder="Career Page URL (2) (optional)" name="secondLink" className="big-input" value={this.state.secondLink} onChange={this.handleChange} />
+          </div>
+          <div className="form-group">
+            <input type="text" placeholder="Career Page URL (3) (optional)" name="thirdLink" className="big-input" value={this.state.thirdLink} onChange={this.handleChange} />
+          </div>
+          <div className="form-group">
+            <p> Once the the request comes through, we'll add the company to your subscribes automatically. Keep in mind this might take up to 24 hours. </p>
+          </div>
+          <div className="form-group">
+            <button type="submit" className="big-button">Submit Website</button>
+          </div>
+        </form>
+      </div>
     )
   }
 }
@@ -198,19 +213,16 @@ class RegisterForm extends React.Component {
       password: "",
       confirmPassword: ""
     }
-    this.performRegister = this.performRegister.bind(this);
-    this.saveSession = this.saveSession.bind(this);
-    this.handleChange = this.handleChange.bind(this);
   }
-  handleChange(e) {
+  handleChange = (e) => {
     let returnObj = {};
     returnObj[e.target.name] = e.target.value;
     this.setState(returnObj);
   }
-  saveSession(user) {
+  saveSession = (user) => {
     localStorage.setItem("user", JSON.stringify(user));
   }
-  performRegister(e) {
+  performRegister = (e) => {
     e.preventDefault();
     e.currentTarget.reset();
     axios.post('http://localhost:3000/register', {
@@ -258,19 +270,16 @@ class LoginForm extends React.Component {
       email: "",
       password: ""
     }
-    this.performLogin = this.performLogin.bind(this);
-    this.saveSession = this.saveSession.bind(this);
-    this.handleChange = this.handleChange.bind(this);
   }
-  handleChange(e) {
+  handleChange = (e) => {
     let returnObj = {};
     returnObj[e.target.name] = e.target.value;
     this.setState(returnObj);
   }
-  saveSession(user) {
+  saveSession = (user) => {
     localStorage.setItem("user", JSON.stringify(user));
   }
-  performLogin(e) {
+  performLogin = (e) => {
     e.preventDefault();
     e.currentTarget.reset();
     axios.post('http://localhost:3000/login', {

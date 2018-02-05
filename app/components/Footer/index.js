@@ -25,7 +25,6 @@ export default function Footer(props) {
           <NavLink to="/profile">My Profile</NavLink>
           <NavLink to="/requestwebsite">Request Website</NavLink>
           <NavLink to="/modifywebsite">Modify Website</NavLink>
-          <NavLink to="/login">Login</NavLink>
         </div>
 
         <div className="footer-column">

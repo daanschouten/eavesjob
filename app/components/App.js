@@ -12,12 +12,11 @@ import Footer from './Footer';
 import NotFound from './404';
 import Profile from './Profile';
 import Support from './Support';
+import Contact from './Contact';
 
 const { Browse } = require('./Browse');
 const { Login } = require('./Auth');
 const { Register } = require('./Auth');
-const { RequestWebsite } = require('./Contact');
-const { Contact } = require('./Contact');
 const { AddWebsite } = require('./Admin');
 const { AddKeyword } = require('./Admin');
 
@@ -63,7 +62,6 @@ class App extends React.Component {
 
             <PrivateRoute path='/browse' component={Browse} user={this.state.user}/>
             <PrivateRoute path="/profile" component={Profile} user = {this.state.user} handleLogout = {this.onLogout} />
-            <PrivateRoute path="/requestWebsite" component= {RequestWebsite} user = {this.state.user} />
 
             <AdminRoute path="/addWebsite" component = {AddWebsite} />
             <AdminRoute path="/addKeyword" component = { AddKeyword } />

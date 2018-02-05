@@ -240,6 +240,7 @@ header {
 
     #website-list {
       padding: 30px 0;
+      width: 100%;
       flex-flow: column;
       background: #FFFFFF;
       align-items: center;
@@ -461,73 +462,78 @@ header {
 .container-center, .container-right {
   flex-flow: column;
   align-items: center;
+}
 
-  .single {
-    width: 500px;
-    flex-flow: column;
-    background: #FFFFFF;
+.single {
+  width: 500px;
+  flex-flow: column;
+  background: #FFFFFF;
+  align-items: center;
+  border: 1px solid #EAEAEA;
+  border-radius: 5px;
+  margin-bottom: 20px;
+
+  .form-redirect {
+    width: 80%;
+    justify-content: space-between;
     align-items: center;
-    border: 1px solid #EAEAEA;
-    border-radius: 5px;
-    margin-bottom: 20px;
+    padding: 20px 0;
 
-    .form-redirect {
-      width: 80%;
+    button {
+      width: 48%;
+    }
+  }
+
+  .form-title {
+    width: 80%;
+    // margin: 20px 0;
+    margin-top: 20px;
+    justify-content: flex-start;
+
+  }
+
+  .form-title-vertical {
+    width: 80%;
+    margin: 20px 0;
+    justify-content: flex-start;
+    flex-flow: column;
+
+    p {
+      margin-top: 10px;
+    }
+
+    a {
+      color: @base;
+    }
+  }
+
+  .form-small {
+    flex-flow: column;
+    width: 80%;
+    padding: 10px 0;
+
+    .form-group {
       justify-content: space-between;
-      align-items: center;
-      padding: 20px 0;
 
-      button {
+      input {
+        width: 100%;
+      }
+
+      input.half {
         width: 48%;
       }
-    }
 
-    .form-title {
-      width: 80%;
-      // margin: 20px 0;
-      margin-top: 20px;
-      justify-content: flex-start;
-
-    }
-
-    .form-title-vertical {
-      width: 80%;
-      margin: 20px 0;
-      justify-content: flex-start;
-      flex-flow: column;
+      button {
+        width: 100%;
+        margin: 15px 0;
+        font-size: 1.1em;
+      }
 
       p {
-        margin-top: 10px;
+        padding: 0 10px;
+        margin-top: 30px;
       }
 
-      a {
-        color: @base;
-      }
-    }
-
-    .form-small {
-      flex-flow: column;
-      width: 80%;
-      padding: 10px 0;
-
-      .form-group {
-        justify-content: space-between;
-
-        input {
-          width: 100%;
-        }
-
-        input.half {
-          width: 48%;
-        }
-
-        button {
-          width: 100%;
-          margin: 15px 0;
-          font-size: 1.1em;
-        }
-
-      }
     }
   }
 }

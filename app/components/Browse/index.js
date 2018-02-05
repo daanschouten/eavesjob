@@ -6,34 +6,6 @@ const { Link } = require('react-router-dom');
 const { RequestWebsiteForm } = require('../Forms');
 const { Toggle } = require('../Toggle');
 
-function StartSearching() {
-  return (
-    <div> start searching div here </div>
-  )
-}
-
-function NoResults() {
-  return (
-    <div> No results div here </div>
-  )
-}
-
-function RequestWebsite(props) {
-  return (
-    <div className="request-website">
-      <div className="right-sidebar-title">
-        <h2>request a career page</h2>
-      </div>
-      <div className="single-text">
-        <p>Came across a careers page not listed here? Tell us about it, and we'll take it from there!</p>
-      </div>
-      <div className="single-text">
-        <button className="big-button"><Link to='/requestwebsite'> request new website? </Link></button>
-      </div>
-    </div>
-  )
-}
-
 function SingleSite(props) {
   function onToggle() {
     props.onChangeSubscribe(props.website._id);
@@ -62,17 +34,18 @@ function Subscribed(props) {
         <h2>subscribed career pages</h2>
       </div>
       {
-        props.monitored ?
-          props.monitored.length > 0 ?
-            props.monitored.map(function(website){
-              return (
-                <SingleSite
-                 onChangeSubscribe = {props.onChangeSubscribe}
-                 website= {website}
-                 key= {website._id} /> )
-            })
-          : <NoResults/>
-        : <StartSearching/>
+        props.monitored && props.monitored.length > 0 ?
+          props.monitored.map(function(website){
+            return (
+              <SingleSite
+               onChangeSubscribe = {props.onChangeSubscribe}
+               website= {website}
+               key= {website._id} /> )
+          })
+        :
+          <div className="single-text">
+            <p> You haven't selected any career page yet! Check out our support section if you're not sure how to. </p>
+          </div>
       }
     </div>
   )
@@ -80,30 +53,35 @@ function Subscribed(props) {
 
 function Available(props) {
   return (
-    <div id="website-list">
-      <div className= "single-website">
-        <div className ="single-name">
-          <p> name </p>
-        </div>
-        <div className = "single-date">
-          <p> new career opportunity </p>
-        </div>
-        <div className= "single-monitor">
-        </div>
-      </div>
-      {
-        props.available ?
-          props.available.length > 0 ?
-            props.available.map(function(website){
-              return (
-                <SingleSite
-                 onChangeSubscribe = {props.onChangeSubscribe}
-                 website= {website}
-                 key= {website._id} /> )
-            })
-          : <NoResults/>
-        : <StartSearching/>
-      }
+    <div className="single" style={{
+      width: "100%",
+      background: "none",
+      border: "none" }}>
+        {
+          props.available && props.available.length > 0 ?
+              <div id="website-list">
+                <div className= "single-website">
+                  <div className ="single-name">
+                    <p> name </p>
+                  </div>
+                  <div className = "single-date">
+                    <p> new career opportunity </p>
+                  </div>
+                  <div className= "single-monitor">
+                  </div>
+                </div>
+                {
+                  props.available.map(function(website){
+                    return (
+                      <SingleSite
+                       onChangeSubscribe = {props.onChangeSubscribe}
+                       website= {website}
+                       key= {website._id} /> )
+                  })
+                }
+              </div>
+          : <RequestWebsiteForm query = {props.query} />
+        }
     </div>
   )
 }
@@ -171,8 +149,7 @@ class Browse extends React.Component {
   }
   onQueryChange = (query) => {
     this.setState({
-      query: query,
-      available: []
+      query: query
     },
     function() {
       this.searchAvailable();
@@ -249,13 +226,13 @@ class Browse extends React.Component {
           <Search onQueryChange = {this.onQueryChange} />
           <Available
           onChangeSubscribe = {this.onChangeSubscribe}
-          available = {this.state.available} />
+          available = {this.state.available}
+          query = {this.state.query} />
         </div>
         <div className="right-sidebar">
           <Subscribed
           onChangeSubscribe = {this.onChangeSubscribe}
           monitored = {this.state.monitored} />
-          <RequestWebsite/>
         </div>
       </div>
     )
