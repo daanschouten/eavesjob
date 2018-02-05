@@ -6,6 +6,23 @@ const { Link } = require('react-router-dom');
 const { RequestWebsiteForm } = require('../Forms');
 const { Toggle } = require('../Toggle');
 
+function NoneMonitoredBrowse() {
+  return (
+    <div id="monitored-websites">
+      <div className="right-sidebar-title">
+        <p> You haven't selected any career page! Check out our support section if you're not sure how to. </p>
+      </div>
+      <button className="big-button"><Link to='/support'> Support </Link> </button>
+    </div>
+  )
+}
+
+function NoneMonitoredProfile() {
+  return (
+      <p> You haven't selected any career pages yet. </p>
+  )
+}
+
 function SingleSite(props) {
   function onToggle() {
     props.onChangeSubscribe(props.website._id);
@@ -29,24 +46,25 @@ function SingleSite(props) {
 
 function Subscribed(props) {
   return (
-    <div id="monitored-websites">
-      <div className="right-sidebar-title">
-        <h2>subscribed career pages</h2>
-      </div>
-      {
-        props.monitored && props.monitored.length > 0 ?
-          props.monitored.map(function(website){
-            return (
-              <SingleSite
-               onChangeSubscribe = {props.onChangeSubscribe}
-               website= {website}
-               key= {website._id} /> )
-          })
-        :
-          <div className="single-text">
-            <p> You haven't selected any career page yet! Check out our support section if you're not sure how to. </p>
-          </div>
-      }
+    <div className="right-sidebar">
+        {
+          props.monitored && props.monitored.length > 0 ?
+            <div id="monitored-websites">
+              <div className="right-sidebar-title">
+                <h2>subscribed career pages</h2>
+              </div>
+            {
+              props.monitored.map(function(website){
+                return (
+                  <SingleSite
+                   onChangeSubscribe = {props.onChangeSubscribe}
+                   website= {website}
+                   key= {website._id} /> )
+              })
+            }
+            </div>
+          : <NoneMonitoredBrowse/>
+        }
     </div>
   )
 }
@@ -80,7 +98,9 @@ function Available(props) {
                   })
                 }
               </div>
-          : <RequestWebsiteForm query = {props.query} />
+          : props.query ?
+              <RequestWebsiteForm query = {props.query} />
+            : <NoneMonitoredProfile/>
         }
     </div>
   )
@@ -229,11 +249,9 @@ class Browse extends React.Component {
           available = {this.state.available}
           query = {this.state.query} />
         </div>
-        <div className="right-sidebar">
-          <Subscribed
-          onChangeSubscribe = {this.onChangeSubscribe}
-          monitored = {this.state.monitored} />
-        </div>
+        <Subscribed
+        onChangeSubscribe = {this.onChangeSubscribe}
+        monitored = {this.state.monitored} />
       </div>
     )
   }
