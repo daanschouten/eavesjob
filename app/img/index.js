@@ -6,11 +6,5 @@ import one from './one.svg';
 import two from './two.svg';
 import three from './three.svg';
 import four from './four.svg';
-
-
-module.exports = {
-  monitorWebsite: monitorWebsite,
-  clickWebsite: clickWebsite,
-  searchWebsite: searchWebsite,
-  searchIcon: searchIcon
-}
+import downArrow from './down-arrow.svg';
+import upArrow from './up-arrow.svg';

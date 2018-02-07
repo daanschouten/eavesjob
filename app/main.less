@@ -4,7 +4,7 @@
 @switchSize: 40px;
 @headerHeight: 55px;
 
-body, div, h1, h2, h3, p, header {
+body, div, h1, h2, h3, h4, p, header {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -121,7 +121,6 @@ header {
           width: 30px;
           height: 30px;
         }
-
       }
 
     }
@@ -243,60 +242,95 @@ header {
       width: 100%;
       flex-flow: column;
       background: #FFFFFF;
-      align-items: center;
       border: 1px solid #EAEAEA;
       border-radius: 5px;
 
-      .single-website {
-        width: 100%;
-        border-bottom: 0.5px solid #EAEAEA;
-        justify-content: space-between;
-        align-items: center;
-        padding: 12px 5%;
-        font-size: 1.1em;
+      .website-full {
+          width: 100%;
+          flex-flow: column;
+          border-bottom: 0.5px solid #EAEAEA;
+          padding: 0 5%;
+          border-left: 1px solid white;
+          border-right: 1px solid white;
 
-        .single-logo  {
-          width: 10%;
-          justify-content: flex-start;
-        }
+          .website-single {
+            width: 100%;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 1.1em;
 
-        .single-monitor  {
-          width: 10%;
-          justify-content: center;
-
-          img {
-            height: 20px;
-            width: auto;
+          .website-name {
+            width: 50%;
+            padding: 12px 0;
           }
 
-          img:hover {
-            cursor: pointer;
+          .website-details {
+            width: 10%;
+            justify-content: flex-end;
+
+            button {
+              background: none;
+              border: none;
+            }
+
+            button:focus {
+              outline: 0;
+            }
+
+            img {
+              padding-top: 10px;
+              width: 20px;
+              height: 20px;
+            }
           }
+
+          .website-monitor  {
+            width: 10%;
+            justify-content: flex-end;
+          }
+
+          .website-date {
+            width: 30%;
+            justify-content: flex-end;
+          }
+
         }
 
-        .single-date {
-          width: 25%;
-          justify-content: flex-end;
+        .website-expanded {
+          flex-flow: column;
+          align-items: flex-start;
+
+          p {
+            color: rgb(100,100,100);
+            margin-bottom: 10px;
+          }
+
+          .small-button {
+            margin-bottom: 10px;
+          }
+
         }
 
-        .single-name {
-          width: 55%;
-
-        }
       }
 
-      .single-website:nth-child(even) {
-        // background: @dark-grey;
-        background: linear-gradient(to right, @dark-grey, #FFFFFF);
+      .website-full:nth-child(even) {
+        background: @dark-grey;
+        border-left: 1px solid @dark-grey;
+        border-right: 1px solid @dark-grey;
       }
 
-      .single-website:hover {
-        background: @base;
+      .website-full:hover {
+        color: @base;
+        border-left: 1px solid @base;
+        border-right: 1px solid @base;
       }
 
-      .single-website:first-of-type:hover {
-        background: #FFFFFF;
+      .website-full:first-of-type:hover {
+        color: black;
+        border-left: 1px solid white;
+        border-right: 1px solid white;
       }
+
     }
 
     #no-results {
@@ -368,7 +402,7 @@ header {
         }
       }
 
-      .single-website {
+      .website-single {
         width: 100%;
         border-bottom: 0.5px solid #EAEAEA;
         justify-content: space-between;
@@ -376,30 +410,15 @@ header {
         padding: 12px 5%;
         font-size: 1.1em;
 
-        .single-logo  {
+        .website-details, .website-date {
           display: none;
         }
 
-        .single-monitor  {
+        .website-monitor  {
           width: 30%;
           justify-content: flex-end;
-
-          img {
-            height: 20px;
-            width: auto;
-          }
-
-          img:hover {
-            cursor: pointer;
-          }
         }
 
-        .single-date {
-          display: none;
-        }
-
-        .single-name {
-        }
       }
 
       .single-text {
@@ -423,25 +442,9 @@ header {
 
         button:hover {
           cursor: pointer;
-
         }
       }
-
-      .single-website:nth-child(even) {
-        background: linear-gradient(to right, @dark-grey, #FFFFFF 90%);
-      }
-
-      .single-website:hover {
-        background: @base;
-      }
-
-      .single-website:first-of-type:hover {
-        background: #FFFFFF;
-      }
-
     }
-
-
   }
 }
 
@@ -552,7 +555,6 @@ header {
 .big-button {
   height: 45px;
   padding: 10px;
-  background: @dark-grey;
   outline: none;
   border-radius: 5px;
   background: @base;
@@ -562,6 +564,21 @@ header {
   a {
     text-decoration: none;
     color: black;
+  }
+}
+
+.small-button {
+  outline: none;
+  border-radius: 5px;
+  background: @base;
+  font-size: 1.1em;
+  justify-content: center;
+  padding: 10px 15px;
+  color: black;
+
+  a {
+    text-decoration: none;
+    color: white;
   }
 }
 

@@ -23,25 +23,71 @@ function NoneMonitoredProfile() {
   )
 }
 
-function SingleSite(props) {
-  function onToggle() {
-    props.onChangeSubscribe(props.website._id);
-  }
+function SingleWebsiteLink(props) {
   return (
-    <div className="single-website">
-      <div className="single-name">
-        <p>{props.website.name}</p>
-      </div>
-      <div className="single-date">
-        <p>{props.website.storedPage.date}</p>
-      </div>
-      <div className="single-monitor ">
-        <Toggle
-        monitored = {props.website.monitored}
-        onToggle = {onToggle}/>
-      </div>
-    </div>
+    <p> {props.link} </p>
   )
+}
+
+function SingleWebsiteExpanded(props) {
+  return props.expand === true ?
+    <div className="website-expanded">
+      {
+        props.links.map(function(link) {
+          return (
+            <SingleWebsiteLink link = {link.pathname} key= {link.origin} />
+          )
+        })
+      }
+      <button className="small-button"> Modify </button>
+    </div>
+  : null
+}
+
+class SingleWebsite extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      expand: false
+    }
+  }
+  onToggle = () => {
+    this.props.onChangeSubscribe(this.props.website._id);
+  }
+  expandWebsite = () => {
+    // change icon as well
+    this.setState(prevState => ({
+      expand: !prevState.expand
+    }));
+  }
+  render() {
+    return (
+      <div className="website-full">
+        <div className="website-single">
+          <div className="website-name">
+            <p>{this.props.website.name}</p>
+          </div>
+          <div className="website-details">
+            {
+              this.state.expand === true ?
+                  <button onClick= {this.expandWebsite} ><img src="../../img/up-arrow.svg" alt="arrow down" /></button>
+              : <button onClick= {this.expandWebsite} ><img src="../../img/down-arrow.svg" alt="arrow down" /></button>
+            }
+
+          </div>
+          <div className="website-date">
+            <p>{this.props.website.storedPage.date}</p>
+          </div>
+          <div className="website-monitor ">
+            <Toggle
+            monitored = {this.props.website.monitored}
+            onToggle = {this.onToggle}/>
+          </div>
+        </div>
+        <SingleWebsiteExpanded expand = {this.state.expand} links = {this.props.website.links} />
+      </div>
+    )
+  }
 }
 
 function Subscribed(props) {
@@ -56,7 +102,7 @@ function Subscribed(props) {
             {
               props.monitored.map(function(website){
                 return (
-                  <SingleSite
+                  <SingleWebsite
                    onChangeSubscribe = {props.onChangeSubscribe}
                    website= {website}
                    key= {website._id} /> )
@@ -78,20 +124,25 @@ function Available(props) {
         {
           props.available && props.available.length > 0 ?
               <div id="website-list">
-                <div className= "single-website">
-                  <div className ="single-name">
-                    <p> name </p>
-                  </div>
-                  <div className = "single-date">
-                    <p> new career opportunity </p>
-                  </div>
-                  <div className= "single-monitor">
+                <div className="website-full">
+                  <div className="website-single">
+                    <div className="website-name">
+                      <h3> name </h3>
+                    </div>
+                    <div className="website-details">
+                      <h3> links </h3>
+                    </div>
+                    <div className="website-date">
+                      <h3> new opportunity </h3>
+                    </div>
+                    <div className="website-monitor">
+                    </div>
                   </div>
                 </div>
                 {
                   props.available.map(function(website){
                     return (
-                      <SingleSite
+                      <SingleWebsite
                        onChangeSubscribe = {props.onChangeSubscribe}
                        website= {website}
                        key= {website._id} /> )
@@ -123,7 +174,7 @@ class Search extends React.Component {
   render() {
     return (
       <div id="search-website">
-        <h2>browse career pages</h2>
+        <h2> browse career pages </h2>
         <div className="search-div">
           <form className="search-form">
             <div className="search-bar">
