@@ -119,14 +119,20 @@ class AddWebsiteForm extends React.Component {
   }
 }
 
+function ModifyInput(props) {
+  return (
+    <div className="form-group">
+      <input type="text" className="big-input" name="name" value = {props.link.href} />
+    </div>
+  )
+}
+
 class ModifyWebsiteForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       name: this.props.website.name,
-      firstLink: "",
-      secondLink: "",
-      thirdLink: ""
+      links: this.props.website.links
     }
   }
   handleChange = (e) => {
@@ -166,6 +172,13 @@ class ModifyWebsiteForm extends React.Component {
           <div className="form-group">
             <p> It's easiest to copy the URL from your address bar. Make sure to include the http:// or https:// part. </p>
           </div>
+          {
+            this.state.links.map(function(link) {
+              return (
+                <ModifyInput link= {link} key={link.href} />
+              )
+            })
+          }
           <div className="form-group">
             <p> We'll implement your proposed changes within 24 hours. Make sure you're subscribed to receive notifications about opportunities! </p>
           </div>

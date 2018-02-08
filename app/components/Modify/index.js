@@ -8,7 +8,7 @@ function ModifyWebsite(props) {
       <div className="container-center">
         <div className="single">
           <div className="form-title">
-            <h1> Modify Website </h1>
+            <h1> {"Modify " + props.location.query.website.name } </h1>
           </div>
           <ModifyWebsiteForm website= {props.location.query.website} />
         </div>
@@ -16,6 +16,8 @@ function ModifyWebsite(props) {
     </div>
   : null
 }
+
+// change null to redirect or 404 or other thing
 
 module.exports = {
   ModifyWebsite: ModifyWebsite
