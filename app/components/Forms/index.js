@@ -119,6 +119,64 @@ class AddWebsiteForm extends React.Component {
   }
 }
 
+class ModifyWebsiteForm extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      name: this.props.website.name,
+      firstLink: "",
+      secondLink: "",
+      thirdLink: ""
+    }
+  }
+  handleChange = (e) => {
+    let returnObj = {};
+    returnObj[e.target.name] = e.target.value;
+    this.setState(returnObj);
+  }
+  performModifyWebsite = (e) => {
+    // e.preventDefault();
+    // e.currentTarget.reset();
+    // axios.post('http://localhost:3000/requestWebsite', {
+    //   name: this.state.name,
+    //   firstLink: this.state.firstLink,
+    //   secondLink: this.state.secondLink,
+    //   thirdLink: this.state.thirdLink,
+    // })
+    // .then((response) => {
+    //   let data = response.data;
+    //   console.log(data);
+    //   this.setState({
+    //     name: "",
+    //     firstLink: "",
+    //     secondLink: "",
+    //     thirdLink: ""
+    //   });
+    // })
+    // .catch((error) => {
+    //   console.log(error);
+    // });
+  }
+  render() {
+    return (
+        <form className="form-small" onSubmit={this.performModifyWebsite}>
+          <div className="form-group">
+            <input type="text" placeholder="Website Name" className="big-input" name="name" value={this.state.name} onChange = {this.handleChange} />
+          </div>
+          <div className="form-group">
+            <p> It's easiest to copy the URL from your address bar. Make sure to include the http:// or https:// part. </p>
+          </div>
+          <div className="form-group">
+            <p> We'll implement your proposed changes within 24 hours. Make sure you're subscribed to receive notifications about opportunities! </p>
+          </div>
+          <div className="form-group">
+            <button type="submit" className="big-button"> Submit Modifications </button>
+          </div>
+        </form>
+    )
+  }
+}
+
 class RequestWebsiteForm extends React.Component {
   constructor(props) {
     super(props);
@@ -340,6 +398,7 @@ module.exports = {
   KeywordForm: KeywordForm,
   AddWebsiteForm: AddWebsiteForm,
   RequestWebsiteForm: RequestWebsiteForm,
+  ModifyWebsiteForm: ModifyWebsiteForm,
   LoginForm: LoginForm,
   RegisterForm: RegisterForm
 }

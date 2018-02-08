@@ -25,7 +25,7 @@ function NoneMonitoredProfile() {
 
 function SingleWebsiteLink(props) {
   return (
-    <p> {props.link} </p>
+    <Link to={props.link.href} target= "_blank"> {props.link.pathname} </Link>
   )
 }
 
@@ -33,13 +33,13 @@ function SingleWebsiteExpanded(props) {
   return props.expand === true ?
     <div className="website-expanded">
       {
-        props.links.map(function(link) {
+        props.website.links.map(function(link) {
           return (
-            <SingleWebsiteLink link = {link.pathname} key= {link.origin} />
+            <SingleWebsiteLink link = {link} key= {link.origin} />
           )
         })
       }
-      <button className="small-button"> Modify </button>
+      <button className="small-button"><Link to={{ pathname: '/modify', query: { website: props.website } }}> Modify </Link></button>
     </div>
   : null
 }
@@ -84,7 +84,7 @@ class SingleWebsite extends React.Component {
             onToggle = {this.onToggle}/>
           </div>
         </div>
-        <SingleWebsiteExpanded expand = {this.state.expand} links = {this.props.website.links} />
+        <SingleWebsiteExpanded expand = {this.state.expand} website = {this.props.website} />
       </div>
     )
   }

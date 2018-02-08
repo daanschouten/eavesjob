@@ -300,17 +300,20 @@ header {
           flex-flow: column;
           align-items: flex-start;
 
-          p {
+          > a {
+            text-decoration: none;
             color: rgb(100,100,100);
             margin-bottom: 10px;
+          }
+
+          > a:hover {
+            text-decoration: underline;
           }
 
           .small-button {
             margin-bottom: 10px;
           }
-
         }
-
       }
 
       .website-full:nth-child(even) {
@@ -574,11 +577,10 @@ header {
   font-size: 1.1em;
   justify-content: center;
   padding: 10px 15px;
-  color: black;
 
   a {
     text-decoration: none;
-    color: white;
+    color: black;
   }
 }
 

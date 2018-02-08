@@ -10,7 +10,7 @@ function Login(props) {
       <div className="container-center">
         <div className="single">
           <div className="form-title">
-            <h1>Log in</h1>
+            <h1> Log in </h1>
           </div>
           <LoginForm onLogin = {props.onLogin}/>
         </div>
