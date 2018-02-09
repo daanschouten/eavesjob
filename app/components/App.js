@@ -12,13 +12,16 @@ import Footer from './Footer';
 import NotFound from './404';
 import Profile from './Profile';
 import Support from './Support';
-import Contact from './Contact';
 
-const { ModifyWebsite } = require('./Modify');
-const { ReportWebsite } = require('./Modify');
+const { Contact } = require('./Contact');
+const { ModifyWebsite } = require('./Contact');
+const { ReportWebsite } = require('./Contact');
+
 const { Browse } = require('./Browse');
+
 const { Login } = require('./Auth');
 const { Register } = require('./Auth');
+
 const { AddWebsite } = require('./Admin');
 const { AddKeyword } = require('./Admin');
 

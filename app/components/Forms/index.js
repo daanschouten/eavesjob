@@ -357,6 +357,38 @@ class RegisterForm extends React.Component {
   }
 }
 
+class ContactForm extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      email: "",
+      message: ""
+    }
+  }
+  handleChange = (e) => {
+    let returnObj = {};
+    returnObj[e.target.name] = e.target.value;
+    this.setState(returnObj);
+  }
+  performContact = (e) => {
+  }
+  render() {
+    return (
+        <form className="form-small" onSubmit={this.performContact}>
+          <div className="form-group">
+            <input type="email" id="email" placeholder="Your Email Address" name="email" className="big-input" value={this.state.email} onChange={this.handleChange} />
+          </div>
+          <div className="form-group">
+            <textarea type="text" id="password" placeholder="Your Message" name="message" className="big-textarea" value={this.state.message} onChange={this.handleChange} />
+          </div>
+          <div className="form-group">
+            <button type="submit" className="big-button"> Send Message </button>
+          </div>
+        </form>
+    );
+  }
+}
+
 class LoginForm extends React.Component {
   constructor(props) {
     super(props);
@@ -437,5 +469,6 @@ module.exports = {
   ModifyWebsiteForm: ModifyWebsiteForm,
   ReportWebsiteForm: ReportWebsiteForm,
   LoginForm: LoginForm,
+  ContactForm: ContactForm,
   RegisterForm: RegisterForm
 }
