@@ -15,6 +15,7 @@ import Support from './Support';
 import Contact from './Contact';
 
 const { ModifyWebsite } = require('./Modify');
+const { ReportWebsite } = require('./Modify');
 const { Browse } = require('./Browse');
 const { Login } = require('./Auth');
 const { Register } = require('./Auth');
@@ -63,7 +64,8 @@ class App extends React.Component {
 
             <PrivateRoute path='/browse' component={Browse} user={this.state.user}/>
             <PrivateRoute path="/profile" component={Profile} user = {this.state.user} handleLogout = {this.onLogout} />
-            <PrivateRoute path="/modify" component={ModifyWebsite} user = {this.state.user} />
+            <PrivateRoute path="/modify" component={ModifyWebsite} />
+            <PrivateRoute path="/report" component={ReportWebsite} />
 
             <AdminRoute path="/addWebsite" component = {AddWebsite} />
             <AdminRoute path="/addKeyword" component = { AddKeyword } />

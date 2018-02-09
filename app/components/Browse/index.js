@@ -39,7 +39,10 @@ function SingleWebsiteExpanded(props) {
           )
         })
       }
-      <button className="small-button"><Link to={{ pathname: '/modify', query: { website: props.website } }}> Modify </Link></button>
+      <div>
+        <button className="small-button"><Link to={{ pathname: '/modify', query: { website: props.website } }}> Add Link </Link></button>
+        <button className="small-button"><Link to={{ pathname: '/report', query: { website: props.website } }}> Report Issue </Link></button>
+      </div>
     </div>
   : null
 }

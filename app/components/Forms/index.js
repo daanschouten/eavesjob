@@ -119,12 +119,54 @@ class AddWebsiteForm extends React.Component {
   }
 }
 
-function ModifyInput(props) {
+function ModifyLinks(props) {
   return (
-    <div className="form-group">
-      <input type="text" className="big-input" name="name" value = {props.link.href} />
-    </div>
+    <p><Link to={props.link.href} target= "_blank"> {props.link.pathname} </Link></p>
   )
+}
+
+class ReportWebsiteForm extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      name: this.props.website.name,
+      comments: ""
+    }
+  }
+  handleChange = (e) => {
+    let returnObj = {};
+    returnObj[e.target.name] = e.target.value;
+    this.setState(returnObj);
+  }
+  performReportWebsite = (e) => {
+  }
+  render() {
+    return (
+        <form className="form-small" onSubmit={this.performReportWebsite}>
+          <div className="form-group">
+            <p> {"The links we currently have for " + this.state.name + " are:" }</p>
+          </div>
+          <div className="form-group">
+          {
+            this.props.website.links.map(function(link) {
+              return (
+                <ModifyLinks link = {link} key= {link.origin} />
+              )
+            })
+          }
+          </div>
+          <div className="form-group">
+            <p> Please indicate whether the name, one of the links, or anything else is incorrect or incomplete. </p>
+          </div>
+          <div className="form-group">
+            <input type="text" className="big-input" placeholder="Comments" name="comments" value = {this.state.comments} onChange = {this.handleChange} />
+          </div>
+          <div className="form-group">
+            <button type="submit" className="big-button"> Submit Issue </button>
+          </div>
+        </form>
+    )
+  }
 }
 
 class ModifyWebsiteForm extends React.Component {
@@ -132,7 +174,7 @@ class ModifyWebsiteForm extends React.Component {
     super(props);
     this.state = {
       name: this.props.website.name,
-      links: this.props.website.links
+      newLink: ""
     }
   }
   handleChange = (e) => {
@@ -141,49 +183,30 @@ class ModifyWebsiteForm extends React.Component {
     this.setState(returnObj);
   }
   performModifyWebsite = (e) => {
-    // e.preventDefault();
-    // e.currentTarget.reset();
-    // axios.post('http://localhost:3000/requestWebsite', {
-    //   name: this.state.name,
-    //   firstLink: this.state.firstLink,
-    //   secondLink: this.state.secondLink,
-    //   thirdLink: this.state.thirdLink,
-    // })
-    // .then((response) => {
-    //   let data = response.data;
-    //   console.log(data);
-    //   this.setState({
-    //     name: "",
-    //     firstLink: "",
-    //     secondLink: "",
-    //     thirdLink: ""
-    //   });
-    // })
-    // .catch((error) => {
-    //   console.log(error);
-    // });
   }
   render() {
     return (
         <form className="form-small" onSubmit={this.performModifyWebsite}>
           <div className="form-group">
-            <input type="text" placeholder="Website Name" className="big-input" name="name" value={this.state.name} onChange = {this.handleChange} />
+            <p> {"The links we currently have for " + this.state.name + " are:" }</p>
           </div>
           <div className="form-group">
-            <p> It's easiest to copy the URL from your address bar. Make sure to include the http:// or https:// part. </p>
-          </div>
           {
-            this.state.links.map(function(link) {
+            this.props.website.links.map(function(link) {
               return (
-                <ModifyInput link= {link} key={link.href} />
+                <ModifyLinks link = {link} key= {link.origin} />
               )
             })
           }
-          <div className="form-group">
-            <p> We'll implement your proposed changes within 24 hours. Make sure you're subscribed to receive notifications about opportunities! </p>
           </div>
           <div className="form-group">
-            <button type="submit" className="big-button"> Submit Modifications </button>
+            <input type="text" className="big-input" placeholder="Additional Career Page URL" name="newLink" value = {this.state.newLink} onChange = {this.handleChange} />
+          </div>
+          <div className="form-group">
+            <p> It's easiest to copy the URL from your address bar. Please include the http:// or https:// part. </p>
+          </div>
+          <div className="form-group">
+            <button type="submit" className="big-button"> Submit Additional Page </button>
           </div>
         </form>
     )
@@ -412,6 +435,7 @@ module.exports = {
   AddWebsiteForm: AddWebsiteForm,
   RequestWebsiteForm: RequestWebsiteForm,
   ModifyWebsiteForm: ModifyWebsiteForm,
+  ReportWebsiteForm: ReportWebsiteForm,
   LoginForm: LoginForm,
   RegisterForm: RegisterForm
 }
