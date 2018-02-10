@@ -5,7 +5,7 @@ export default function renderFullPage(html, preloadedState) {
         <head>
             <title> Eavesjob </title>
         </head>
-        <body>
+        <body style="display:none">
             <div id="root">${html}</div>
             <script>
             window.__PRELOADED_STATE__ = ${JSON.stringify(preloadedState).replace(/</g, '\\u003c')}

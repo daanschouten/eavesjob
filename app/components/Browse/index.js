@@ -126,7 +126,7 @@ function Available(props) {
       border: "none" }}>
         {
           props.available && props.available.length > 0 ?
-              <div id="website-list">
+              <div id="large-list">
                 <div className="website-full">
                   <div className="website-single">
                     <div className="website-name">

@@ -42,9 +42,8 @@ module.exports = {
                   presets: ['es2015', 'react']
               }
           },
-          {
-            test: /\.(ttf|eot|woff(2)?)(\?[a-z0-9=&.]+)?$/,
-            loader: 'file-loader?name=fonts/[name].[ext]'
+          { test: /\.(otf|ttf|eot|svg|woff(2)?)(\?[a-z0-9=&.]+)?$/,
+            loader: 'url-loader?name=fonts/[name].[ext]'
           },
           {
             test: /\.(jpg|png|gif|svg|pdf|ico)$/,
