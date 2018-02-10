@@ -3,6 +3,7 @@ const PropTypes = require('prop-types');
 const { RegisterForm } = require('../Forms');
 const { LoginForm } = require('../Forms');
 const { Link } = require('react-router-dom');
+const { ForgotPasswordForm } = require('../Forms');
 
 function Login(props) {
   return (
@@ -46,7 +47,23 @@ function Register(props) {
     )
 }
 
+function ForgotPassword(props) {
+  return (
+    <div className="container-single">
+      <div className="container-center">
+        <div className="single">
+          <div className="form-title">
+            <h1> Reset your Password </h1>
+          </div>
+          <ForgotPasswordForm />
+        </div>
+      </div>
+    </div>
+  )
+}
+
 module.exports = {
+  ForgotPassword: ForgotPassword,
   Register: Register,
   Login: Login
 }

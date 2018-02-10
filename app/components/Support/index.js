@@ -2,12 +2,10 @@ const React = require('react');
 const PropTypes = require('prop-types');
 
 import {
-    Redirect,
     Route,
     Link,
     NavLink,
-    Switch,
-    withRouter
+    Switch
 } from 'react-router-dom';
 
 export default function Support(props) {
@@ -16,6 +14,7 @@ export default function Support(props) {
       <div className="right-sidebar">
         <div id="monitored-websites">
           <div id="sidebar-nav">
+            <h2> Support </h2>
             <NavLink to="/support" exact > Getting Started </NavLink>
             <NavLink to="/support/verify"> Verify Email Address </NavLink>
             <NavLink to="/support/subscribing"> Subscribe to Career Pages </NavLink>

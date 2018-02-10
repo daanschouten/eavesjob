@@ -169,6 +169,34 @@ class ReportWebsiteForm extends React.Component {
   }
 }
 
+class ForgotPasswordForm extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      email: ""
+    }
+  }
+  handleChange = (e) => {
+    let returnObj = {};
+    returnObj[e.target.name] = e.target.value;
+    this.setState(returnObj);
+  }
+  performForgotPassword = (e) => {
+  }
+  render() {
+    return (
+        <form className="form-small" onSubmit={this.performForgotPassword}>
+          <div className="form-group">
+            <input type="text" className="big-input" placeholder="Your Email Address" name="email" value = {this.state.email} onChange = {this.handleChange} />
+          </div>
+          <div className="form-group">
+            <button type="submit" className="big-button"> Send Reset Email </button>
+          </div>
+        </form>
+    )
+  }
+}
+
 class ModifyWebsiteForm extends React.Component {
   constructor(props) {
     super(props);
@@ -468,6 +496,7 @@ module.exports = {
   RequestWebsiteForm: RequestWebsiteForm,
   ModifyWebsiteForm: ModifyWebsiteForm,
   ReportWebsiteForm: ReportWebsiteForm,
+  ForgotPasswordForm: ForgotPasswordForm,
   LoginForm: LoginForm,
   ContactForm: ContactForm,
   RegisterForm: RegisterForm

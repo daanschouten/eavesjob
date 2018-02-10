@@ -29,8 +29,8 @@ export default function Footer(props) {
         <div className="footer-column">
           <h4> FORMAL </h4>
           <NavLink to="/premium">Go Premium</NavLink>
-          <NavLink to="/terms">Terms and Conditions</NavLink>
-          <NavLink to="/businesses">Businesses</NavLink>
+          <NavLink to="/conditions">Terms and Conditions</NavLink>
+          <NavLink to="/business">Businesses</NavLink>
         </div>
     </footer>
   )

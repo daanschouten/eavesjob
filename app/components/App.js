@@ -12,6 +12,9 @@ import Footer from './Footer';
 import NotFound from './404';
 import Profile from './Profile';
 import Support from './Support';
+import Conditions from './Conditions';
+import Business from './Business';
+import About from './About';
 
 const { Contact } = require('./Contact');
 const { ModifyWebsite } = require('./Contact');
@@ -21,6 +24,7 @@ const { Browse } = require('./Browse');
 
 const { Login } = require('./Auth');
 const { Register } = require('./Auth');
+const { ForgotPassword } = require('./Auth');
 
 const { AddWebsite } = require('./Admin');
 const { AddKeyword } = require('./Admin');
@@ -61,6 +65,10 @@ class App extends React.Component {
               onRegister = {this.onRegister} />} />
             <Route path="/contact" component={Contact} />
             <Route path="/support" component={Support} />
+            <Route path="/conditions" component={Conditions} />
+            <Route path="/business" component={Business} />
+            <Route path="/about" component={About} />
+            <Route path="/forgotpassword" component={ForgotPassword} />
 
             <StrangerRoute path="/login" component = {Login} onLogin = {this.onLogin} />
             <StrangerRoute path="/register" component= {Register} onRegister = {this.onRegister} />
