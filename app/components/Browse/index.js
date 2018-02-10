@@ -10,9 +10,8 @@ function NoneMonitoredBrowse() {
   return (
     <div id="monitored-websites">
       <div className="right-sidebar-title">
-        <p> You haven't selected any career page! Check out our support section if you're not sure how to. </p>
+        <p> You haven't selected any career page yet! Check out our <Link to='/support/subscribing'>support section</Link> if you're not sure how to. </p>
       </div>
-      <button className="big-button"><Link to='/support'> Support </Link> </button>
     </div>
   )
 }

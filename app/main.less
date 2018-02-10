@@ -3,9 +3,11 @@
 @dark-grey: rgb(230,230,230);
 @switchSize: 40px;
 @headerHeight: 55px;
+@black: #232323;
+@background: #F5F5F5;
 
 body {
-  background-color: #f5f5f5;
+  background-color: @background;
 }
 
 body, div, h1, h2, h3, h4, p, header {
@@ -21,17 +23,24 @@ div, header, form, button, input, footer {
 
 h1, h2, h3, h4, h5 {
   font-family: RobotoCondensed;
+  color: @black;
 }
 
 p, input, a, button {
   font-family: RobotoRegular;
   font-size: 1em;
   text-decoration: none;
-  color: black;
+  color: @black;
+}
+
+p {
+  > a {
+    text-decoration: underline;
+  }
 }
 
 .active {
-  color: black !important;
+  color: @black !important;
 }
 
 @font-face {
@@ -120,7 +129,7 @@ header {
           font-family: RobotoRegular;
           text-align: justify;
           line-height: normal;
-          max-width: 380px;
+          max-width: 400px;
           font-size: 1.2em;
         }
 
@@ -376,7 +385,7 @@ header {
   }
 
   .website-full:first-of-type:hover {
-    color: black;
+    color: @black;
     border-left: 2px solid white;
     border-right: 2px solid white;
   }
