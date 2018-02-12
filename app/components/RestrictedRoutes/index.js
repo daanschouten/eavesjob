@@ -1,9 +1,7 @@
 import React from 'react';
 import {
     Redirect,
-    Route,
-    Switch,
-    withRouter
+    Route
 } from 'react-router-dom';
 
 const getAuth = function(role) {

@@ -94,19 +94,19 @@ class App extends React.Component {
           user: {}
         });
       }
-      this.redirectUser('/');
+      <Redirect to="/" push />
     }
     onRegister = (user) => {
       this.setState({
         user: user
       });
-      this.redirectUser('/browse');
+      <Redirect to="/browse" push />
     }
     onLogin = (user) => {
       this.setState({
         user: user
       });
-      this.redirectUser('/browse');
+      <Redirect to="/browse" push />
     }
 };
 
