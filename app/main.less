@@ -64,11 +64,11 @@ header {
   width: 100%;
   justify-content: space-between;
   align-content: center;
-  padding: 0 40px;
+  padding: 0 20px;
   height: @headerHeight;
   background: @base;
 
-  #logo, #menu {
+  #menu-left, #menu-right, #menu-center, #menu-mobile {
     align-items: center;
 
     a {
@@ -77,6 +77,32 @@ header {
       color: white;
     }
   }
+
+  #menu-left, #menu-right {
+    display: none;
+    flex: 1 1 40%;
+  }
+
+  #menu-left {
+    justify-content: flex-start;
+  }
+
+  #menu-right {
+    justify-content: flex-end;
+  }
+
+  #menu-center {
+    display: none;
+    justify-content: center;
+    flex: 1 1 20%;
+  }
+
+  #menu-mobile {
+    width: 100%;
+    justify-content: flex-end;
+  }
+
+
 }
 
 .container-single {
@@ -219,7 +245,7 @@ header {
     width: 100%;
     flex-flow: column;
 
-    #monitored-websites, .request-website, #welcome-user {
+    #monitored-websites, .request-website {
       background: #FFFFFF;
       border: 1px solid #EAEAEA;
       border-radius: 5px;
@@ -231,22 +257,13 @@ header {
         padding: 21.5px 5%;
         align-items: center;
         justify-content: space-between;
-
-        button {
-          font-family: RobotoRegular;
-          font-size: 1.1em;
-          padding: 10px 20px;
-          border: 0px;
-          background: @base;
-          border-radius: 5px;
-          margin: 10px 0;
-          outline: none;
-        }
       }
 
       .website-single {
         width: 100%;
         border-bottom: 0.5px solid #EAEAEA;
+        border-left: 2px solid white;
+        border-right: 2px solid white;
         justify-content: space-between;
         align-items: center;
         padding: 12px 5%;
@@ -263,6 +280,11 @@ header {
 
       }
 
+      .website-single:hover {
+          border-left: 2px solid @base;
+          border-right: 2px solid @base;
+      }
+
       .single-text {
         width: 100%;
         border-bottom: 0.5px solid #EAEAEA;
@@ -270,17 +292,6 @@ header {
         padding: 0 5% 12px 5%;
         font-size: 1.1em;
         justify-content: center;
-
-        button {
-          font-family: RobotoRegular;
-          font-size: 1.1em;
-          padding: 10px 20px;
-          border: 0px;
-          background: @base;
-          border-radius: 5px;
-          margin: 10px 0;
-          outline: none;
-        }
       }
     }
   }
@@ -531,7 +542,7 @@ header {
 
 .big-input, .big-button {
   height: 45px;
-  padding: 10px;
+  padding: 10px 15px;
   border-radius: 5px;
   outline: none;
 }
@@ -686,14 +697,14 @@ footer {
 @media (min-width: 1000px) {
 
   header {
+    padding: 0 40px;
 
+    #menu-left, #menu-right, #menu-center {
+      display: flex;
+    }
 
-    #logo, #menu {
-
-
-      a {
-
-      }
+    #menu-mobile {
+      display: none;
     }
   }
 

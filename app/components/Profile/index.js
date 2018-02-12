@@ -70,7 +70,7 @@ export default class Profile extends React.Component {
             <div id="search-website">
               <h2>selected career pages</h2>
               <div id="top-buttons">
-                <button className="big-button"><Link to='/browse'> Browse Career Pages </Link> </button>
+                <button className="big-button"><Link to='/browse'> Browse </Link> </button>
                 <button className="big-button" onClick = {this.props.handleLogout}> Log out </button>
               </div>
             </div>
