@@ -6,6 +6,8 @@
 @black: #232323;
 @background: #F5F5F5;
 
+// This applies from 0px to 600px
+
 body {
   background-color: @background;
 }
@@ -80,7 +82,7 @@ header {
 .container-single {
   width: 100%;
   flex-flow: column;
-  margin-top: 15vh;
+  margin-top: 5vh;
 
   .container-center {
     width: 100%;
@@ -104,22 +106,26 @@ header {
         }
       }
 
+      img {
+        max-width: 100%;
+      }
+
     }
   }
 }
 
 .container-double {
   width: 100%;
-  justify-content: space-around;
+  flex-flow: column;
+  align-items: center;
 
     .container-left {
       align-items: center;
       flex-flow: column;
-      width: 55%;
-      margin-top: 10px;
+      width: 100%;
 
         h1.title {
-          font-size: 60px;
+          font-size: 3em;
           margin: 0;
           font-family: RobotoCondensed;
           text-align: center;
@@ -129,19 +135,19 @@ header {
           font-family: RobotoRegular;
           text-align: justify;
           line-height: normal;
-          max-width: 400px;
           font-size: 1.2em;
+          padding: 0 15%;
         }
 
         p:first-of-type {
-          margin: 50px 0 20px 0;
+          margin: 30px 0;
         }
     }
 }
 
 #sidebar-nav {
   flex-flow: column;
-  padding: 10% 0;
+  padding: 20px 0;
 
   h2 {
     padding: 10px 10%;
@@ -168,12 +174,12 @@ header {
 
 #two-thirds-page {
   width: 100%;
-  padding: 40px 50px;
-  justify-content: space-between;
-  min-height: 80vh;
+  flex-flow: column;
+  align-items: center;
+  padding: 40px 0;
 
   #two-thirds-left {
-    width: 70%;
+    width: 100%;
     flex-flow: column;
 
     #no-results {
@@ -210,7 +216,7 @@ header {
   }
 
   .right-sidebar {
-    width: 25%;
+    width: 100%;
     flex-flow: column;
 
     #monitored-websites, .request-website, #welcome-user {
@@ -222,8 +228,7 @@ header {
 
       .right-sidebar-title {
         width: 100%;
-        padding: 30px 5%;
-        height: 100px;
+        padding: 21.5px 5%;
         align-items: center;
         justify-content: space-between;
 
@@ -282,7 +287,7 @@ header {
 }
 
 .container-right {
-  width: 45%;
+  width: 100%;
 }
 
 .container-center, .container-right {
@@ -353,8 +358,7 @@ header {
       }
 
       .website-date {
-        width: 30%;
-        justify-content: flex-end;
+        display: none;
       }
 
     }
@@ -399,6 +403,7 @@ header {
 }
 
 #search-website {
+  flex-flow: column;
   padding: 30px 5%;
   background: #FFFFFF;
   border: 1px solid #EAEAEA;
@@ -407,9 +412,19 @@ header {
   justify-content: space-between;
   align-items: center;
 
+  h2 {
+    margin-bottom: 20px;
+  }
+
+  #top-buttons {
+    button {
+      margin: 10px;
+    }
+  }
+
   .search-div {
     height: 40px;
-    width: 50%;
+    width: 80%;
 
     .search-form {
       width: 100%;
@@ -449,12 +464,10 @@ header {
 }
 
 .single {
-  width: 500px;
+  width: 100%;
   flex-flow: column;
   background: #FFFFFF;
   align-items: center;
-  border: 1px solid #EAEAEA;
-  border-radius: 5px;
   margin-bottom: 20px;
 
   .single-text {
@@ -514,16 +527,6 @@ header {
 
     }
   }
-}
-
-#profile-premium {
-  padding: 30px 5%;
-  background: #FFFFFF;
-  border: 1px solid #EAEAEA;
-  border-radius: 5px;
-  margin-bottom: 30px;
-  justify-content: space-between;
-  align-items: center;
 }
 
 .big-input, .big-button {
@@ -655,13 +658,14 @@ footer {
   padding: 30px 10%;
   background: @base;
   justify-content: space-between;
-  margin-top: 50px;
+  margin-top: 30px;
+  flex-wrap: wrap;
 
   .footer-column {
-    padding-left: 5%;
+    padding-left: 10%;
     height: 100%;
     flex-flow: column;
-    width: 25%;
+    width: 50%;
 
     a {
       margin: 3px 0;
@@ -674,6 +678,116 @@ footer {
       margin: 15px 0;
     }
 
+  }
+}
+
+/* Desktop Size */
+
+@media (min-width: 1000px) {
+
+  header {
+
+
+    #logo, #menu {
+
+
+      a {
+
+      }
+    }
+  }
+
+  .container-single {
+    margin-top: 15vh;
+  }
+
+  .container-double {
+    flex-flow: row;
+    justify-content: space-around;
+
+      .container-left {
+        width: 55%;
+        margin-top: 10px;
+
+          h1.title {
+            font-size: 3.5em;
+          }
+
+          p  {
+            max-width: 400px;
+            padding: 0;
+          }
+
+          p:first-of-type {
+            margin: 50px 0 20px 0;
+          }
+      }
+  }
+
+  #two-thirds-page {
+    padding: 40px 50px;
+    flex-flow: row;
+    align-items: flex-start;
+    justify-content: space-between;
+    min-height: 80vh;
+
+    #two-thirds-left {
+      width: 65%;
+    }
+
+    .right-sidebar {
+      width: 30%;
+    }
+  }
+
+  .container-right {
+    width: 45%;
+  }
+
+  #large-list {
+
+    .website-full {
+
+      .website-single {
+
+        .website-date {
+          display: flex;
+          width: 30%;
+          justify-content: flex-end;
+        }
+
+      }
+    }
+
+  }
+
+  #search-website {
+    flex-flow: row;
+
+    h2 {
+      margin-bottom: 0;
+    }
+
+    .search-div {
+      width: 50%;
+    }
+  }
+
+  .single {
+    width: 500px;
+    border: 1px solid #EAEAEA;
+    border-radius: 5px;
+  }
+
+  footer {
+    padding: 30px 10%;
+    margin-top: 50px;
+
+    .footer-column {
+      height: 100%;
+      flex-flow: column;
+      width: 25%;
+    }
   }
 }
 

@@ -67,22 +67,21 @@ export default class Profile extends React.Component {
     return (
         <div id="two-thirds-page">
           <div id="two-thirds-left">
-            <div id="profile-premium">
+            <div id="search-website">
               <h2>selected career pages</h2>
-              <button className="big-button"><Link to='/browse'> Browse Career Pages </Link> </button>
+              <div id="top-buttons">
+                <button className="big-button"><Link to='/browse'> Browse Career Pages </Link> </button>
+                <button className="big-button" onClick = {this.props.handleLogout}> Log out </button>
+              </div>
             </div>
             <Available
             onChangeSubscribe = {this.onChangeSubscribe}
             available = {this.state.monitored} />
           </div>
           <div className="right-sidebar">
-            <div id="profile-premium">
-              <p>Hi {this.props.user.firstName}!</p>
-              <button className="big-button" onClick = {this.props.handleLogout}> Log out </button>
-            </div>
             <div id="monitored-websites">
               <div className="right-sidebar-title">
-                <p> Want to monitor more than 5 pages? </p>
+                <p> Want to monitor more than 5 pages? Upgrade to a premium account at the cost of a cappucino. </p>
               </div>
               <button className="big-button"><Link to='/premium'> Go Premium </Link> </button>
             </div>
