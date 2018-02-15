@@ -20,16 +20,14 @@ class AddKeyword extends React.Component {
   }
 }
 
-class AddWebsite extends React.Component {
-  render() {
-    return (
-      <div className="container-single">
-        <div className="container-center">          
-            <AddWebsiteForm/>
-        </div>
+function AddWebsite(props) {
+  return (
+    <div className="container-single">
+      <div className="container-center">
+          <AddWebsiteForm user = {props.user} />
       </div>
-    )
-  }
+    </div>
+  )
 }
 
 module.exports = {

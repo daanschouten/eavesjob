@@ -72,7 +72,7 @@ class SingleWebsite extends React.Component {
           <div className="website-details">
             {
               this.state.expand === true ?
-                  <button onClick= {this.expandWebsite} ><img src="../../img/up-arrow.svg" alt="arrow down" /></button>
+                  <button onClick= {this.expandWebsite} ><img src="../../img/up-arrow.svg" alt="arrow up" /></button>
               : <button onClick= {this.expandWebsite} ><img src="../../img/down-arrow.svg" alt="arrow down" /></button>
             }
 
@@ -152,7 +152,7 @@ function Available(props) {
                 }
               </div>
           : props.query ?
-              <RequestWebsiteForm query = {props.query} />
+              <RequestWebsiteForm query = {props.query} user = {props.user} />
             : <NoneMonitoredProfile/>
         }
     </div>
@@ -299,6 +299,7 @@ class Browse extends React.Component {
           <Search onQueryChange = {this.onQueryChange} />
           <Available
           onChangeSubscribe = {this.onChangeSubscribe}
+          user = {this.state.user}
           available = {this.state.available}
           query = {this.state.query} />
         </div>

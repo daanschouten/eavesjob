@@ -31,7 +31,6 @@ const { AddKeyword } = require('./Admin');
 
 const { PrivateRoute } = require('./RestrictedRoutes');
 const { StrangerRoute } = require('./RestrictedRoutes');
-const { AdminRoute } = require('./RestrictedRoutes');
 
 class App extends React.Component {
     constructor(props) {
@@ -73,13 +72,13 @@ class App extends React.Component {
             <StrangerRoute path="/login" component = {Login} onLogin = {this.onLogin} />
             <StrangerRoute path="/register" component= {Register} onRegister = {this.onRegister} />
 
-            <PrivateRoute path='/browse' component={Browse} user={this.state.user}/>
+            <PrivateRoute path='/browse' component={Browse} user = {this.state.user}/>
             <PrivateRoute path="/profile" component={Profile} user = {this.state.user} handleLogout = {this.onLogout} />
             <PrivateRoute path="/modify" component={ModifyWebsite} />
             <PrivateRoute path="/report" component={ReportWebsite} />
 
-            <AdminRoute path="/addWebsite" component = {AddWebsite} />
-            <AdminRoute path="/addKeyword" component = { AddKeyword } />
+            <PrivateRoute path="/addWebsite" component = {AddWebsite} user = {this.state.user} />
+            <PrivateRoute path="/addKeyword" component = { AddKeyword } />
 
             <Route component = { NotFound }/>
           </Switch>

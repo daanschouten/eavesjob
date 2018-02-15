@@ -6,7 +6,6 @@ export default function Header(props) {
   return (
     <header>
       <div id="menu-left">
-        <NavLink exact to="/">Home</NavLink>
         <NavLink to="/browse">Browse</NavLink>
         <NavLink to="/about">About</NavLink>
         <NavLink to="/contact">Contact</NavLink>

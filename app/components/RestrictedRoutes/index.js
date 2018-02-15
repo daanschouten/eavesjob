@@ -4,7 +4,7 @@ import {
     Route
 } from 'react-router-dom';
 
-const getAuth = function(role) {
+const Authenticate = function() {
   let canUseDOM = !!(
         typeof window !== 'undefined' &&
         window.document &&
@@ -12,16 +12,8 @@ const getAuth = function(role) {
   );
   if (canUseDOM) {
     let user = JSON.parse(localStorage.getItem('user'));
-    if (user && role) {
-      if (role === "user" || role == "stranger") {
-        return true;
-      } else if (role === "admin") {
-        if (user._id === "5a62075953a7b0103d06a9e3") {
-          return true;
-        } else {
-          return false;
-        }
-      }
+    if (user) {
+      return true;
     } else {
       return false
     }
@@ -30,7 +22,7 @@ const getAuth = function(role) {
 
 const PrivateRoute = ({ component: Component, ...rest }) => (
   <Route {...rest} render={props => (
-    getAuth("user") ? (
+    Authenticate() ? (
       <Component {...rest} {...props} />
     ) : (
       <Redirect to={{
@@ -41,22 +33,9 @@ const PrivateRoute = ({ component: Component, ...rest }) => (
   )}/>
 )
 
-const AdminRoute = ({ component: Component, ...rest }) => (
-  <Route {...rest} render={props => (
-    getAuth("admin") ? (
-      <Component {...rest} {...props} />
-    ) : (
-      <Redirect to={{
-        pathname: '/',
-        state: { from: props.location }
-      }}/>
-    )
-  )}/>
-)
-
 const StrangerRoute = ({ component: Component, ...rest }) => (
   <Route {...rest} render={props => (
-    getAuth("stranger") ? (
+    Authenticate() ? (
       <Redirect to={{
         pathname: '/profile',
         state: { from: props.location }
@@ -69,6 +48,5 @@ const StrangerRoute = ({ component: Component, ...rest }) => (
 
 module.exports = {
   PrivateRoute: PrivateRoute,
-  AdminRoute: AdminRoute,
   StrangerRoute: StrangerRoute
 }

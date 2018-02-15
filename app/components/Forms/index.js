@@ -14,7 +14,17 @@ class AddWebsiteForm extends React.Component {
     }
   }
   componentDidMount() {
-    axios.get('http://localhost:3000/addWebsite')
+    if (this.props.user.token) {
+      this.retrieveRequestedWebsite(this.props.user);
+    }
+  }
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.user !== this.props.user ) {
+      this.retrieveRequestedWebsite(nextProps.user);
+    }
+  }
+  retrieveRequestedWebsite = (user) => {
+    axios.get(`http://localhost:3000/addWebsite/${user.token}`)
       .then((response) => {
         if (response.data.name) {
           let responseObj = {
@@ -42,7 +52,7 @@ class AddWebsiteForm extends React.Component {
   performAddWebsite = (e) => {
     e.preventDefault();
     e.currentTarget.reset();
-    axios.post('http://localhost:3000/addWebsite', {
+    axios.post(`http://localhost:3000/addWebsite/${this.props.user.token}`, {
       name: this.state.name,
       firstLink: this.state.firstLink,
       secondLink: this.state.secondLink,
@@ -54,6 +64,9 @@ class AddWebsiteForm extends React.Component {
         firstLink: "",
         secondLink: "",
         thirdLink: ""
+      }, function() {
+        console.log(this.props.user);
+        this.retrieveRequestedWebsite(this.props.user);
       });
     })
     .catch((error) => {
@@ -61,7 +74,7 @@ class AddWebsiteForm extends React.Component {
     });
   }
   performRemoveRequest = (e) => {
-    axios.post('http://localhost:3000/removeRequest', {
+    axios.post(`http://localhost:3000/removeRequest/${this.props.user.token}`, {
       name: this.state.name,
       firstLink: this.state.firstLink,
       secondLink: this.state.secondLink,
@@ -271,7 +284,7 @@ class RequestWebsiteForm extends React.Component {
   performRequestWebsite = (e) => {
     e.preventDefault();
     e.currentTarget.reset();
-    axios.post('http://localhost:3000/requestWebsite', {
+    axios.post(`http://localhost:3000/requestWebsite/${this.props.user.token}`, {
       name: this.state.name,
       firstLink: this.state.firstLink,
       secondLink: this.state.secondLink,
@@ -279,7 +292,6 @@ class RequestWebsiteForm extends React.Component {
     })
     .then((response) => {
       let data = response.data;
-      console.log(data);
       this.setState({
         name: "",
         firstLink: "",
