@@ -28,12 +28,14 @@ h1, h2, h3, h4, h5 {
   color: @black;
 }
 
-p, input, a, button {
+p, input, a, button, select {
   font-family: RobotoRegular;
   font-size: 1em;
   text-decoration: none;
   color: @black;
 }
+
+
 
 p {
   > a {
@@ -68,7 +70,7 @@ header {
   height: @headerHeight;
   background: @base;
 
-  #menu-left, #menu-right, #menu-center, #menu-mobile {
+  #menu-left, #menu-right, #menu-mobile {
     align-items: center;
 
     a {
@@ -76,11 +78,16 @@ header {
       font-size: 1.1em;
       color: white;
     }
+
+    h2 {
+      font-size: 2em;
+      color: white;
+    }
   }
 
   #menu-left, #menu-right {
     display: none;
-    flex: 1 1 40%;
+    flex: 1 1 50%;
   }
 
   #menu-left {
@@ -89,12 +96,6 @@ header {
 
   #menu-right {
     justify-content: flex-end;
-  }
-
-  #menu-center {
-    display: none;
-    justify-content: center;
-    flex: 1 1 20%;
   }
 
   #menu-mobile {
@@ -202,7 +203,7 @@ header {
   width: 100%;
   flex-flow: column;
   align-items: center;
-  padding: 40px 0;
+  padding: 60px 0;
 
   #two-thirds-left {
     width: 100%;
@@ -538,6 +539,13 @@ header {
   }
 }
 
+select {
+  border-radius: 5px;
+  outline: none;
+  background: @dark-grey;
+  margin: 10px 5px;
+}
+
 .big-input, .big-button {
   height: 45px;
   padding: 10px 15px;
@@ -682,9 +690,14 @@ footer {
       color: white;
     }
 
-    h1, h4 {
+    h4 {
       color: white;
       margin: 15px 0;
+    }
+
+    h1 {
+      font-size: 3em;
+      color: white;
     }
 
   }
@@ -695,9 +708,9 @@ footer {
 @media (min-width: 1000px) {
 
   header {
-    padding: 0 40px;
+    padding: 20px 40px;
 
-    #menu-left, #menu-right, #menu-center {
+    #menu-left, #menu-right {
       display: flex;
     }
 
@@ -734,7 +747,7 @@ footer {
   }
 
   #two-thirds-page {
-    padding: 40px 50px;
+    padding: 60px 50px;
     flex-flow: row;
     align-items: flex-start;
     justify-content: space-between;

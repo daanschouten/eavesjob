@@ -3,21 +3,19 @@ const PropTypes = require('prop-types');
 const { KeywordForm } = require('../Forms');
 const { AddWebsiteForm } = require('../Forms');
 
-class AddKeyword extends React.Component {
-  render() {
-    return (
-      <div className="container-single">
-        <div className="container-center">
-          <div className="single">
-            <div className="form-title">
-              <h1>Add Keywords</h1>
-            </div>
-            <KeywordForm />
+function AddKeyword(props) {
+  return (
+    <div className="container-single">
+      <div className="container-center">
+        <div className="single">
+          <div className="form-title">
+            <h1>Add Keywords</h1>
           </div>
+          <KeywordForm user = {props.user} />
         </div>
       </div>
-    );
-  }
+    </div>
+  );
 }
 
 function AddWebsite(props) {

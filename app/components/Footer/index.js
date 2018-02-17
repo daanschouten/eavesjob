@@ -7,7 +7,7 @@ export default function Footer(props) {
     <footer>
 
         <div className="footer-column">
-          <h1> EAVESJOB </h1>
+          <h1> Eavesjob </h1>
         </div>
 
         <div className="footer-column">

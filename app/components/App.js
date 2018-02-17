@@ -77,8 +77,8 @@ class App extends React.Component {
             <PrivateRoute path="/modify" component={ModifyWebsite} />
             <PrivateRoute path="/report" component={ReportWebsite} />
 
-            <PrivateRoute path="/addWebsite" component = {AddWebsite} user = {this.state.user} />
-            <PrivateRoute path="/addKeyword" component = { AddKeyword } />
+            <PrivateRoute path="/addWebsite" component = { AddWebsite } user = {this.state.user} />
+            <PrivateRoute path="/addKeyword" component = { AddKeyword } user = {this.state.user} />
 
             <Route component = { NotFound }/>
           </Switch>

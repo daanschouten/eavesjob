@@ -5,13 +5,13 @@ import {
 } from 'react-router-dom';
 
 const Authenticate = function() {
-  let canUseDOM = !!(
+  const canUseDOM = !!(
         typeof window !== 'undefined' &&
         window.document &&
         window.document.createElement
   );
   if (canUseDOM) {
-    let user = JSON.parse(localStorage.getItem('user'));
+    const user = JSON.parse(localStorage.getItem('user'));
     if (user) {
       return true;
     } else {

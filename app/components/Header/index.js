@@ -6,19 +6,15 @@ export default function Header(props) {
   return (
     <header>
       <div id="menu-left">
-        <NavLink to="/browse">Browse</NavLink>
-        <NavLink to="/about">About</NavLink>
-        <NavLink to="/contact">Contact</NavLink>
-      </div>
-      <div id="menu-center">
-        <NavLink exact to="/">EAVESJOB</NavLink>
+        <NavLink exact to="/"><h2> Eavesjob </h2></NavLink>
       </div>
       <div id="menu-right">
         <NavLink to="/support">Support</NavLink>
+        <NavLink to="/browse">Browse</NavLink>
         <NavLink to="/profile">My Profile</NavLink>
       </div>
       <div id="menu-mobile">
-        <NavLink exact to="/">EA</NavLink>
+        <NavLink exact to="/"><h2> Eavesjob </h2></NavLink>
         <NavLink to="/support">Support</NavLink>
         <NavLink to="/browse">Browse</NavLink>
         <NavLink to="/profile">Profile</NavLink>

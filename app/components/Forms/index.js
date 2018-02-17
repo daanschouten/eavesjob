@@ -65,7 +65,6 @@ class AddWebsiteForm extends React.Component {
         secondLink: "",
         thirdLink: ""
       }, function() {
-        console.log(this.props.user);
         this.retrieveRequestedWebsite(this.props.user);
       });
     })
@@ -289,6 +288,7 @@ class RequestWebsiteForm extends React.Component {
       firstLink: this.state.firstLink,
       secondLink: this.state.secondLink,
       thirdLink: this.state.thirdLink,
+      requestedBy: this.props.user.email
     })
     .then((response) => {
       let data = response.data;
@@ -479,24 +479,61 @@ class LoginForm extends React.Component {
 }
 
 class KeywordForm extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      name: "",
+      category: "intern",
+      language: "dutch"
+    }
+  }
+  handleChange = (e) => {
+    let returnObj = {};
+    returnObj[e.target.name] = e.target.value;
+    this.setState(returnObj);
+  }
+  performAddKeyword = (e) => {
+    e.preventDefault();
+    e.currentTarget.reset();
+    axios.post(`http://localhost:3000/addKeyword/${this.props.user.token}`, {
+      name: this.state.name,
+      language: this.state.language,
+      category: this.state.category
+    })
+    .then((response) => {
+      this.setState({
+        name: "",
+        language: "dutch",
+        category: "intern"
+      })
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+  }
   render() {
     return (
-      <form method="POST" action="/addKeywords" className="form-small">
+      <form method="POST" action="/addKeywords" className="form-small" onSubmit={this.performAddKeyword}>
         <div className="form-group">
-          <input id="name" type="text" placeholder="some keyword" name="name" className="big-input"/>
+          <input id="name" type="text" placeholder="some keyword" name="name" className="big-input" onChange = {this.handleChange} value = {this.state.name}/>
         </div>
-        <div className="form-group">Category:
-          <select for="category" name="category">
+        <div className="form-group">
+          <select htmlFor="language" name="language" onChange = {this.handleChange} value = {this.state.language }>
+            <option value="dutch">Dutch</option>
+            <option value="english">English</option>
+          </select>
+        </div>
+        <div className="form-group">
+          <select htmlFor="category" name="category" onChange = {this.handleChange} value = {this.state.category }>
             <option value="intern">intern</option>
             <option value="professional">professional</option>
             <option value="voluntary">voluntary</option>
             <option value="parttime">parttime</option>
             <option value="fulltime">fulltime </option>
             <option value="general">general</option>
-            <option value="skill">skill</option>
           </select>
         </div>
-        <button type="submit" class="big-button">Add keyword</button>
+        <button type="submit" className="big-button">Add keyword</button>
       </form>
     )
   }

@@ -47,8 +47,8 @@ function GettingStarted() {
   return (
     <div className="paragraph">
       <p> Start off by searching for the company or organisation whose career page(s) you would like to stay informed about. Once you have found the company, you can click the arrow to see the career page link(s) we have stored. </p>
-      <p><span> No results? Try an alternative name or abbreviation. Otherwise, you can always add the page yourself in a few seconds. Check out our </span><Link to='/support/requesting'>section</Link><span> on requesting a new page.</span></p>
       <p><span> Check out how to subscribe to a page </span><Link to='/support/subscribing'>here</Link><span>.</span></p>
+      <p><span> No results? Try an alternative name or abbreviation. Otherwise, you can always add the page yourself in a few seconds. Check out our </span><Link to='/support/requesting'>section</Link><span> on requesting a new page.</span></p>
     </div>
   )
 }
@@ -92,7 +92,7 @@ function Requesting() {
 function Modifying() {
   return (
     <div className="paragraph">
-      <p> Does a particular company have a career page we do not yet monitor? First click the arrow on the website bar, and then click the button called 'add link'. </p>
+      <p> Does a particular company have a career page we do not yet monitor? Click on the arrow on the website bar, and then on the button called 'add link'. </p>
     </div>
   )
 }
@@ -100,7 +100,7 @@ function Modifying() {
 function Premium() {
   return (
     <div className="paragraph">
-      <p> Going premium will allow you to subscribe to up to a hundred pages, at the cost of a cappucino.</p>
+      <p> Going premium will allow you to subscribe to up to a hundred pages. </p>
       <p> We would recommend going premium if there are many different companies you'd be willing to work for, and you want to save some time on having to check all of them repeatedly. </p>
       <p><span> Check our </span><Link to='/premium'>premium</Link><span> page for more information.</span></p>
     </div>
