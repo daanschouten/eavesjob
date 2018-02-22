@@ -2,47 +2,45 @@ const React = require('react');
 const PropTypes = require('prop-types');
 const { RegisterForm } = require('../Forms');
 
-class HowItWorks extends React.Component {
-  render() {
-    return(
-      <div className="container-single">
-        <div className="container-center">
-          <h1> see how it works </h1>
-        </div>
-        <div className="container-center">
-
-          <div className="explain-single">
-            <div className="explain-text">
-              <img src="../../img/one.svg"></img>
-              <p> Find the career pages you want monitored. </p>
-            </div>
-            <img src="../../img/searchWebsite.png"/>
-          </div>
-
-          <div className="explain-single">
-            <div className="explain-text">
-              <img src="../../img/two.svg"></img>
-              <p> Select up to five pages, or go premium. </p>
-            </div>
-            <img src="../../img/clickWebsite.png"/>
-          </div>
-
-          <div className="explain-single">
-            <div className="explain-text">
-              <img src="../../img/three.svg"></img>
-              <p> Sit back, and keep an eye on your inbox. </p>
-            </div>
-            <img src="../../img/monitorWebsite.png"/>
-          </div>
-
-        </div>
+function HowItWorks(props) {
+  return (
+    <div className="container-single">
+      <div className="container-center">
+        <h1> see how it works </h1>
       </div>
-    )
-  }
+      <div className="container-center">
+
+        <div className="explain-single">
+          <div className="explain-text">
+            <img src="../../img/one.svg"></img>
+            <p> Find the career pages you want monitored. </p>
+          </div>
+          <img src="../../img/searchWebsite.png"/>
+        </div>
+
+        <div className="explain-single">
+          <div className="explain-text">
+            <img src="../../img/two.svg"></img>
+            <p> Select up to five pages, or go premium. </p>
+          </div>
+          <img src="../../img/clickWebsite.png"/>
+        </div>
+
+        <div className="explain-single">
+          <div className="explain-text">
+            <img src="../../img/three.svg"></img>
+            <p> Sit back, and keep an eye on your inbox. </p>
+          </div>
+          <img src="../../img/monitorWebsite.png"/>
+        </div>
+
+      </div>
+    </div>
+  )
 }
 
 export default function RegisterHome(props) {
-  return(
+  return (
     <div className="container-single">
       <div className="container-double">
         <div className="container-left">

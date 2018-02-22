@@ -10,7 +10,9 @@ class AddWebsiteForm extends React.Component {
       name: "",
       firstLink: "",
       secondLink: "",
-      thirdLink: ""
+      thirdLink: "",
+      requestedBy: "",
+      websiteID: ""
     }
   }
   componentDidMount() {
@@ -29,13 +31,15 @@ class AddWebsiteForm extends React.Component {
         if (response.data.name) {
           let responseObj = {
             name: response.data.name,
+            requestedBy: response.data.requestedBy,
+            websiteID: response.data._id,
             firstLink: response.data.links[0]
           };
           if (response.data.links[1]) {
               responseObj.secondLink = response.data.links[1];
           }
           if (response.data.links[2]) {
-              responseObj.response.data.links[2];
+              responseObj.thirdLink = response.data.links[2];
           }
           this.setState(responseObj);
         }
@@ -54,13 +58,17 @@ class AddWebsiteForm extends React.Component {
     e.currentTarget.reset();
     axios.post(`http://localhost:3000/addWebsite/${this.props.user.token}`, {
       name: this.state.name,
+      requestedBy: this.state.requestedBy,
+      websiteID: this.state.websiteID,
       firstLink: this.state.firstLink,
       secondLink: this.state.secondLink,
-      thirdLink: this.state.thirdLink,
+      thirdLink: this.state.thirdLink
     })
     .then((response) => {
       this.setState({
         name: "",
+        requestedBy: "",
+        websiteID: "",
         firstLink: "",
         secondLink: "",
         thirdLink: ""
@@ -78,13 +86,16 @@ class AddWebsiteForm extends React.Component {
       firstLink: this.state.firstLink,
       secondLink: this.state.secondLink,
       thirdLink: this.state.thirdLink,
+      websiteID: this.state.websiteID
     })
     .then((response) => {
       this.setState({
         name: "",
         firstLink: "",
         secondLink: "",
-        thirdLink: ""
+        thirdLink: "",
+        requestedBy: "",
+        websiteID: ""
       });
     })
     .catch((error) => {
@@ -105,19 +116,25 @@ class AddWebsiteForm extends React.Component {
             <input type="text" placeholder="Career Page URL (1)" name="firstLink" className="big-input" value={this.state.firstLink} onChange={this.handleChange}/>
           </div>
           <div className="form-group">
-            <Link target = "_blank" to={this.state.firstLink}>{this.state.firstLink}</Link>
+            <Link target = "_blank" to={this.state.firstLink}>check link</Link>
           </div>
           <div className="form-group">
             <input type="text" placeholder="Career Page URL (2) (optional)" name="secondLink" className="big-input" value={this.state.secondLink} onChange={this.handleChange} />
           </div>
           <div className="form-group">
-            <Link target = "_blank" to={this.state.secondLink}>{this.state.secondLink}</Link>
+            <Link target = "_blank" to={this.state.secondLink}>check link</Link>
           </div>
           <div className="form-group">
             <input type="text" placeholder="Career Page URL (3) (optional)" name="thirdLink" className="big-input" value={this.state.thirdLink} onChange={this.handleChange} />
           </div>
           <div className="form-group">
-            <Link target = "_blank" to={this.state.thirdLink}>{this.state.thirdLink}</Link>
+            <Link target = "_blank" to={this.state.thirdLink}>check link</Link>
+          </div>
+          <div className="form-group">
+            <input type="text" name="requestedBy" className="big-input" value={this.state.requestedBy} disabled />
+          </div>
+          <div className="form-group">
+            <input type="text" name="websiteID" className="big-input" value={this.state.websiteID} disabled />
           </div>
           <div className="form-group">
             <button type="submit" className="big-button">Add Website</button>
@@ -258,9 +275,8 @@ class RequestWebsiteForm extends React.Component {
     super(props);
     this.state = {
       name: "",
-      firstLink: "",
-      secondLink: "",
-      thirdLink: ""
+      links: ["", "", "", "", ""],
+      numberShown: 0
     }
   }
   componentDidMount = (props) => {
@@ -280,23 +296,40 @@ class RequestWebsiteForm extends React.Component {
     returnObj[e.target.name] = e.target.value;
     this.setState(returnObj);
   }
+  handleArrayChange = (e) => {
+    const number = parseInt(e.target.name);
+    let returnObj = {};
+    returnObj.links = this.state.links;
+    returnObj.links[number] = e.target.value;
+    this.setState(returnObj);
+  }
+  expandInput = (e) => {
+    const numberShown = this.state.numberShown + 1;
+    if (numberShown === 4) {
+      const expandButton = document.getElementsByClassName('expand')[0];
+      expandButton.style.display = "none";
+    }
+    this.setState({
+        numberShown: numberShown
+    }, function() {
+      const inputs = document.getElementsByClassName('request');
+      inputs[this.state.numberShown].style.display = "flex";
+    })
+  }
   performRequestWebsite = (e) => {
     e.preventDefault();
     e.currentTarget.reset();
     axios.post(`http://localhost:3000/requestWebsite/${this.props.user.token}`, {
       name: this.state.name,
-      firstLink: this.state.firstLink,
-      secondLink: this.state.secondLink,
-      thirdLink: this.state.thirdLink,
-      requestedBy: this.props.user.email
+      links: this.state.links,
+      numberShown: this.state.numberShown
     })
     .then((response) => {
       let data = response.data;
       this.setState({
         name: "",
-        firstLink: "",
-        secondLink: "",
-        thirdLink: ""
+        links: ["", "", "", "", ""],
+        numberShown: 0
       });
     })
     .catch((error) => {
@@ -316,14 +349,23 @@ class RequestWebsiteForm extends React.Component {
           <div className="form-group">
             <p> It's easiest to copy the URL from your address bar. Make sure to include the http:// or https:// part. </p>
           </div>
-          <div className="form-group">
-            <input type="text" placeholder="Career Page URL (1)" name="firstLink" className="big-input" value={this.state.firstLink} onChange={this.handleChange}/>
+          <div className="form-group request">
+            <input type="text" placeholder="Career Page URL (1)" name= "0" className="big-input" value={this.state.links[0]} onChange={this.handleArrayChange}/>
+          </div>
+          <div className="form-group request" style={{display: "none"}}>
+            <input type="text" placeholder="Career Page URL (2) (optional)" name="1" className="big-input" value={this.state.links[1]} onChange={this.handleArrayChange} />
+          </div>
+          <div className="form-group request" style={{display: "none"}}>
+            <input type="text" placeholder="Career Page URL (3) (optional)" name="2" className="big-input" value={this.state.links[2]} onChange={this.handleArrayChange} />
+          </div>
+          <div className="form-group request" style={{display: "none"}}>
+            <input type="text" placeholder="Career Page URL (4) (optional)" name="3" className="big-input" value={this.state.links[3]} onChange={this.handleArrayChange} />
+          </div>
+          <div className="form-group request" style={{display: "none"}}>
+            <input type="text" placeholder="Career Page URL (5) (optional)" name="4" className="big-input" value={this.state.links[4]} onChange={this.handleArrayChange} />
           </div>
           <div className="form-group">
-            <input type="text" placeholder="Career Page URL (2) (optional)" name="secondLink" className="big-input" value={this.state.secondLink} onChange={this.handleChange} />
-          </div>
-          <div className="form-group">
-            <input type="text" placeholder="Career Page URL (3) (optional)" name="thirdLink" className="big-input" value={this.state.thirdLink} onChange={this.handleChange} />
+            <button type="button" className="big-button expand" onClick={this.expandInput}> Add Another Career Page </button>
           </div>
           <div className="form-group">
             <p> Once the the request comes through, we'll add the company to your subscribes automatically. Keep in mind this might take up to 24 hours. </p>
@@ -341,11 +383,8 @@ class RegisterForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      firstName: "",
-      lastName: "",
       email: "",
-      password: "",
-      confirmPassword: ""
+      password: ""
     }
   }
   handleChange = (e) => {
@@ -360,11 +399,8 @@ class RegisterForm extends React.Component {
     e.preventDefault();
     e.currentTarget.reset();
     axios.post('http://localhost:3000/register', {
-      firstName: this.state.firstName,
-      lastName: this.state.lastName,
       email: this.state.email.toLowerCase(),
-      password: this.state.password,
-      confirmPassword: this.state.confirmPassword
+      password: this.state.password
     })
     .then((response) => {
       let user = response.data;
@@ -379,15 +415,10 @@ class RegisterForm extends React.Component {
     return (
       <form className="form-small" onSubmit={this.performRegister}>
         <div className="form-group">
-          <input type="text" placeholder="First Name" name="firstName" className="big-input half" value={this.state.firstName} onChange={this.handleChange} />
-          <input type="text" placeholder="Last Name" name="lastName" className="big-input half" value={this.state.lastName} onChange={this.handleChange}/>
-        </div>
-        <div className="form-group">
           <input type="email" placeholder="Your Email Address" name="email" className="big-input" value={this.state.email} onChange={this.handleChange} />
         </div>
         <div className="form-group">
-          <input type="password" name="password" placeholder="Password" className="big-input half" value={this.state.password} onChange={this.handleChange}/>
-          <input type="password" name="confirmPassword" placeholder="Confirm Password" className="big-input half" value={this.state.confirmPassword} onChange={this.handleChange}/>
+          <input type="password" name="password" placeholder="Password" className="big-input" value={this.state.password} onChange={this.handleChange}/>
         </div>
         <div className="form-group">
           <button type="submit" className="big-button">Sign up</button>
