@@ -8,9 +8,8 @@ class AddWebsiteForm extends React.Component {
     super(props);
     this.state = {
       name: "",
-      firstLink: "",
-      secondLink: "",
-      thirdLink: "",
+      links: ["", "", "", "", ""],
+      numberShown: 0,
       requestedBy: "",
       websiteID: ""
     }
@@ -25,22 +24,39 @@ class AddWebsiteForm extends React.Component {
       this.retrieveRequestedWebsite(nextProps.user);
     }
   }
+  expandInput = (e) => {
+    const numberShown = this.state.numberShown + 1;
+    if (numberShown === 4) {
+      let expandButton = document.getElementsByClassName('expand')[0];
+      expandButton.style.display = "none";
+    }
+    this.setState({
+        numberShown: numberShown
+    }, function() {
+      let inputs = document.getElementsByClassName('request');
+      inputs[this.state.numberShown].style.display = "flex";
+    })
+  }
   retrieveRequestedWebsite = (user) => {
     axios.get(`http://localhost:3000/addWebsite/${user.token}`)
       .then((response) => {
         if (response.data.name) {
+          let links = response.data.links;
+          const length = links.length;
+          const inputs = document.getElementsByClassName('request');
+          for (var i = 0; i < 5; i++) {
+            if (!links[i]) {
+              links[i] = "";
+              inputs[i].style.display = "none";
+            }
+          }
           let responseObj = {
             name: response.data.name,
             requestedBy: response.data.requestedBy,
             websiteID: response.data._id,
-            firstLink: response.data.links[0]
+            links: links,
+            numberShown: length - 1
           };
-          if (response.data.links[1]) {
-              responseObj.secondLink = response.data.links[1];
-          }
-          if (response.data.links[2]) {
-              responseObj.thirdLink = response.data.links[2];
-          }
           this.setState(responseObj);
         }
       })
@@ -53,6 +69,13 @@ class AddWebsiteForm extends React.Component {
     returnObj[e.target.name] = e.target.value;
     this.setState(returnObj);
   }
+  handleArrayChange = (e) => {
+    const number = parseInt(e.target.name);
+    let returnObj = {};
+    returnObj.links = this.state.links;
+    returnObj.links[number] = e.target.value;
+    this.setState(returnObj);
+  }
   performAddWebsite = (e) => {
     e.preventDefault();
     e.currentTarget.reset();
@@ -60,18 +83,15 @@ class AddWebsiteForm extends React.Component {
       name: this.state.name,
       requestedBy: this.state.requestedBy,
       websiteID: this.state.websiteID,
-      firstLink: this.state.firstLink,
-      secondLink: this.state.secondLink,
-      thirdLink: this.state.thirdLink
+      links: this.state.links
     })
     .then((response) => {
       this.setState({
         name: "",
+        links: ["", "", "", "", ""],
         requestedBy: "",
         websiteID: "",
-        firstLink: "",
-        secondLink: "",
-        thirdLink: ""
+        numberShown: 0
       }, function() {
         this.retrieveRequestedWebsite(this.props.user);
       });
@@ -82,20 +102,15 @@ class AddWebsiteForm extends React.Component {
   }
   performRemoveRequest = (e) => {
     axios.post(`http://localhost:3000/removeRequest/${this.props.user.token}`, {
-      name: this.state.name,
-      firstLink: this.state.firstLink,
-      secondLink: this.state.secondLink,
-      thirdLink: this.state.thirdLink,
       websiteID: this.state.websiteID
     })
     .then((response) => {
       this.setState({
         name: "",
-        firstLink: "",
-        secondLink: "",
-        thirdLink: "",
+        links: ["", "", "", "", ""],
         requestedBy: "",
-        websiteID: ""
+        websiteID: "",
+        numberShown: 0
       });
     })
     .catch((error) => {
@@ -112,23 +127,28 @@ class AddWebsiteForm extends React.Component {
           <div className="form-group">
             <input style={{marginBottom: "20px"}} type="text" placeholder="Website Name" className="big-input" name="name" value={this.state.name} onChange={this.handleChange} />
           </div>
-          <div className="form-group">
-            <input type="text" placeholder="Career Page URL (1)" name="firstLink" className="big-input" value={this.state.firstLink} onChange={this.handleChange}/>
+          <div className="form-group request">
+            <input type="text" placeholder="Career Page URL (1)" name="0" className="big-input" value={this.state.links[0]} onChange={this.handleArrayChange}/>
+            <Link target = "_blank" to={this.state.links[0]}>check link</Link>
+          </div>
+          <div className="form-group request">
+            <input type="text" placeholder="Career Page URL (2) (optional)" name="1" className="big-input" value={this.state.links[1]} onChange={this.handleArrayChange} />
+            <Link target = "_blank" to={this.state.links[1]}>check link</Link>
+          </div>
+          <div className="form-group request">
+            <input type="text" placeholder="Career Page URL (3) (optional)" name="2" className="big-input" value={this.state.links[2]} onChange={this.handleArrayChange} />
+            <Link target = "_blank" to={this.state.links[2]}>check link</Link>
+          </div>
+          <div className="form-group request">
+            <input type="text" placeholder="Career Page URL (4) (optional)" name="3" className="big-input" value={this.state.links[3]} onChange={this.handleArrayChange} />
+            <Link target = "_blank" to={this.state.links[3]}>check link</Link>
+          </div>
+          <div className="form-group request">
+            <input type="text" placeholder="Career Page URL (5) (optional)" name="4" className="big-input" value={this.state.links[4]} onChange={this.handleArrayChange} />
+            <Link target = "_blank" to={this.state.links[4]}>check link</Link>
           </div>
           <div className="form-group">
-            <Link target = "_blank" to={this.state.firstLink}>check link</Link>
-          </div>
-          <div className="form-group">
-            <input type="text" placeholder="Career Page URL (2) (optional)" name="secondLink" className="big-input" value={this.state.secondLink} onChange={this.handleChange} />
-          </div>
-          <div className="form-group">
-            <Link target = "_blank" to={this.state.secondLink}>check link</Link>
-          </div>
-          <div className="form-group">
-            <input type="text" placeholder="Career Page URL (3) (optional)" name="thirdLink" className="big-input" value={this.state.thirdLink} onChange={this.handleChange} />
-          </div>
-          <div className="form-group">
-            <Link target = "_blank" to={this.state.thirdLink}>check link</Link>
+            <button type="button" className="big-button expand" onClick={this.expandInput}> Add Another Career Page </button>
           </div>
           <div className="form-group">
             <input type="text" name="requestedBy" className="big-input" value={this.state.requestedBy} disabled />
@@ -321,8 +341,7 @@ class RequestWebsiteForm extends React.Component {
     e.currentTarget.reset();
     axios.post(`http://localhost:3000/requestWebsite/${this.props.user.token}`, {
       name: this.state.name,
-      links: this.state.links,
-      numberShown: this.state.numberShown
+      links: this.state.links
     })
     .then((response) => {
       let data = response.data;

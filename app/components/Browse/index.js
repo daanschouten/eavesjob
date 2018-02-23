@@ -101,15 +101,18 @@ function Subscribed(props) {
               <div className="right-sidebar-title">
                 <h2>subscribed career pages</h2>
               </div>
-            {
-              props.monitored.map(function(website){
-                return (
-                  <SingleWebsite
-                   onChangeSubscribe = {props.onChangeSubscribe}
-                   website= {website}
-                   key= {website._id} /> )
-              })
-            }
+              {
+                props.monitored.map(function(website){
+                  return (
+                    <SingleWebsite
+                     onChangeSubscribe = {props.onChangeSubscribe}
+                     website= {website}
+                     key= {website._id} /> )
+                })
+              }
+              <div className="right-sidebar-title">
+                <h3> {`${props.limit - props.monitored.length} empty slot(s) remaining`}</h3>
+              </div>
             </div>
           : <NoneMonitoredBrowse/>
         }
@@ -199,7 +202,8 @@ class Browse extends React.Component {
       user: {},
       query: "",
       available: [],
-      monitored: []
+      monitored: [],
+      limit: 0
     };
   }
   componentDidMount = () => {
@@ -284,6 +288,7 @@ class Browse extends React.Component {
     .then((response) => {
       let data = response.data;
       this.setState({
+        limit: data.limit,
         available: data.available,
         monitored: data.monitored
       })
@@ -305,7 +310,8 @@ class Browse extends React.Component {
         </div>
         <Subscribed
         onChangeSubscribe = {this.onChangeSubscribe}
-        monitored = {this.state.monitored} />
+        monitored = {this.state.monitored}
+        limit = {this.state.limit} />
       </div>
     )
   }
