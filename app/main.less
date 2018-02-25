@@ -515,13 +515,11 @@ header {
 
     .form-group {
       justify-content: space-between;
+      flex-flow: column;
+      overflow: hidden;
 
       input {
         width: 100%;
-      }
-
-      input.half {
-        width: 48%;
       }
 
       button {
@@ -574,7 +572,6 @@ select {
   background: @dark-grey;
   border: 1px solid @dark-grey;
   outline: none;
-  border-radius: 5px;
 }
 
 .small-button {

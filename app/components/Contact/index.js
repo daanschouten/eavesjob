@@ -12,7 +12,7 @@ function ModifyWebsite(props) {
           <div className="form-title">
             <h1> {"Add page to " + props.location.query.website.name } </h1>
           </div>
-          <ModifyWebsiteForm website= {props.location.query.website} />
+          <ModifyWebsiteForm website= {props.location.query.website} user = {props.user} />
         </div>
       </div>
     </div>
@@ -27,7 +27,7 @@ function ReportWebsite(props) {
           <div className="form-title">
             <h1> {"Report issue with " + props.location.query.website.name } </h1>
           </div>
-          <ReportWebsiteForm website= {props.location.query.website} />
+          <ReportWebsiteForm website= {props.location.query.website} user = {props.user} />
         </div>
       </div>
     </div>

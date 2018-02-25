@@ -3,6 +3,134 @@ const PropTypes = require('prop-types');
 import axios from 'axios';
 const { Link } = require('react-router-dom');
 
+function ModifyLinks(props) {
+  return (
+    <p><Link to={props.link.href} target= "_blank"> {props.link.pathname} </Link></p>
+  )
+}
+
+class AddModifyForm extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      requestID: "",
+      websiteName: "",
+      websiteLinks: [],
+      websiteID: "",
+      newLink: ""
+    }
+  }
+  componentDidMount() {
+    if (this.props.user.token) {
+      this.retrieveRequestedModify(this.props.user);
+    }
+  }
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.user !== this.props.user ) {
+      this.retrieveRequestedModify(nextProps.user);
+    }
+  }
+  retrieveRequestedModify = (user) => {
+    axios.get(`http://localhost:3000/addModify/${user.token}`)
+      .then((response) => {
+        if (response.data.newLink) {
+          let responseObj = {
+            requestID: response.data.requestID,
+            newLink: response.data.newLink,
+            websiteID: response.data.websiteID,
+            websiteName: response.data.websiteName,
+            websiteLinks: response.data.websiteLinks
+          };
+          this.setState(responseObj);
+        }
+      })
+      .catch((error) => {
+        console.log("error fetching and parsing data", error);
+      })
+  }
+  handleChange = (e) => {
+    let returnObj = {};
+    returnObj[e.target.name] = e.target.value;
+    this.setState(returnObj);
+  }
+  performAddModify = (e) => {
+    e.preventDefault();
+    e.currentTarget.reset();
+    axios.post(`http://localhost:3000/addModify/${this.props.user.token}`, {
+      requestID: this.state.requestID,
+      websiteID: this.state.websiteID,
+      newLink: this.state.newLink
+    })
+    .then((response) => {
+      this.setState({
+        "requestID": "",
+        "newLink": "",
+        "websiteID": "",
+        "websiteName": "",
+        "websiteLinks": []
+      }, function() {
+        this.retrieveRequestedModify(this.props.user);
+      });
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+  }
+  performRemoveRequest = (e) => {
+    axios.post(`http://localhost:3000/removeModify/${this.props.user.token}`, {
+      requestID: this.state.requestID
+    })
+    .then((response) => {
+      this.setState({
+        "requestID": "",
+        "newLink": "",
+        "websiteID": "",
+        "websiteName": "",
+        "websiteLinks": []
+      }, function() {
+        this.retrieveRequestedModify(this.props.user);
+      });
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+  }
+  render() {
+    return(
+      <div className="single">
+        <div className="form-title">
+          <h1>{`Add new link to website of ${this.state.websiteName}`}</h1>
+        </div>
+        <form className="form-small" onSubmit={this.performAddModify}>
+          {
+            this.state.websiteLinks.map(function(link) {
+              return (
+                <ModifyLinks link = {link} key= {link.origin} />
+              )
+            })
+          }
+          <div className="form-group request">
+            <input type="url" placeholder="Career Page URL (1)" name="newLink" className="big-input" value={this.state.newLink} onChange={this.handleChange}/>
+            <Link target = "_blank" to={this.state.newLink}>check link</Link>
+          </div>
+          <div className="form-group">
+            <input type="text" name="websiteID" className="big-input" value={this.state.websiteID} disabled />
+          </div>
+          <div className="form-group">
+            <input type="text" name="websiteID" className="big-input" value={this.state.requestID} disabled />
+          </div>
+          <div className="form-group">
+            <button type="submit" className="big-button">Add Modify</button>
+          </div>
+        </form>
+        <div className="form-small">
+          <button className="big-button" onClick={this.performRemoveRequest}> Remove Request </button>
+        </div>
+      </div>
+    )
+  }
+}
+
 class AddWebsiteForm extends React.Component {
   constructor(props) {
     super(props);
@@ -111,6 +239,8 @@ class AddWebsiteForm extends React.Component {
         requestedBy: "",
         websiteID: "",
         numberShown: 0
+      }, function() {
+        this.retrieveRequestedWebsite(this.props.user);
       });
     })
     .catch((error) => {
@@ -166,12 +296,6 @@ class AddWebsiteForm extends React.Component {
       </div>
     )
   }
-}
-
-function ModifyLinks(props) {
-  return (
-    <p><Link to={props.link.href} target= "_blank"> {props.link.pathname} </Link></p>
-  )
 }
 
 class ReportWebsiteForm extends React.Component {
@@ -250,7 +374,7 @@ class ModifyWebsiteForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      name: this.props.website.name,
+      websiteID: this.props.website._id,
       newLink: ""
     }
   }
@@ -260,12 +384,28 @@ class ModifyWebsiteForm extends React.Component {
     this.setState(returnObj);
   }
   performModifyWebsite = (e) => {
+    e.preventDefault();
+    e.currentTarget.reset();
+    axios.post(`http://localhost:3000/requestModify/${this.props.user.token}`, {
+      websiteID: this.state.websiteID,
+      newLink: this.state.newLink
+    })
+    .then((response) => {
+      let data = response.data;
+      this.setState({
+        websiteID: "",
+        newLink: ""
+      });
+    })
+    .catch((error) => {
+      console.log(error);
+    });
   }
   render() {
     return (
         <form className="form-small" onSubmit={this.performModifyWebsite}>
           <div className="form-group">
-            <p> {"The links we currently have for " + this.state.name + " are:" }</p>
+            <p> {"The links we currently have for " + this.props.website.name + " are:" }</p>
           </div>
           <div className="form-group">
           {
@@ -592,6 +732,7 @@ class KeywordForm extends React.Component {
 module.exports = {
   KeywordForm: KeywordForm,
   AddWebsiteForm: AddWebsiteForm,
+  AddModifyForm: AddModifyForm,
   RequestWebsiteForm: RequestWebsiteForm,
   ModifyWebsiteForm: ModifyWebsiteForm,
   ReportWebsiteForm: ReportWebsiteForm,
