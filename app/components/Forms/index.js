@@ -128,23 +128,23 @@ class AddWebsiteForm extends React.Component {
             <input style={{marginBottom: "20px"}} type="text" placeholder="Website Name" className="big-input" name="name" value={this.state.name} onChange={this.handleChange} />
           </div>
           <div className="form-group request">
-            <input type="text" placeholder="Career Page URL (1)" name="0" className="big-input" value={this.state.links[0]} onChange={this.handleArrayChange}/>
+            <input type="url" placeholder="Career Page URL (1)" name="0" className="big-input" value={this.state.links[0]} onChange={this.handleArrayChange}/>
             <Link target = "_blank" to={this.state.links[0]}>check link</Link>
           </div>
           <div className="form-group request">
-            <input type="text" placeholder="Career Page URL (2) (optional)" name="1" className="big-input" value={this.state.links[1]} onChange={this.handleArrayChange} />
+            <input type="url" placeholder="Career Page URL (2) (optional)" name="1" className="big-input" value={this.state.links[1]} onChange={this.handleArrayChange} />
             <Link target = "_blank" to={this.state.links[1]}>check link</Link>
           </div>
           <div className="form-group request">
-            <input type="text" placeholder="Career Page URL (3) (optional)" name="2" className="big-input" value={this.state.links[2]} onChange={this.handleArrayChange} />
+            <input type="url" placeholder="Career Page URL (3) (optional)" name="2" className="big-input" value={this.state.links[2]} onChange={this.handleArrayChange} />
             <Link target = "_blank" to={this.state.links[2]}>check link</Link>
           </div>
           <div className="form-group request">
-            <input type="text" placeholder="Career Page URL (4) (optional)" name="3" className="big-input" value={this.state.links[3]} onChange={this.handleArrayChange} />
+            <input type="url" placeholder="Career Page URL (4) (optional)" name="3" className="big-input" value={this.state.links[3]} onChange={this.handleArrayChange} />
             <Link target = "_blank" to={this.state.links[3]}>check link</Link>
           </div>
           <div className="form-group request">
-            <input type="text" placeholder="Career Page URL (5) (optional)" name="4" className="big-input" value={this.state.links[4]} onChange={this.handleArrayChange} />
+            <input type="url" placeholder="Career Page URL (5) (optional)" name="4" className="big-input" value={this.state.links[4]} onChange={this.handleArrayChange} />
             <Link target = "_blank" to={this.state.links[4]}>check link</Link>
           </div>
           <div className="form-group">
@@ -277,7 +277,7 @@ class ModifyWebsiteForm extends React.Component {
           }
           </div>
           <div className="form-group">
-            <input type="text" className="big-input" placeholder="Additional Career Page URL" name="newLink" value = {this.state.newLink} onChange = {this.handleChange} />
+            <input type="url" className="big-input" placeholder="Additional Career Page URL" name="newLink" value = {this.state.newLink} onChange = {this.handleChange} />
           </div>
           <div className="form-group">
             <p> It's easiest to copy the URL from your address bar. Please include the http:// or https:// part. </p>
@@ -369,19 +369,19 @@ class RequestWebsiteForm extends React.Component {
             <p> It's easiest to copy the URL from your address bar. Make sure to include the http:// or https:// part. </p>
           </div>
           <div className="form-group request">
-            <input type="text" placeholder="Career Page URL (1)" name= "0" className="big-input" value={this.state.links[0]} onChange={this.handleArrayChange}/>
+            <input type="url" placeholder="Career Page URL (1)" name= "0" className="big-input" value={this.state.links[0]} onChange={this.handleArrayChange}/>
           </div>
           <div className="form-group request" style={{display: "none"}}>
-            <input type="text" placeholder="Career Page URL (2) (optional)" name="1" className="big-input" value={this.state.links[1]} onChange={this.handleArrayChange} />
+            <input type="url" placeholder="Career Page URL (2) (optional)" name="1" className="big-input" value={this.state.links[1]} onChange={this.handleArrayChange} />
           </div>
           <div className="form-group request" style={{display: "none"}}>
-            <input type="text" placeholder="Career Page URL (3) (optional)" name="2" className="big-input" value={this.state.links[2]} onChange={this.handleArrayChange} />
+            <input type="url" placeholder="Career Page URL (3) (optional)" name="2" className="big-input" value={this.state.links[2]} onChange={this.handleArrayChange} />
           </div>
           <div className="form-group request" style={{display: "none"}}>
-            <input type="text" placeholder="Career Page URL (4) (optional)" name="3" className="big-input" value={this.state.links[3]} onChange={this.handleArrayChange} />
+            <input type="url" placeholder="Career Page URL (4) (optional)" name="3" className="big-input" value={this.state.links[3]} onChange={this.handleArrayChange} />
           </div>
           <div className="form-group request" style={{display: "none"}}>
-            <input type="text" placeholder="Career Page URL (5) (optional)" name="4" className="big-input" value={this.state.links[4]} onChange={this.handleArrayChange} />
+            <input type="url" placeholder="Career Page URL (5) (optional)" name="4" className="big-input" value={this.state.links[4]} onChange={this.handleArrayChange} />
           </div>
           <div className="form-group">
             <button type="button" className="big-button expand" onClick={this.expandInput}> Add Another Career Page </button>

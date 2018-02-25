@@ -22,6 +22,7 @@ export default function Support(props) {
             <NavLink to="/support/requesting"> Request new Career Pages </NavLink>
             <NavLink to="/support/modifying"> Modify existing Career Pages </NavLink>
             <NavLink to="/support/premium"> Go Premium </NavLink>
+            <NavLink to="/support/robots"> Robots Prevent Monitoring </NavLink>
           </div>
         </div>
       </div>
@@ -35,6 +36,7 @@ export default function Support(props) {
               <Route path="/support/requesting" component={Requesting} />
               <Route path="/support/modifying" component={Modifying} />
               <Route path="/support/premium" component={Premium} />
+              <Route path="/support/robots" component={Robots} />
               <Route component = { GettingStarted }/>
             </Switch>
           </div>
@@ -103,6 +105,15 @@ function Premium() {
       <p> Going premium will allow you to subscribe to up to a hundred pages. </p>
       <p> We would recommend going premium if there are many different companies you'd be willing to work for, and you want to save some time on having to check all of them repeatedly. </p>
       <p><span> Check our </span><Link to='/premium'>premium</Link><span> page for more information.</span></p>
+    </div>
+  )
+}
+
+function Robots() {
+  return (
+    <div className="paragraph">
+      <p> Websites can indicate that they would rather not have us monitor their career pages, which we respect. </p>
+      <p> We would recommend not subscribing to such a page, as we won't be able to keep you updated. </p>
     </div>
   )
 }

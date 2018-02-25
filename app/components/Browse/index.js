@@ -78,7 +78,11 @@ class SingleWebsite extends React.Component {
 
           </div>
           <div className="website-date">
-            <p>{this.props.website.storedPage.date}</p>
+            {
+              this.props.website.robotsAllow === true ?
+                <p>{this.props.website.storedPage.date}</p>
+              : <Link to='/support/robots' style={{fontSize: "15px", textDecoration: "underline"}}> website prevents monitoring </Link>
+            }
           </div>
           <div className="website-monitor ">
             <Toggle

@@ -61,6 +61,7 @@ function Dislike() {
       <p> The one reason for disliking what we do is probably that you may be receiving more applications that you'd like. You are no longer filtering genuinely interested candidates by making them visit your website for opportunities. </p>
       <p> First, we'd like to remind you that Eavesjob is very much search-based. There is no possiblity to select an industry and just subscribe to all companies. This means that most people subscribed to your career page(s) have actually done so purposefully. </p>
       <p> If you still aren't convinced, we do respect the robots file located at the root of your folder structure. We won't scan your career page(s) if you tell us not to. </p>
+      <p><span> You can also </span><Link to='/contact'> contact </Link><span> us and we will stop monitoring your pages. </span></p>
     </div>
   )
 }
