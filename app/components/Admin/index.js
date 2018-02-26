@@ -1,9 +1,11 @@
-const React = require('react');
-const PropTypes = require('prop-types');
+import React from 'react';
+import PropTypes from 'prop-types';
 
-const { KeywordForm } = require('../Forms');
-const { AddWebsiteForm } = require('../Forms');
-const { AddModifyForm } = require('../Forms');
+const {
+  KeywordForm,
+  AddWebsiteForm,
+  AddModifyForm
+} = require('../Forms');
 
 function AddKeyword(props) {
   return (
@@ -20,6 +22,13 @@ function AddKeyword(props) {
   );
 }
 
+AddKeyword.propTypes = {
+  user: PropTypes.shape({
+    token: PropTypes.string
+  })
+}
+
+
 function AddWebsite(props) {
   return (
     <div className="container-single">
@@ -30,6 +39,12 @@ function AddWebsite(props) {
   )
 }
 
+AddWebsite.propTypes = {
+  user: PropTypes.shape({
+    token: PropTypes.string
+  })
+}
+
 function AddModify(props) {
   return (
     <div className="container-single">
@@ -38,6 +53,12 @@ function AddModify(props) {
       </div>
     </div>
   )
+}
+
+AddModify.propTypes = {
+  user: PropTypes.shape({
+    token: PropTypes.string
+  })
 }
 
 module.exports = {

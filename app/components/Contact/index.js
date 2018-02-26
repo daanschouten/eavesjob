@@ -1,8 +1,14 @@
-const React = require('react');
-const PropTypes = require('prop-types');
-const { ModifyWebsiteForm } = require('../Forms');
-const { ReportWebsiteForm } = require('../Forms');
-const { ContactForm } = require('../Forms');
+import React from 'react';
+import PropTypes from 'prop-types';
+import {
+    Redirect,
+    Route
+} from 'react-router-dom';
+
+const {
+  ModifyWebsiteForm,
+  ReportWebsiteForm,
+  ContactForm } = require('../Forms');
 
 function ModifyWebsite(props) {
   return props.location.query ?
@@ -16,7 +22,25 @@ function ModifyWebsite(props) {
         </div>
       </div>
     </div>
-  : null
+  : <Redirect to={{
+      pathname: '/browse'
+    }}/>
+}
+
+ModifyWebsite.propTypes = {
+  user: PropTypes.shape({
+    token: PropTypes.string
+  }),
+  location: PropTypes.shape({
+    query: PropTypes.shape({
+      website: PropTypes.shape({
+        _id: PropTypes.string.isRequired,
+        links: PropTypes.arrayOf(PropTypes.shape({
+             href: PropTypes.string.isRequired
+        })).isRequired
+      })
+    })
+  })
 }
 
 function ReportWebsite(props) {
@@ -31,10 +55,26 @@ function ReportWebsite(props) {
         </div>
       </div>
     </div>
-  : null
+  : <Redirect to={{
+      pathname: '/browse'
+    }}/>
 }
 
-// change null to redirect or 404 or other thing
+ReportWebsite.propTypes = {
+  user: PropTypes.shape({
+    token: PropTypes.string
+  }),
+  location: PropTypes.shape({
+    query: PropTypes.shape({
+      website: PropTypes.shape({
+        _id: PropTypes.string.isRequired,
+        links: PropTypes.arrayOf(PropTypes.shape({
+             href: PropTypes.string.isRequired
+        })).isRequired
+      })
+    })
+  })
+}
 
 function Contact(props) {
   return (

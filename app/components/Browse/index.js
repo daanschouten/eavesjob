@@ -1,10 +1,10 @@
-const React = require('react');
-const PropTypes = require('prop-types');
+import React from 'react';
+import PropTypes from 'prop-types';
 import axios from 'axios';
-const { Link } = require('react-router-dom');
 
+const { Link } = require('react-router-dom');
 const { RequestWebsiteForm } = require('../Forms');
-const { Toggle } = require('../Toggle');
+import Toggle from '../Toggle';
 
 function NoneMonitoredBrowse() {
   return (
@@ -18,7 +18,7 @@ function NoneMonitoredBrowse() {
 
 function NoneMonitoredProfile() {
   return (
-      <p> You haven't selected any career pages yet. </p>
+      <p> No career pages to display. </p>
   )
 }
 
@@ -44,6 +44,16 @@ function SingleWebsiteExpanded(props) {
       </div>
     </div>
   : null
+}
+
+SingleWebsiteExpanded.propTypes = {
+  expand: PropTypes.bool.isRequired,
+  website: PropTypes.shape({
+    _id: PropTypes.string.isRequired,
+    links: PropTypes.arrayOf(PropTypes.shape({
+         href: PropTypes.string.isRequired
+    })).isRequired
+  })
 }
 
 class SingleWebsite extends React.Component {
@@ -96,6 +106,21 @@ class SingleWebsite extends React.Component {
   }
 }
 
+SingleWebsite.propTypes = {
+  onChangeSubscribe: PropTypes.func.isRequired,
+  website: PropTypes.shape({
+    _id: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+    monitored: PropTypes.bool.isRequired,
+    storedPage: PropTypes.shape({
+      date: PropTypes.string
+    }).isRequired,
+    links: PropTypes.arrayOf(PropTypes.shape({
+         href: PropTypes.string
+    })).isRequired
+  })
+}
+
 function Subscribed(props) {
   return (
     <div className="right-sidebar">
@@ -122,6 +147,22 @@ function Subscribed(props) {
         }
     </div>
   )
+}
+
+Subscribed.propTypes = {
+  onChangeSubscribe: PropTypes.func.isRequired,
+  limit: PropTypes.number.isRequired,
+  monitored: PropTypes.arrayOf(PropTypes.shape({
+    _id: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+    monitored: PropTypes.bool.isRequired,
+    storedPage: PropTypes.shape({
+      date: PropTypes.string
+    }).isRequired,
+    links: PropTypes.arrayOf(PropTypes.shape({
+         href: PropTypes.string
+    })).isRequired
+  }))
 }
 
 function Available(props) {
@@ -166,6 +207,21 @@ function Available(props) {
   )
 }
 
+Available.propTypes = {
+  onChangeSubscribe: PropTypes.func.isRequired,
+  available: PropTypes.arrayOf(PropTypes.shape({
+    _id: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+    monitored: PropTypes.bool.isRequired,
+    storedPage: PropTypes.shape({
+      date: PropTypes.string
+    }).isRequired,
+    links: PropTypes.arrayOf(PropTypes.shape({
+         href: PropTypes.string
+    })).isRequired
+  }))
+}
+
 class Search extends React.Component {
   constructor() {
     super();
@@ -197,6 +253,10 @@ class Search extends React.Component {
       </div>
     )
   }
+}
+
+Search.propTypes = {
+  onQueryChange: PropTypes.func.isRequired,
 }
 
 class Browse extends React.Component {
@@ -319,6 +379,12 @@ class Browse extends React.Component {
       </div>
     )
   }
+}
+
+Browse.propTypes = {
+  user: PropTypes.shape({
+    token: PropTypes.string
+  })
 }
 
 module.exports = {

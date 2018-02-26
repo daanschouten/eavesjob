@@ -1,9 +1,12 @@
-const React = require('react');
-const PropTypes = require('prop-types');
-const { RegisterForm } = require('../Forms');
-const { LoginForm } = require('../Forms');
+import React from 'react';
+import PropTypes from 'prop-types';
+
+const {
+  RegisterForm,
+  LoginForm,
+  ForgotPasswordForm } = require('../Forms');
+
 const { Link } = require('react-router-dom');
-const { ForgotPasswordForm } = require('../Forms');
 
 function Login(props) {
   return (
@@ -26,6 +29,10 @@ function Login(props) {
   );
 }
 
+Login.propTypes = {
+  onLogin: PropTypes.func.isRequired
+}
+
 function Register(props) {
     return (
       <div className ="container-single">
@@ -38,13 +45,17 @@ function Register(props) {
           </div>
           <div className="single">
               <div className="form-redirect">
-                <h2> Log In </h2>
-                <button className="big-button"><Link to='/login'>Already a member?</Link> </button>
+                <h2> Already a member? </h2>
+                <button className="big-button"><Link to='/login'> Log in </Link> </button>
               </div>
           </div>
         </div>
       </div>
     )
+}
+
+Register.propTypes = {
+  onRegister: PropTypes.func.isRequired
 }
 
 function ForgotPassword(props) {

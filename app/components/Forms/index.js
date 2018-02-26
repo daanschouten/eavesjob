@@ -1,12 +1,20 @@
-const React = require('react');
-const PropTypes = require('prop-types');
+import React from 'react';
+import PropTypes from 'prop-types';
 import axios from 'axios';
+
 const { Link } = require('react-router-dom');
 
 function ModifyLinks(props) {
   return (
     <p><Link to={props.link.href} target= "_blank"> {props.link.pathname} </Link></p>
   )
+}
+
+ModifyLinks.propTypes = {
+  link: PropTypes.shape({
+    href: PropTypes.string.isRequired,
+    pathname: PropTypes.string.isRequired
+  }).isRequired
 }
 
 class AddModifyForm extends React.Component {
@@ -129,6 +137,12 @@ class AddModifyForm extends React.Component {
       </div>
     )
   }
+}
+
+AddModifyForm.propTypes = {
+  user: PropTypes.shape({
+    token: PropTypes.string
+  })
 }
 
 class AddWebsiteForm extends React.Component {
@@ -298,6 +312,12 @@ class AddWebsiteForm extends React.Component {
   }
 }
 
+AddWebsiteForm.propTypes = {
+  user: PropTypes.shape({
+    token: PropTypes.string
+  })
+}
+
 class ReportWebsiteForm extends React.Component {
   constructor(props) {
     super(props);
@@ -340,6 +360,19 @@ class ReportWebsiteForm extends React.Component {
         </form>
     )
   }
+}
+
+ReportWebsiteForm.propTypes = {
+  user: PropTypes.shape({
+    token: PropTypes.string
+  }),
+  website: PropTypes.shape({
+    _id: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+    links: PropTypes.arrayOf(PropTypes.shape({
+         href: PropTypes.string
+    })).isRequired
+  })
 }
 
 class ForgotPasswordForm extends React.Component {
@@ -428,6 +461,19 @@ class ModifyWebsiteForm extends React.Component {
         </form>
     )
   }
+}
+
+ModifyWebsiteForm.propTypes = {
+  user: PropTypes.shape({
+    token: PropTypes.string
+  }),
+  website: PropTypes.shape({
+    _id: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+    links: PropTypes.arrayOf(PropTypes.shape({
+         href: PropTypes.string
+    })).isRequired
+  })
 }
 
 class RequestWebsiteForm extends React.Component {
@@ -538,6 +584,13 @@ class RequestWebsiteForm extends React.Component {
   }
 }
 
+RequestWebsiteForm.propTypes = {
+  user: PropTypes.shape({
+    token: PropTypes.string
+  }),
+  query: PropTypes.string.isRequired
+}
+
 class RegisterForm extends React.Component {
   constructor(props) {
     super(props);
@@ -577,7 +630,7 @@ class RegisterForm extends React.Component {
           <input type="email" placeholder="Your Email Address" name="email" className="big-input" value={this.state.email} onChange={this.handleChange} />
         </div>
         <div className="form-group">
-          <input type="password" name="password" placeholder="Password" className="big-input" value={this.state.password} onChange={this.handleChange}/>
+          <input autoComplete="new-password" type="password" name="password" placeholder="Password" className="big-input" value={this.state.password} onChange={this.handleChange}/>
         </div>
         <div className="form-group">
           <button type="submit" className="big-button">Sign up</button>
@@ -585,6 +638,10 @@ class RegisterForm extends React.Component {
       </form>
     )
   }
+}
+
+RegisterForm.propTypes = {
+  onRegister: PropTypes.func.isRequired
 }
 
 class ContactForm extends React.Component {
@@ -668,6 +725,10 @@ class LoginForm extends React.Component {
   }
 }
 
+LoginForm.propTypes = {
+  onLogin: PropTypes.func.isRequired
+}
+
 class KeywordForm extends React.Component {
   constructor(props) {
     super(props);
@@ -727,6 +788,12 @@ class KeywordForm extends React.Component {
       </form>
     )
   }
+}
+
+KeywordForm.propTypes = {
+  user: PropTypes.shape({
+    token: PropTypes.string
+  })
 }
 
 module.exports = {

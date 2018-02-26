@@ -1,5 +1,5 @@
-const React = require('react');
-const PropTypes = require('prop-types');
+import React from 'react';
+import PropTypes from 'prop-types';
 const { RegisterForm } = require('../Forms');
 
 function HowItWorks(props) {
@@ -59,4 +59,8 @@ export default function RegisterHome(props) {
       <HowItWorks/>
     </div>
   )
+}
+
+RegisterHome.propTypes = {
+  onRegister: PropTypes.func.isRequired
 }

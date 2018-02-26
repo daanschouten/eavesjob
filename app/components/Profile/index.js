@@ -1,5 +1,5 @@
-const React = require('react');
-const PropTypes = require('prop-types');
+import React from 'react';
+import PropTypes from 'prop-types';
 import axios from 'axios';
 
 const { Link } = require('react-router-dom');
@@ -89,4 +89,11 @@ export default class Profile extends React.Component {
         </div>
     )
   }
+}
+
+Profile.propTypes = {
+  handleLogout: PropTypes.func.isRequired,
+  user: PropTypes.shape({
+    token: PropTypes.string
+  })
 }

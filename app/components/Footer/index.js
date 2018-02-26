@@ -1,5 +1,4 @@
-const React = require('react');
-const PropTypes = require('prop-types');
+import React from 'react';
 const { NavLink } = require('react-router-dom');
 
 export default function Footer(props) {
