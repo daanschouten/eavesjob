@@ -145,6 +145,94 @@ AddModifyForm.propTypes = {
   })
 }
 
+class IssueForm extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      issueID: "",
+      website: {},
+      comments: ""
+    }
+  }
+  componentDidMount() {
+    if (this.props.user.token) {
+      this.retrieveIssue(this.props.user);
+    }
+  }
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.user !== this.props.user ) {
+      this.retrieveIssue(nextProps.user);
+    }
+  }
+  retrieveIssue = (user) => {
+    axios.get(`http://localhost:3000/retrieveIssue/${user.token}`)
+      .then((response) => {
+        if (response.data.issueID) {
+          let responseObj = {
+            issueID: response.data.issueID,
+            website: response.data.website,
+            comments: response.data.comments
+          };
+          this.setState(responseObj);
+        }
+      })
+      .catch((error) => {
+        console.log("error fetching and parsing data", error);
+      })
+  }
+  performRemoveIssue = (e) => {
+    e.preventDefault();
+    e.currentTarget.reset();
+    axios.post(`http://localhost:3000/removeIssue/${this.props.user.token}`, {
+      issueID: this.state.issueID
+    })
+    .then((response) => {
+      this.setState({
+        "issueID": "",
+        "website": {},
+        "comments": ""
+      }, function() {
+        this.retrieveIssue(this.props.user);
+      });
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+  }
+  render() {
+    return (
+      <form className="form-small" onSubmit={this.performRemoveIssue}>
+        <div className="form-group">
+          <p> {"There appears to be something up with " + this.state.website.name + "."}</p>
+        </div>
+        <div className="form-group">
+        {
+          this.state.website.links ?
+            this.state.website.links.map(function(link) {
+              return (
+                <ModifyLinks link = {link} key= {link.origin} />
+              )
+            })
+          : null
+        }
+        </div>
+        <div className="form-group">
+          <textarea type="text" className="big-textarea" placeholder="Comments" name="comments" value = {this.state.comments} />
+        </div>
+        <div className="form-group">
+          <button type="submit" className="big-button"> Remove Issue </button>
+        </div>
+      </form>
+    )
+  }
+}
+
+IssueForm.propTypes = {
+  user: PropTypes.shape({
+    token: PropTypes.string
+  })
+}
+
 class AddWebsiteForm extends React.Component {
   constructor(props) {
     super(props);
@@ -322,7 +410,6 @@ class ReportWebsiteForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      name: this.props.website.name,
       comments: ""
     }
   }
@@ -332,12 +419,27 @@ class ReportWebsiteForm extends React.Component {
     this.setState(returnObj);
   }
   performReportWebsite = (e) => {
+    e.preventDefault();
+    e.currentTarget.reset();
+    axios.post(`http://localhost:3000/reportWebsite/${this.props.user.token}`, {
+      websiteID: this.props.website._id,
+      comments: this.state.comments
+    })
+    .then((response) => {
+      let data = response.data;
+      this.setState({
+        comments: ""
+      });
+    })
+    .catch((error) => {
+      console.log(error);
+    });
   }
   render() {
     return (
         <form className="form-small" onSubmit={this.performReportWebsite}>
           <div className="form-group">
-            <p> {"The links we currently have for " + this.state.name + " are:" }</p>
+            <p> {"The links we currently have for " + this.props.website.name + " are:" }</p>
           </div>
           <div className="form-group">
           {
@@ -352,7 +454,7 @@ class ReportWebsiteForm extends React.Component {
             <p> Please indicate whether the name, one of the links, or anything else is incorrect or incomplete. </p>
           </div>
           <div className="form-group">
-            <input type="text" className="big-input" placeholder="Comments" name="comments" value = {this.state.comments} onChange = {this.handleChange} />
+            <textarea type="text" className="big-textarea" placeholder="Comments" name="comments" value = {this.state.comments} onChange = {this.handleChange} />
           </div>
           <div className="form-group">
             <button type="submit" className="big-button"> Submit Issue </button>
@@ -633,6 +735,10 @@ class RegisterForm extends React.Component {
           <input autoComplete="new-password" type="password" name="password" placeholder="Password" className="big-input" value={this.state.password} onChange={this.handleChange}/>
         </div>
         <div className="form-group">
+          <p><span> By signing up you agree to our </span><Link to='/conditions'>terms and conditions</Link><span>.</span></p>
+
+        </div>
+        <div className="form-group">
           <button type="submit" className="big-button">Sign up</button>
         </div>
       </form>
@@ -806,5 +912,6 @@ module.exports = {
   ForgotPasswordForm: ForgotPasswordForm,
   LoginForm: LoginForm,
   ContactForm: ContactForm,
-  RegisterForm: RegisterForm
+  RegisterForm: RegisterForm,
+  IssueForm: IssueForm
 }

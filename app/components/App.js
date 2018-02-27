@@ -29,6 +29,7 @@ const { ForgotPassword } = require('./Auth');
 const { AddWebsite } = require('./Admin');
 const { AddKeyword } = require('./Admin');
 const { AddModify } = require('./Admin');
+const { ReadIssues } = require('./Admin');
 
 const { PrivateRoute } = require('./RestrictedRoutes');
 const { StrangerRoute } = require('./RestrictedRoutes');
@@ -81,6 +82,7 @@ class App extends React.Component {
             <PrivateRoute path="/addWebsite" component = { AddWebsite } user = {this.state.user} />
             <PrivateRoute path="/addKeyword" component = { AddKeyword } user = {this.state.user} />
             <PrivateRoute path="/addModify" component = { AddModify } user = {this.state.user} />
+            <PrivateRoute path="/readIssues" component = { ReadIssues } user = {this.state.user} />
 
             <Route component = { NotFound }/>
           </Switch>

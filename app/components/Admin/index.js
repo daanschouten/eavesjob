@@ -1,11 +1,35 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import axios from 'axios';
 
 const {
   KeywordForm,
   AddWebsiteForm,
-  AddModifyForm
+  AddModifyForm,
+  IssueForm
 } = require('../Forms');
+
+function ReadIssues(props) {
+  return (
+    <div className="container-single">
+      <div className="container-center">
+        <div className="single">
+          <div className="form-title">
+            <h1> Read about all them issues </h1>
+          </div>
+          <IssueForm user = {props.user} />
+        </div>
+      </div>
+    </div>
+  );
+}
+
+ReadIssues.propTypes = {
+  user: PropTypes.shape({
+    token: PropTypes.string
+  })
+}
+
 
 function AddKeyword(props) {
   return (
@@ -64,5 +88,6 @@ AddModify.propTypes = {
 module.exports = {
   AddKeyword: AddKeyword,
   AddWebsite: AddWebsite,
-  AddModify: AddModify
+  AddModify: AddModify,
+  ReadIssues: ReadIssues
 }
