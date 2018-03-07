@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
+import moment from 'moment';
 
 const { Link } = require('react-router-dom');
 const { RequestWebsiteForm } = require('../Forms');
@@ -63,6 +64,16 @@ class SingleWebsite extends React.Component {
       expand: false
     }
   }
+  getMostRecent = (updates) => {
+    let mostRecent = "";
+    updates.map(function(update){
+      if (update.date > mostRecent || mostRecent === "") {
+        mostRecent = update.date;
+      }
+    })
+    mostRecent === "" ? mostRecent = "new arrival" : mostRecent = moment(mostRecent).fromNow();
+    return mostRecent;
+  }
   onToggle = () => {
     this.props.onChangeSubscribe(this.props.website._id);
   }
@@ -89,9 +100,9 @@ class SingleWebsite extends React.Component {
           </div>
           <div className="website-date">
             {
-              this.props.website.robotsAllow === true ?
-                <p>{this.props.website.storedPage.date}</p>
-              : <Link to='/support/robots' style={{fontSize: "15px", textDecoration: "underline"}}> website prevents monitoring </Link>
+              this.props.website.robotsAllow === true && this.props.website.issue === 0 ?
+                <p> {this.getMostRecent(this.props.website.pageUpdates)}</p>
+              : <Link to='/support/robots' style={{fontSize: "15px", textDecoration: "underline"}}> monitoring impossible </Link>
             }
           </div>
           <div className="website-monitor ">
@@ -112,9 +123,7 @@ SingleWebsite.propTypes = {
     _id: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
     monitored: PropTypes.bool.isRequired,
-    storedPage: PropTypes.shape({
-      date: PropTypes.string
-    }).isRequired,
+    pageUpdates: PropTypes.array,
     links: PropTypes.arrayOf(PropTypes.shape({
          href: PropTypes.string
     })).isRequired
@@ -156,9 +165,7 @@ Subscribed.propTypes = {
     _id: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
     monitored: PropTypes.bool.isRequired,
-    storedPage: PropTypes.shape({
-      date: PropTypes.string
-    }).isRequired,
+    pageUpdates: PropTypes.array,
     links: PropTypes.arrayOf(PropTypes.shape({
          href: PropTypes.string
     })).isRequired
@@ -213,9 +220,7 @@ Available.propTypes = {
     _id: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
     monitored: PropTypes.bool.isRequired,
-    storedPage: PropTypes.shape({
-      date: PropTypes.string
-    }).isRequired,
+    pageUpdates: PropTypes.array,
     links: PropTypes.arrayOf(PropTypes.shape({
          href: PropTypes.string
     })).isRequired

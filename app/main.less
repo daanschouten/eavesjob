@@ -39,8 +39,6 @@ p, input, a, button, select {
   color: @black;
 }
 
-
-
 p {
   > a {
     text-decoration: underline;
@@ -68,45 +66,71 @@ p {
 
 header {
   width: 100%;
-  justify-content: space-between;
-  align-content: center;
-  padding: 0 20px;
-  height: @headerHeight;
-  background: @base;
+  flex-flow: column;
 
-  #menu-left, #menu-right, #menu-mobile {
-    align-items: center;
+  #header-upper {
+    justify-content: space-between;
+    align-content: center;
+    padding: 0 20px;
+    height: @headerHeight;
+    background: @base;
 
-    a {
-      margin: 0 15px;
-      font-size: 1.1em;
-      color: white;
+    #menu-left, #menu-right, #menu-mobile {
+      align-items: center;
+
+      a {
+        margin: 0 15px;
+        font-size: 1.1em;
+        color: white;
+      }
+
+      h2 {
+        font-size: 2em;
+        color: white;
+      }
     }
 
-    h2 {
-      font-size: 2em;
-      color: white;
+    #menu-left, #menu-right {
+      display: none;
+      flex: 1 1 50%;
+    }
+
+    #menu-left {
+      justify-content: flex-start;
+
+    }
+
+    #menu-right {
+      justify-content: flex-end;
+    }
+
+    #menu-mobile {
+      width: 100%;
+      justify-content: flex-end;
     }
   }
 
-  #menu-left, #menu-right {
-    display: none;
-    flex: 1 1 50%;
-  }
+  #header-lower {
+    align-content: center;
+    padding: 0 20px;
+    background: #F5DD90;
 
-  #menu-left {
-    justify-content: flex-start;
-  }
+    #header-verified {
+      width: 100%;
+      margin-left: 15px;
+      padding: 10px 0;
+      justify-content: flex-end;
 
-  #menu-right {
-    justify-content: flex-end;
+      button {
+        display: inline-block;
+        border: none;
+        background: none;
+        text-decoration: underline;
+        outline: none;
+        padding: 0;
+      }
+    }
   }
-
-  #menu-mobile {
-    width: 100%;
-    justify-content: flex-end;
-  }
-
 
 }
 
@@ -719,14 +743,21 @@ footer {
 @media (min-width: 1000px) {
 
   header {
-    padding: 20px 40px;
 
-    #menu-left, #menu-right {
-      display: flex;
+    #header-upper {
+      padding: 0 40px;
+
+      #menu-left, #menu-right {
+        display: flex;
+      }
+
+      #menu-mobile {
+        display: none;
+      }
     }
 
-    #menu-mobile {
-      display: none;
+    #header-lower {
+      padding: 0 40px;
     }
   }
 
