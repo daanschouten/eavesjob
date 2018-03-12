@@ -68,10 +68,12 @@ export default class Profile extends React.Component {
         <div id="two-thirds-page">
           <div id="two-thirds-left">
             <div id="search-website">
-              <h2>selected career pages</h2>
-              <div id="top-buttons">
-                <button className="big-button"><Link to='/browse'> Browse </Link> </button>
-                <button className="big-button" style={{"padding": "10px 15px"}} onClick = {this.props.handleLogout}> Log out </button>
+              <div id="search-upper">
+                <h2>selected career pages</h2>
+                <div id="top-buttons">
+                  <button className="big-button"><Link to='/browse'> Browse </Link> </button>
+                  <button className="big-button" style={{"padding": "10px 15px"}} onClick = {this.props.handleLogout}> Log out </button>
+                </div>
               </div>
             </div>
             <Available

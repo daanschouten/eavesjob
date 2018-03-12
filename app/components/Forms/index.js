@@ -4,6 +4,26 @@ import axios from 'axios';
 
 const { Link } = require('react-router-dom');
 
+function ErrorMessage(props) {
+  return (
+    <div className="form-group">
+      <div className="warning">
+        <p> {props.eMessage} </p>
+      </div>
+    </div>
+  )
+}
+
+function SuccessMessage(props) {
+  return (
+    <div className="form-group">
+      <div className="success">
+        <p> {props.sMessage} </p>
+      </div>
+    </div>
+  )
+}
+
 function ModifyLinks(props) {
   return (
     <p><Link to={props.link.href} target= "_blank"> {props.link.pathname} </Link></p>
@@ -25,7 +45,9 @@ class AddModifyForm extends React.Component {
       websiteName: "",
       websiteLinks: [],
       websiteID: "",
-      newLink: ""
+      newLink: "",
+      error: "",
+      success: ""
     }
   }
   componentDidMount() {
@@ -53,7 +75,10 @@ class AddModifyForm extends React.Component {
         }
       })
       .catch((error) => {
-        console.log("error fetching and parsing data", error);
+        var eMessage = error.response.data.error.message;
+        this.setState({
+          error: eMessage
+        })
       })
   }
   handleChange = (e) => {
@@ -75,13 +100,18 @@ class AddModifyForm extends React.Component {
         "newLink": "",
         "websiteID": "",
         "websiteName": "",
-        "websiteLinks": []
+        "websiteLinks": [],
+        "issue": "",
+        "success": "success"
       }, function() {
         this.retrieveRequestedModify(this.props.user);
       });
     })
     .catch((error) => {
-      console.log(error);
+      var eMessage = error.response.data.error.message;
+      this.setState({
+        error: eMessage
+      });
     });
   }
   performRemoveRequest = (e) => {
@@ -94,13 +124,18 @@ class AddModifyForm extends React.Component {
         "newLink": "",
         "websiteID": "",
         "websiteName": "",
-        "websiteLinks": []
+        "websiteLinks": [],
+        "issue": "",
+        "success": "success"
       }, function() {
         this.retrieveRequestedModify(this.props.user);
       });
     })
     .catch((error) => {
-      console.log(error);
+      var eMessage = error.response.data.error.message;
+      this.setState({
+        error: eMessage
+      });
     });
   }
   render() {
@@ -127,6 +162,18 @@ class AddModifyForm extends React.Component {
           <div className="form-group">
             <input type="text" name="websiteID" className="big-input" value={this.state.requestID} disabled />
           </div>
+          {
+              this.state.error !== "" ?
+                <ErrorMessage eMessage = {this.state.error}/>
+              :
+                null
+          }
+          {
+              this.state.success !== "" ?
+                <SuccessMessage sMessage = "successfully sent"/>
+              :
+                null
+          }
           <div className="form-group">
             <button type="submit" className="big-button">Add Modify</button>
           </div>
@@ -151,7 +198,9 @@ class IssueForm extends React.Component {
     this.state = {
       issueID: "",
       website: {},
-      comments: ""
+      comments: "",
+      error: "",
+      success: ""
     }
   }
   componentDidMount() {
@@ -177,7 +226,10 @@ class IssueForm extends React.Component {
         }
       })
       .catch((error) => {
-        console.log("error fetching and parsing data", error);
+        var eMessage = error.response.data.error.message;
+        this.setState({
+          error: eMessage
+        });
       })
   }
   performRemoveIssue = (e) => {
@@ -190,13 +242,18 @@ class IssueForm extends React.Component {
       this.setState({
         "issueID": "",
         "website": {},
-        "comments": ""
+        "comments": "",
+        "error": "",
+        "success": "success"
       }, function() {
         this.retrieveIssue(this.props.user);
       });
     })
     .catch((error) => {
-      console.log(error);
+      var eMessage = error.response.data.error.message;
+      this.setState({
+        error: eMessage
+      });
     });
   }
   render() {
@@ -219,6 +276,18 @@ class IssueForm extends React.Component {
         <div className="form-group">
           <textarea type="text" className="big-textarea" placeholder="Comments" name="comments" value = {this.state.comments} />
         </div>
+        {
+            this.state.error !== "" ?
+              <ErrorMessage eMessage = {this.state.error}/>
+            :
+              null
+        }
+        {
+            this.state.success !== "" ?
+              <SuccessMessage sMessage = "successfully sent"/>
+            :
+              null
+        }
         <div className="form-group">
           <button type="submit" className="big-button"> Remove Issue </button>
         </div>
@@ -241,7 +310,9 @@ class AddWebsiteForm extends React.Component {
       links: ["", "", "", "", ""],
       numberShown: 0,
       requestedBy: "",
-      websiteID: ""
+      websiteID: "",
+      error: "",
+      success: ""
     }
   }
   componentDidMount() {
@@ -291,7 +362,10 @@ class AddWebsiteForm extends React.Component {
         }
       })
       .catch((error) => {
-        console.log("error fetching and parsing data", error);
+        var eMessage = error.response.data.error.message;
+        this.setState({
+          error: eMessage
+        })
       })
   }
   handleChange = (e) => {
@@ -321,13 +395,19 @@ class AddWebsiteForm extends React.Component {
         links: ["", "", "", "", ""],
         requestedBy: "",
         websiteID: "",
-        numberShown: 0
+        numberShown: 0,
+        issue: "",
+        success: "success"
       }, function() {
         this.retrieveRequestedWebsite(this.props.user);
       });
     })
     .catch((error) => {
-      console.log(error);
+      var eMessage = error.response.data.error.message;
+      this.setState({
+        error: eMessage,
+        success: ""
+      })
     });
   }
   performRemoveRequest = (e) => {
@@ -340,13 +420,19 @@ class AddWebsiteForm extends React.Component {
         links: ["", "", "", "", ""],
         requestedBy: "",
         websiteID: "",
-        numberShown: 0
+        numberShown: 0,
+        issue: "",
+        success: "success"
       }, function() {
         this.retrieveRequestedWebsite(this.props.user);
       });
     })
     .catch((error) => {
-      console.log(error);
+      var eMessage = error.response.data.error.message;
+      this.setState({
+        error: eMessage,
+        success: ""
+      })
     });
   }
   render() {
@@ -382,12 +468,25 @@ class AddWebsiteForm extends React.Component {
           <div className="form-group">
             <button type="button" className="big-button expand" onClick={this.expandInput}> Add Another Career Page </button>
           </div>
+
           <div className="form-group">
             <input type="text" name="requestedBy" className="big-input" value={this.state.requestedBy} disabled />
           </div>
           <div className="form-group">
             <input type="text" name="websiteID" className="big-input" value={this.state.websiteID} disabled />
           </div>
+          {
+              this.state.error !== "" ?
+                <ErrorMessage eMessage = {this.state.error}/>
+              :
+                null
+          }
+          {
+              this.state.success !== "" ?
+                <SuccessMessage sMessage = "successfully sent"/>
+              :
+                null
+          }
           <div className="form-group">
             <button type="submit" className="big-button">Add Website</button>
           </div>
@@ -410,7 +509,8 @@ class ReportWebsiteForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      comments: ""
+      comments: "",
+      error: ""
     }
   }
   handleChange = (e) => {
@@ -432,7 +532,10 @@ class ReportWebsiteForm extends React.Component {
       });
     })
     .catch((error) => {
-      console.log(error);
+      var eMessage = error.response.data.error.message;
+      this.setState({
+        error: eMessage
+      })
     });
   }
   render() {
@@ -456,6 +559,12 @@ class ReportWebsiteForm extends React.Component {
           <div className="form-group">
             <textarea type="text" className="big-textarea" placeholder="Comments" name="comments" value = {this.state.comments} onChange = {this.handleChange} />
           </div>
+          {
+              this.state.error !== "" ?
+                <ErrorMessage eMessage = {this.state.error}/>
+              :
+                null
+          }
           <div className="form-group">
             <button type="submit" className="big-button"> Submit Issue </button>
           </div>
@@ -481,7 +590,8 @@ class ForgotPasswordForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      email: ""
+      email: "",
+      error: ""
     }
   }
   handleChange = (e) => {
@@ -497,6 +607,12 @@ class ForgotPasswordForm extends React.Component {
           <div className="form-group">
             <input type="text" className="big-input" placeholder="Your Email Address" name="email" value = {this.state.email} onChange = {this.handleChange} />
           </div>
+          {
+              this.state.error !== "" ?
+                <ErrorMessage eMessage = {this.state.error}/>
+              :
+                null
+          }
           <div className="form-group">
             <button type="submit" className="big-button"> Send Reset Email </button>
           </div>
@@ -510,7 +626,8 @@ class ModifyWebsiteForm extends React.Component {
     super(props);
     this.state = {
       websiteID: this.props.website._id,
-      newLink: ""
+      newLink: "",
+      error: ""
     }
   }
   handleChange = (e) => {
@@ -533,7 +650,10 @@ class ModifyWebsiteForm extends React.Component {
       });
     })
     .catch((error) => {
-      console.log(error);
+      var eMessage = error.response.data.error.message;
+      this.setState({
+        error: eMessage
+      })
     });
   }
   render() {
@@ -557,6 +677,12 @@ class ModifyWebsiteForm extends React.Component {
           <div className="form-group">
             <p> It's easiest to copy the URL from your address bar. Please include the http:// or https:// part. </p>
           </div>
+          {
+              this.state.error !== "" ?
+                <ErrorMessage eMessage = {this.state.error}/>
+              :
+                null
+          }
           <div className="form-group">
             <button type="submit" className="big-button"> Submit Additional Page </button>
           </div>
@@ -584,7 +710,8 @@ class RequestWebsiteForm extends React.Component {
     this.state = {
       name: "",
       links: ["", "", "", "", ""],
-      numberShown: 0
+      numberShown: 0,
+      error: ""
     }
   }
   componentDidMount = (props) => {
@@ -627,21 +754,34 @@ class RequestWebsiteForm extends React.Component {
   performRequestWebsite = (e) => {
     e.preventDefault();
     e.currentTarget.reset();
-    axios.post(`http://localhost:3000/requestWebsite/${this.props.user.token}`, {
-      name: this.state.name,
-      links: this.state.links
-    })
-    .then((response) => {
-      let data = response.data;
-      this.setState({
-        name: "",
-        links: ["", "", "", "", ""],
-        numberShown: 0
+    if (this.state.name !== "") {
+      axios.post(`http://localhost:3000/requestWebsite/${this.props.user.token}`, {
+        name: this.state.name,
+        links: this.state.links
+      })
+      .then((response) => {
+        let data = response.data;
+        this.setState({
+          name: "",
+          links: ["", "", "", "", ""],
+          numberShown: 0,
+          error: ""
+        }, function() {
+          this.props.onRequest();
+        });
+      })
+      .catch((error) => {
+        var eMessage = error.response.data.error.message;
+        this.setState({
+          error: eMessage
+        })
       });
-    })
-    .catch((error) => {
-      console.log(error);
-    });
+    } else {
+      this.setState({
+        error: "All fields required."
+      })
+    }
+
   }
   render() {
     return(
@@ -674,6 +814,12 @@ class RequestWebsiteForm extends React.Component {
           <div className="form-group">
             <button type="button" className="big-button expand" onClick={this.expandInput}> Add Another Career Page </button>
           </div>
+          {
+            this.state.error !== "" ?
+              <ErrorMessage eMessage = {this.state.error}/>
+            :
+              null
+          }
           <div className="form-group">
             <p> Once the the request comes through, we'll add the company to your subscribes automatically. Keep in mind this might take up to 24 hours. </p>
           </div>
@@ -690,7 +836,8 @@ RequestWebsiteForm.propTypes = {
   user: PropTypes.shape({
     token: PropTypes.string
   }),
-  query: PropTypes.string.isRequired
+  query: PropTypes.string.isRequired,
+  onRequest: PropTypes.func.isRequired
 }
 
 class RegisterForm extends React.Component {
@@ -698,7 +845,8 @@ class RegisterForm extends React.Component {
     super(props);
     this.state = {
       email: "",
-      password: ""
+      password: "",
+      error: ""
     }
   }
   handleChange = (e) => {
@@ -722,7 +870,10 @@ class RegisterForm extends React.Component {
       this.props.onRegister(user);
     })
     .catch((error) => {
-      console.log(error);
+      var eMessage = error.response.data.error.message;
+      this.setState({
+        error: eMessage
+      })
     });
   }
   render() {
@@ -734,9 +885,14 @@ class RegisterForm extends React.Component {
         <div className="form-group">
           <input autoComplete="new-password" type="password" name="password" placeholder="Password" className="big-input" value={this.state.password} onChange={this.handleChange}/>
         </div>
+        {
+          this.state.error !== "" ?
+            <ErrorMessage eMessage = {this.state.error}/>
+          :
+            null
+        }
         <div className="form-group">
           <p><span> By signing up you agree to our </span><Link to='/conditions'>terms and conditions</Link><span>.</span></p>
-
         </div>
         <div className="form-group">
           <button type="submit" className="big-button">Sign up</button>
@@ -755,7 +911,8 @@ class ContactForm extends React.Component {
     super(props);
     this.state = {
       email: "",
-      message: ""
+      message: "",
+      error: ""
     }
   }
   handleChange = (e) => {
@@ -764,6 +921,15 @@ class ContactForm extends React.Component {
     this.setState(returnObj);
   }
   performContact = (e) => {
+    e.preventDefault();
+    e.currentTarget.reset();
+    if (this.state.email !== "" && this.state.message !== "") {
+
+    } else {
+      this.setState({
+        error: "All fields required."
+      })
+    }
   }
   render() {
     return (
@@ -774,6 +940,12 @@ class ContactForm extends React.Component {
           <div className="form-group">
             <textarea type="text" id="password" placeholder="Your Message" name="message" className="big-textarea" value={this.state.message} onChange={this.handleChange} />
           </div>
+          {
+              this.state.error !== "" ?
+                <ErrorMessage eMessage = {this.state.error}/>
+              :
+                null
+          }
           <div className="form-group">
             <button type="submit" className="big-button"> Send Message </button>
           </div>
@@ -787,7 +959,8 @@ class LoginForm extends React.Component {
     super(props);
     this.state = {
       email: "",
-      password: ""
+      password: "",
+      error: ""
     }
   }
   handleChange = (e) => {
@@ -811,7 +984,10 @@ class LoginForm extends React.Component {
       this.props.onLogin(user);
     })
     .catch((error) => {
-      console.log(error);
+      var eMessage = error.response.data.error.message;
+      this.setState({
+        error: eMessage
+      })
     });
   }
   render() {
@@ -823,6 +999,12 @@ class LoginForm extends React.Component {
           <div className="form-group">
             <input type="password" id="password" placeholder="Your Password" name="password" className="big-input" value={this.state.password} onChange={this.handleChange} />
           </div>
+          {
+              this.state.error !== "" ?
+                <ErrorMessage eMessage = {this.state.error}/>
+              :
+                null
+          }
           <div className="form-group">
             <button type="submit" className="big-button">Log in</button>
           </div>
@@ -841,7 +1023,8 @@ class KeywordForm extends React.Component {
     this.state = {
       name: "",
       category: "intern",
-      language: "dutch"
+      language: "dutch",
+      error: ""
     }
   }
   handleChange = (e) => {
@@ -865,12 +1048,15 @@ class KeywordForm extends React.Component {
       })
     })
     .catch((error) => {
-      console.log(error);
+      var eMessage = error.response.data.error.message;
+      this.setState({
+        error: eMessage
+      })
     });
   }
   render() {
     return (
-      <form method="POST" action="/addKeywords" className="form-small" onSubmit={this.performAddKeyword}>
+      <form className="form-small" onSubmit={this.performAddKeyword}>
         <div className="form-group">
           <input id="name" type="text" placeholder="some keyword" name="name" className="big-input" onChange = {this.handleChange} value = {this.state.name}/>
         </div>
@@ -890,7 +1076,13 @@ class KeywordForm extends React.Component {
             <option value="general">general</option>
           </select>
         </div>
-        <button type="submit" className="big-button">Add keyword</button>
+        {
+            this.state.error !== "" ?
+              <ErrorMessage eMessage = {this.state.error}/>
+            :
+              null
+        }
+        <button style={{"marginTop": "15px" }} type="submit" className="big-button">Add keyword</button>
       </form>
     )
   }

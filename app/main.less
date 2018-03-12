@@ -5,6 +5,8 @@
 @headerHeight: 55px;
 @black: #232323;
 @background: #F5F5F5;
+@warningYellow: #F5DD90;
+@successBlue: #324376;
 
 // This applies from 0px to 600px
 
@@ -113,7 +115,7 @@ header {
   #header-lower {
     align-content: center;
     padding: 0 20px;
-    background: #F5DD90;
+    background: @warningYellow;
 
     #header-verified {
       width: 100%;
@@ -442,63 +444,78 @@ header {
 
 #search-website {
   flex-flow: column;
-  padding: 30px 5%;
-  background: #FFFFFF;
   border: 1px solid #EAEAEA;
   border-radius: 5px;
   margin-bottom: 30px;
-  justify-content: space-between;
-  align-items: center;
+  background: #FFFFFF;
 
-  h2 {
-    margin-bottom: 20px;
-  }
+  #search-upper {
+    flex-flow: column;
+    padding: 30px 5%;
+    justify-content: space-between;
+    align-items: center;
 
-  #top-buttons {
-    button {
-      margin: 10px;
+    h2 {
+      margin-bottom: 20px;
     }
-  }
 
-  .search-div {
-    height: 40px;
-    width: 80%;
+    #top-buttons {
+      button {
+        margin: 10px;
+      }
+    }
 
-    .search-form {
-      width: 100%;
+    .search-div {
+      height: 40px;
+      width: 80%;
 
-      .search-bar {
+      .search-form {
         width: 100%;
-        justify-content: space-between;
-        background: @dark-grey;
 
-        input {
-          flex: 10 1 50%;
-          border: none;
-          padding: 0 10px;
-          background: none;
-          outline: none;
-        }
+        .search-bar {
+          width: 100%;
+          justify-content: space-between;
+          background: @dark-grey;
 
-        button {
-          border: none;
-          width: 60px;
-          justify-content: center;
-          padding: 0;
-          background: none;
-
-          :hover {
-            cursor: pointer;
+          input {
+            flex: 10 1 50%;
+            border: none;
+            padding: 0 10px;
+            background: none;
+            outline: none;
           }
 
-          img {
-            width: 35%;
-            height: auto;
+          button {
+            border: none;
+            width: 60px;
+            justify-content: center;
+            padding: 0;
+            background: none;
+
+            :hover {
+              cursor: pointer;
+            }
+
+            img {
+              width: 35%;
+              height: auto;
+            }
           }
         }
       }
     }
   }
+
+  #search-lower {
+
+    p {
+      padding: 10px 5%;
+      background: @base;
+      color: white;
+
+    }
+  }
+
 }
 
 .single {
@@ -560,6 +577,29 @@ header {
         padding: 0 10px;
         margin-top: 30px;
       }
+
+      .warning, .success {
+        margin-top: 15px;
+        align-items: center;
+        background: @warningYellow;
+        border-radius: 5px;
+
+        p {
+          margin: 0;
+          padding: 13px;
+        }
+      }
+
+      .success {
+        background: @successBlue;
+
+       p {
+         color: white;
+       }
+
+      }
+
+
 
     }
   }
@@ -826,15 +866,23 @@ footer {
   }
 
   #search-website {
-    flex-flow: row;
 
-    h2 {
-      margin-bottom: 0;
+    #search-upper {
+      flex-flow: row;
+
+      h2 {
+        margin-bottom: 0;
+      }
+
+      .search-div {
+        width: 50%;
+      }
     }
 
-    .search-div {
-      width: 50%;
+    #search-lower {
+
     }
+
   }
 
   .single {

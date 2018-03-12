@@ -7,6 +7,18 @@ const { Link } = require('react-router-dom');
 const { RequestWebsiteForm } = require('../Forms');
 import Toggle from '../Toggle';
 
+function SuccessRequest(props) {
+  return (
+    <div id="search-lower">
+    {
+      props.madeRequest ?
+        <p> You have successfully requested a career page. Once verified, it will be added to your subscribes automatically. </p>
+      : null
+    }
+    </div>
+  )
+}
+
 function NoneMonitoredBrowse() {
   return (
     <div id="monitored-websites">
@@ -35,7 +47,7 @@ function SingleWebsiteExpanded(props) {
       {
         props.website.links.map(function(link) {
           return (
-            <SingleWebsiteLink link = {link} key= {link.origin} />
+            <SingleWebsiteLink link = {link} key= {link.href} />
           )
         })
       }
@@ -67,7 +79,7 @@ class SingleWebsite extends React.Component {
   getMostRecent = (updates) => {
     let mostRecent = "";
     updates.map(function(update){
-      if (update.date > mostRecent || mostRecent === "") {
+      if (update.date > mostRecent && update.relevant === true || mostRecent === "" && update.relevant === true) {
         mostRecent = update.date;
       }
     })
@@ -207,7 +219,7 @@ function Available(props) {
                 }
               </div>
           : props.query ?
-              <RequestWebsiteForm query = {props.query} user = {props.user} />
+              <RequestWebsiteForm query = {props.query} user = {props.user} onRequest = {props.onRequest}/>
             : <NoneMonitoredProfile/>
         }
     </div>
@@ -224,14 +236,32 @@ Available.propTypes = {
     links: PropTypes.arrayOf(PropTypes.shape({
          href: PropTypes.string
     })).isRequired
-  }))
+  })),
+  onRequest: PropTypes.func.isRequired
 }
 
 class Search extends React.Component {
   constructor() {
     super();
     this.state = {
-      query: ""
+      query: "",
+      madeRequest: false
+    }
+  }
+  componentWillReceiveProps = (nextProps) => {
+    if (nextProps.madeRequest !== this.props.madeRequest ) {
+      let newState = {};
+      nextProps.madeRequest === false ?
+        newState = {
+          madeRequest: nextProps.madeRequest
+        }
+      : newState = {
+          madeRequest: nextProps.madeRequest,
+          query: ""
+      };
+      this.setState(newState, function() {
+        this.props.onQueryChange(this.state.query);
+      });
     }
   }
   handleChange = (e) => {
@@ -244,17 +274,20 @@ class Search extends React.Component {
   render() {
     return (
       <div id="search-website">
-        <h2> browse career pages </h2>
-        <div className="search-div">
-          <form className="search-form">
-            <div className="search-bar">
-              <input id="search-input" type="text" placeholder="organisation / company name" name="query" value={this.state.query}  onChange={this.handleChange}/>
-              <button disabled="disabled">
-                <img src="../../img/searchIcon.svg"/>
-              </button>
-            </div>
-          </form>
+        <div id="search-upper">
+          <h2> browse career pages </h2>
+          <div className="search-div">
+            <form className="search-form">
+              <div className="search-bar">
+                <input id="search-input" type="text" placeholder="organisation / company name" name="query" value={this.state.query}  onChange={this.handleChange}/>
+                <button disabled="disabled">
+                  <img src="../../img/searchIcon.svg"/>
+                </button>
+              </div>
+            </form>
+          </div>
         </div>
+        <SuccessRequest madeRequest = {this.state.madeRequest} />
       </div>
     )
   }
@@ -272,7 +305,8 @@ class Browse extends React.Component {
       query: "",
       available: [],
       monitored: [],
-      limit: 0
+      limit: 0,
+      madeRequest: false
     };
   }
   componentDidMount = () => {
@@ -293,14 +327,26 @@ class Browse extends React.Component {
       })
     }
   }
-  onQueryChange = (query) => {
+  onRequest = () => {
     this.setState({
-      query: query
-    },
+      madeRequest: true
+    });
+  }
+  onQueryChange = (query) => {
+    console.log("query is " + query);
+    let newState = {};
+    query === "" ?
+      newState = {
+        query: query
+      }
+    : newState = {
+      query: query,
+      madeRequest: false
+    };
+    this.setState(newState,
     function() {
       this.searchAvailable();
-    }
-    );
+    });
   }
   onChangeSubscribe = (site) => {
     let isMonitored = false;
@@ -370,9 +416,10 @@ class Browse extends React.Component {
     return (
       <div id="two-thirds-page">
         <div id="two-thirds-left">
-          <Search onQueryChange = {this.onQueryChange} />
+          <Search onQueryChange = {this.onQueryChange} madeRequest = {this.state.madeRequest} />
           <Available
           onChangeSubscribe = {this.onChangeSubscribe}
+          onRequest = {this.onRequest}
           user = {this.state.user}
           available = {this.state.available}
           query = {this.state.query} />
