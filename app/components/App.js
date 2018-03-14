@@ -22,14 +22,19 @@ const { ReportWebsite } = require('./Contact');
 
 const { Browse } = require('./Browse');
 
-const { Login } = require('./Auth');
-const { Register } = require('./Auth');
-const { ForgotPassword } = require('./Auth');
+const {
+  Login,
+  Register,
+  ForgotPassword
+} = require('./Auth');
 
-const { AddWebsite } = require('./Admin');
-const { AddKeyword } = require('./Admin');
-const { AddModify } = require('./Admin');
-const { ReadIssues } = require('./Admin');
+const {
+  AddWebsite,
+  AddKeyword,
+  AddModify,
+  ReadIssues,
+  AdminDB
+} = require('./Admin');
 
 const { PrivateRoute } = require('./RestrictedRoutes');
 const { StrangerRoute } = require('./RestrictedRoutes');
@@ -71,18 +76,23 @@ class App extends React.Component {
             <Route path="/about" component={About} />
             <Route path="/forgotpassword" component={ForgotPassword} />
 
-            <StrangerRoute path="/login" component = {Login} onLogin = {this.onLogin} />
-            <StrangerRoute path="/register" component= {Register} onRegister = {this.onRegister} />
+            <Route path="/register" render={props => <Register
+              onRegister = {this.onRegister} />} />
+
+            <Route path="/login" render={props => <Login
+              onLogin = {this.onLogin} />} />
 
             <PrivateRoute path='/browse' component={Browse} user = {this.state.user}/>
             <PrivateRoute path="/profile" component={Profile} user = {this.state.user} handleLogout = {this.onLogout} />
             <PrivateRoute path="/modify" component={ModifyWebsite} user = {this.state.user} />
             <PrivateRoute path="/report" component={ReportWebsite} user = {this.state.user} />
 
+
             <PrivateRoute path="/addWebsite" component = { AddWebsite } user = {this.state.user} />
             <PrivateRoute path="/addKeyword" component = { AddKeyword } user = {this.state.user} />
             <PrivateRoute path="/addModify" component = { AddModify } user = {this.state.user} />
             <PrivateRoute path="/readIssues" component = { ReadIssues } user = {this.state.user} />
+            <PrivateRoute path="/adminDB" component = { AdminDB } user = {this.state.user} />
 
             <Route component = { NotFound }/>
           </Switch>
@@ -97,19 +107,16 @@ class App extends React.Component {
           user: {}
         });
       }
-      <Redirect to="/" push />
     }
     onRegister = (user) => {
       this.setState({
         user: user
       });
-      <Redirect to="/profile" push />
     }
     onLogin = (user) => {
       this.setState({
         user: user
       });
-      <Redirect to="/profile" push />
     }
 };
 

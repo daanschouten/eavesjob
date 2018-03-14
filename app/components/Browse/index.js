@@ -236,8 +236,7 @@ Available.propTypes = {
     links: PropTypes.arrayOf(PropTypes.shape({
          href: PropTypes.string
     })).isRequired
-  })),
-  onRequest: PropTypes.func.isRequired
+  }))
 }
 
 class Search extends React.Component {
@@ -333,7 +332,6 @@ class Browse extends React.Component {
     });
   }
   onQueryChange = (query) => {
-    console.log("query is " + query);
     let newState = {};
     query === "" ?
       newState = {

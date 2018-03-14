@@ -1,8 +1,94 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
+var jsonMarkup = require('json-markup')
 
 const { Link } = require('react-router-dom');
+import {
+    Redirect,
+    Route,
+    Switch,
+    withRouter
+} from 'react-router-dom';
+
+class AdminForm extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      objectID: "",
+      objectName: "",
+      objectType: "Website",
+      error: "",
+      returnObj: {}
+    }
+  }
+  handleChange = (e) => {
+    let returnObj = {};
+    returnObj[e.target.name] = e.target.value;
+    this.setState(returnObj);
+  }
+  retrieveObject = (e) => {
+    e.preventDefault();
+    e.currentTarget.reset();
+    axios.post(`http://localhost:3000/adminDB/${this.props.user.token}`, {
+      objectID: this.state.objectID,
+      objectName: this.state.objectName,
+      objectType: this.state.objectType
+    })
+    .then((response) => {
+      console.log(response);
+      this.setState({
+        returnObj: response.data
+      });
+    })
+    .catch((error) => {
+      var eMessage = error.response.data.error.message;
+      this.setState({
+        error: eMessage
+      });
+    });
+  }
+  render() {
+    return (
+      <form className="form-small" onSubmit={this.retrieveObject}>
+        <div className="form-group">
+          <input id="name" type="text" placeholder="object ID" name="objectID" className="big-input" onChange = {this.handleChange} value = {this.state.objectID}/>
+        </div>
+        <div className="form-group">
+          <input id="name" type="text" placeholder="object Name" name="objectName" className="big-input" onChange = {this.handleChange} value = {this.state.objectName}/>
+        </div>
+        <div className="form-group">
+          <select htmlFor="language" name="objectType" onChange = {this.handleChange} value = {this.state.objectType }>
+            <option value="Website">Stored Website</option>
+            <option value="RequestedWebsite">Requested Website</option>
+            <option value="ReportedWebsite">Reported Website</option>
+            <option value="Keyword">Keyword</option>
+            <option value="User">User</option>
+            <option value="RequestedModify">Requested Modify</option>
+          </select>
+        </div>
+        {
+            this.state.error !== "" ?
+              <ErrorMessage eMessage = {this.state.error}/>
+            :
+              null
+        }
+        <div className="form-group">
+          <button type="submit" className="big-button"> Find Object </button>
+        </div>
+        <div className="form-group">
+          <div className="html-content" dangerouslySetInnerHTML={{__html: jsonMarkup(this.state.returnObj)}}></div>
+        </div>
+      </form>
+    )
+  }
+}
+
+AdminForm.propTypes = {
+  user: PropTypes.shape({
+    token: PropTypes.string
+  })
+}
 
 function ErrorMessage(props) {
   return (
@@ -309,7 +395,7 @@ class AddWebsiteForm extends React.Component {
       name: "",
       links: ["", "", "", "", ""],
       numberShown: 0,
-      requestedBy: "",
+      requestedBy: [],
       websiteID: "",
       error: "",
       success: ""
@@ -393,7 +479,7 @@ class AddWebsiteForm extends React.Component {
       this.setState({
         name: "",
         links: ["", "", "", "", ""],
-        requestedBy: "",
+        requestedBy: [],
         websiteID: "",
         numberShown: 0,
         issue: "",
@@ -418,7 +504,7 @@ class AddWebsiteForm extends React.Component {
       this.setState({
         name: "",
         links: ["", "", "", "", ""],
-        requestedBy: "",
+        requestedBy: [],
         websiteID: "",
         numberShown: 0,
         issue: "",
@@ -466,7 +552,7 @@ class AddWebsiteForm extends React.Component {
             <Link target = "_blank" to={this.state.links[4]}>check link</Link>
           </div>
           <div className="form-group">
-            <button type="button" className="big-button expand" onClick={this.expandInput}> Add Another Career Page </button>
+            <button type="button" className="big-button expand" onClick={this.expandInput}> Add Another Page </button>
           </div>
 
           <div className="form-group">
@@ -526,6 +612,8 @@ class ReportWebsiteForm extends React.Component {
       comments: this.state.comments
     })
     .then((response) => {
+      // redirect to browse
+
       let data = response.data;
       this.setState({
         comments: ""
@@ -760,7 +848,6 @@ class RequestWebsiteForm extends React.Component {
         links: this.state.links
       })
       .then((response) => {
-        let data = response.data;
         this.setState({
           name: "",
           links: ["", "", "", "", ""],
@@ -846,7 +933,8 @@ class RegisterForm extends React.Component {
     this.state = {
       email: "",
       password: "",
-      error: ""
+      error: "",
+      redirect: false
     }
   }
   handleChange = (e) => {
@@ -867,6 +955,9 @@ class RegisterForm extends React.Component {
     .then((response) => {
       let user = response.data;
       this.saveSession(user);
+      this.setState({
+        redirect: true
+      });
       this.props.onRegister(user);
     })
     .catch((error) => {
@@ -878,26 +969,28 @@ class RegisterForm extends React.Component {
   }
   render() {
     return (
-      <form className="form-small" onSubmit={this.performRegister}>
-        <div className="form-group">
-          <input type="email" placeholder="Your Email Address" name="email" className="big-input" value={this.state.email} onChange={this.handleChange} />
-        </div>
-        <div className="form-group">
-          <input autoComplete="new-password" type="password" name="password" placeholder="Password" className="big-input" value={this.state.password} onChange={this.handleChange}/>
-        </div>
-        {
-          this.state.error !== "" ?
-            <ErrorMessage eMessage = {this.state.error}/>
-          :
-            null
-        }
-        <div className="form-group">
-          <p><span> By signing up you agree to our </span><Link to='/conditions'>terms and conditions</Link><span>.</span></p>
-        </div>
-        <div className="form-group">
-          <button type="submit" className="big-button">Sign up</button>
-        </div>
-      </form>
+      this.state.redirect === false ?
+        <form className="form-small" onSubmit={this.performRegister}>
+          <div className="form-group">
+            <input type="email" placeholder="Your Email Address" name="email" className="big-input" value={this.state.email} onChange={this.handleChange} />
+          </div>
+          <div className="form-group">
+            <input autoComplete="new-password" type="password" name="password" placeholder="Password" className="big-input" value={this.state.password} onChange={this.handleChange}/>
+          </div>
+          {
+            this.state.error !== "" ?
+              <ErrorMessage eMessage = {this.state.error}/>
+            :
+              null
+          }
+          <div className="form-group">
+            <p><span> By signing up you agree to our </span><Link to='/conditions'>terms and conditions</Link><span>.</span></p>
+          </div>
+          <div className="form-group">
+            <button type="submit" className="big-button">Sign up</button>
+          </div>
+        </form>
+      : <Redirect to="/browse"/>
     )
   }
 }
@@ -960,7 +1053,8 @@ class LoginForm extends React.Component {
     this.state = {
       email: "",
       password: "",
-      error: ""
+      error: "",
+      redirect: false
     }
   }
   handleChange = (e) => {
@@ -981,6 +1075,9 @@ class LoginForm extends React.Component {
     .then((response) => {
       let user = response.data;
       this.saveSession(user);
+      this.setState({
+        redirect: true
+      })
       this.props.onLogin(user);
     })
     .catch((error) => {
@@ -992,23 +1089,25 @@ class LoginForm extends React.Component {
   }
   render() {
     return (
-        <form className="form-small" onSubmit={this.performLogin}>
-          <div className="form-group">
-            <input type="email" id="email" placeholder="Your Email Address" name="email" className="big-input" value={this.state.email} onChange={this.handleChange} />
-          </div>
-          <div className="form-group">
-            <input type="password" id="password" placeholder="Your Password" name="password" className="big-input" value={this.state.password} onChange={this.handleChange} />
-          </div>
-          {
-              this.state.error !== "" ?
-                <ErrorMessage eMessage = {this.state.error}/>
-              :
-                null
-          }
-          <div className="form-group">
-            <button type="submit" className="big-button">Log in</button>
-          </div>
-        </form>
+        this.state.redirect === false ?
+          <form className="form-small" onSubmit={this.performLogin}>
+              <div className="form-group">
+                <input type="email" id="email" placeholder="Your Email Address" name="email" className="big-input" value={this.state.email} onChange={this.handleChange} />
+              </div>
+              <div className="form-group">
+                <input type="password" id="password" placeholder="Your Password" name="password" className="big-input" value={this.state.password} onChange={this.handleChange} />
+              </div>
+              {
+                  this.state.error !== "" ?
+                    <ErrorMessage eMessage = {this.state.error}/>
+                  :
+                    null
+              }
+              <div className="form-group">
+                <button type="submit" className="big-button">Log in</button>
+              </div>
+          </form> :
+        <Redirect to="/browse"/>
     );
   }
 }
@@ -1105,5 +1204,6 @@ module.exports = {
   LoginForm: LoginForm,
   ContactForm: ContactForm,
   RegisterForm: RegisterForm,
-  IssueForm: IssueForm
+  IssueForm: IssueForm,
+  AdminForm: AdminForm
 }

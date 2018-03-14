@@ -6,8 +6,24 @@ const {
   KeywordForm,
   AddWebsiteForm,
   AddModifyForm,
-  IssueForm
+  IssueForm,
+  AdminForm
 } = require('../Forms');
+
+function AdminDB(props) {
+  return (
+    <div className="container-single">
+      <div className="container-center">
+        <div className="single" style={{"width": "90%"}}>
+          <div className="form-title">
+            <h1> Find DB Objects by ID or Name </h1>
+          </div>
+          <AdminForm user = {props.user} />
+        </div>
+      </div>
+    </div>
+  )
+}
 
 function ReadIssues(props) {
   return (
@@ -89,5 +105,6 @@ module.exports = {
   AddKeyword: AddKeyword,
   AddWebsite: AddWebsite,
   AddModify: AddModify,
-  ReadIssues: ReadIssues
+  ReadIssues: ReadIssues,
+  AdminDB: AdminDB
 }

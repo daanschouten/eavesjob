@@ -563,6 +563,36 @@ header {
       flex-flow: column;
       overflow: hidden;
 
+      .html-content {
+
+        .json-markup {
+        	line-height: 17px;
+        	font-size: 13px;
+        	font-family: monospace;
+        	white-space: pre;
+        }
+        
+        .json-markup-key {
+        	font-weight: bold;
+        }
+        .json-markup-bool {
+        	color: firebrick;
+        }
+        .json-markup-string {
+        	color: green;
+        }
+        .json-markup-null {
+        	color: gray;
+        }
+        .json-markup-number {
+        	color: blue;
+        }
+
+        div {
+          display: block;
+        }
+      }
+
       input {
         width: 100%;
       }
@@ -674,7 +704,7 @@ input:focus, input:hover {
   border: 1px solid @base;
 }
 
-.switch{
+.switch {
   display: inline-block;
   position: relative;
   cursor: pointer;
@@ -683,7 +713,7 @@ input:focus, input:hover {
   border-radius: 60px;
   background-color: @base;
 
-  .switch__toggle{
+  .switch__toggle {
     width: 0;
     height: 0;
     opacity: 0;
@@ -692,12 +722,12 @@ input:focus, input:hover {
     left: 0;
   }
 
-  .switch__toggle:checked ~ .switch__label:before{
+  .switch__toggle:checked ~ .switch__label:before {
     transform: scale(0);
     opacity: .7;
   }
 
-  .switch__toggle:checked ~ .switch__label:after{
+  .switch__toggle:checked ~ .switch__label:after {
     transform: translate3d(100%, -50%, 0);
   }
 
