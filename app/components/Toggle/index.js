@@ -7,7 +7,7 @@ export default function Toggle(props) {
   function handleChange() {
     props.onToggle()
   }
-  return(
+  return (
     <label className="switch" role="switch">
       <input className="switch__toggle" type="checkbox" checked={props.monitored} onChange={handleChange}/>
       <span className="switch__label"></span>

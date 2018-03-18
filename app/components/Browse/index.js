@@ -112,7 +112,7 @@ class SingleWebsite extends React.Component {
           </div>
           <div className="website-date">
             {
-              this.props.website.robotsAllow === true && this.props.website.issue === 0 ?
+              this.props.website.robotsAllow !== false && this.props.website.issue === 0 ?
                 <p> {this.getMostRecent(this.props.website.pageUpdates)}</p>
               : <Link to='/support/robots' style={{fontSize: "15px", textDecoration: "underline"}}> monitoring impossible </Link>
             }
@@ -273,7 +273,7 @@ class Search extends React.Component {
   render() {
     return (
       <div id="search-website">
-        <div id="search-upper">
+        <div id="search-upper" style={{"padding": "34px 5%"}}>
           <h2> browse career pages </h2>
           <div className="search-div">
             <form className="search-form">
@@ -309,7 +309,7 @@ class Browse extends React.Component {
     };
   }
   componentDidMount = () => {
-    if (this.props.user) {
+    if (this.props.user.token) {
       this.setState({
         user: this.props.user
       }, function() {
