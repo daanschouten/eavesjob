@@ -16,11 +16,13 @@ import Conditions from './Conditions';
 import Business from './Business';
 import About from './About';
 
-const { Contact } = require('./Contact');
-const { ModifyWebsite } = require('./Contact');
-const { ReportWebsite } = require('./Contact');
-
 const { Browse } = require('./Browse');
+
+const {
+  Contact,
+  ModifyWebsite,
+  ReportWebsite
+} = require('./Contact');
 
 const {
   Login,
@@ -36,8 +38,11 @@ const {
   AdminDB
 } = require('./Admin');
 
+const {
+  VerifyEmail
+} = require('./Email');
+
 const { PrivateRoute } = require('./RestrictedRoutes');
-const { StrangerRoute } = require('./RestrictedRoutes');
 
 class App extends React.Component {
     constructor(props) {
@@ -87,6 +92,7 @@ class App extends React.Component {
             <PrivateRoute path="/modify" component={ModifyWebsite} user = {this.state.user} />
             <PrivateRoute path="/report" component={ReportWebsite} user = {this.state.user} />
 
+            <PrivateRoute path="/verifyEmail" component={VerifyEmail} user = {this.state.user} onLogin = {this.onLogin} />
 
             <PrivateRoute path="/addWebsite" component = { AddWebsite } user = {this.state.user} />
             <PrivateRoute path="/addKeyword" component = { AddKeyword } user = {this.state.user} />

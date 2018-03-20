@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import axios from 'axios';
 const { NavLink } = require('react-router-dom');
 
 export default function Header(props) {
@@ -26,20 +27,55 @@ export default function Header(props) {
   )
 }
 
-function Verified(props) {
-  function onResend() {
-    console.log("send api request to email");
+class Verified extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      emailSent: false,
+      sentTo: "",
+      error: ""
+    };
   }
-  return (
-    <div id="header-lower">
-    {
-      props.user && props.user.verified === false ?
-      <div id="header-verified">
-          <p><span> You have not verified your email address yet. Please do, so that we can send you career updates. </span><button onClick= {onResend} > Resend verification email</button></p>
+  onResend = () => {
+    this.setState({
+      emailSent: true
+    }, function() {
+      axios.get(`http://localhost:3000/sendVerification/${this.props.user.token}`)
+        .then((response) => {
+          if (response.data.email) {
+            this.setState({
+              sentTo: response.data.email
+            });
+          }
+        })
+        .catch((error) => {
+          var eMessage = error.response.data.error.message;
+          this.setState({
+            error: eMessage
+          })
+        })
+    })
+  }
+  render() {
+    return (
+      <div id="header-lower">
+      {
+        this.props.user && this.props.user.verified === false ?
+        <div id="header-verified">
+            <p><span> You have not verified your email address yet. Please do, so that we can send you career updates. </span> {
+              this.state.emailSent && this.state.sentTo ?
+                <span> Email sent to {this.state.sentTo} </span>
+              : this.state.emailSent ?
+                  <span> Sending email .. </span>
+                :
+                  <button onClick= {this.onResend} ><span> Resend email verification </span></button>
+            }
+            </p>
+        </div>
+        : null
+      }
       </div>
-      : null
-    }
-    </div>
 
-  )
+    )
+  }
 }
