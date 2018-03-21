@@ -27,7 +27,8 @@ const {
 const {
   Login,
   Register,
-  ForgotPassword
+  ForgotPassword,
+  ResetPassword
 } = require('./Auth');
 
 const {
@@ -39,7 +40,8 @@ const {
 } = require('./Admin');
 
 const {
-  VerifyEmail
+  VerifyEmail,
+  ContactSent
 } = require('./Email');
 
 const { PrivateRoute } = require('./RestrictedRoutes');
@@ -80,6 +82,7 @@ class App extends React.Component {
             <Route path="/business" component={Business} />
             <Route path="/about" component={About} />
             <Route path="/forgotpassword" component={ForgotPassword} />
+            <Route path="/resetpassword" component={ResetPassword} />
 
             <Route path="/register" render={props => <Register
               onRegister = {this.onRegister} />} />
@@ -93,6 +96,8 @@ class App extends React.Component {
             <PrivateRoute path="/report" component={ReportWebsite} user = {this.state.user} />
 
             <PrivateRoute path="/verifyEmail" component={VerifyEmail} user = {this.state.user} onLogin = {this.onLogin} />
+            <PrivateRoute path="/contactSent" component={ContactSent} />
+            <PrivateRoute path="/forgotPassword" component={ForgotPassword} />
 
             <PrivateRoute path="/addWebsite" component = { AddWebsite } user = {this.state.user} />
             <PrivateRoute path="/addKeyword" component = { AddKeyword } user = {this.state.user} />

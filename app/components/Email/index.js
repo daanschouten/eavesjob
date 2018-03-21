@@ -104,7 +104,23 @@ class VerifyEmail extends React.Component {
 
 function ContactSent(props) {
   return (
-    null
+    <div className="container-single">
+      <div className="container-center">
+        <div className="single">
+          <div className="form-small">
+            <div className="form-title">
+              <h1> Contact Us </h1>
+            </div>
+            <div className="single-text">
+                <p> Your message has been sent! </p>
+            </div>
+            <div className = "form-group">
+              <button className="big-button"><Link to='/'>Visit Homepage</Link> </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   )
 }
 

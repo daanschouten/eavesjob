@@ -35,6 +35,15 @@ function HowItWorks(props) {
         </div>
 
       </div>
+
+      <div className="container-center" style={{"marginTop": "50px"}}>
+        <div className ="single">
+          <div className="form-title">
+            <h1> Join for Free! </h1>
+          </div>
+          <RegisterForm onRegister = {props.onRegister} />
+        </div>
+      </div>
     </div>
   )
 }
@@ -56,7 +65,7 @@ export default function RegisterHome(props) {
           </div>
         </div>
       </div>
-      <HowItWorks/>
+      <HowItWorks onRegister = {props.onRegister}/>
     </div>
   )
 }

@@ -679,7 +679,8 @@ class ForgotPasswordForm extends React.Component {
     super(props);
     this.state = {
       email: "",
-      error: ""
+      error: "",
+      success: false
     }
   }
   handleChange = (e) => {
@@ -688,22 +689,137 @@ class ForgotPasswordForm extends React.Component {
     this.setState(returnObj);
   }
   performForgotPassword = (e) => {
+    e.preventDefault();
+    e.currentTarget.reset();
+    if (this.state.email !== "") {
+      axios.post('http://localhost:3000/forgotPassword', {
+        email: this.state.email.toLowerCase()
+      })
+      .then((response) => {
+        this.setState({
+          success: true,
+          email: ""
+        })
+      })
+      .catch((error) => {
+        var eMessage = error.response.data.error.message;
+        this.setState({
+          error: eMessage
+        })
+      });
+    } else {
+      this.setState({
+        error: "All fields required."
+      })
+    }
   }
   render() {
     return (
         <form className="form-small" onSubmit={this.performForgotPassword}>
-          <div className="form-group">
-            <input type="text" className="big-input" placeholder="Your Email Address" name="email" value = {this.state.email} onChange = {this.handleChange} />
-          </div>
-          {
+            <div className="form-group">
+              <input type="text" className="big-input" placeholder="Your Email Address" name="email" value = {this.state.email} onChange = {this.handleChange} />
+            </div>
+            {
               this.state.error !== "" ?
                 <ErrorMessage eMessage = {this.state.error}/>
               :
                 null
-          }
-          <div className="form-group">
-            <button type="submit" className="big-button"> Send Reset Email </button>
-          </div>
+            }
+            {
+              this.state.success ?
+                <SuccessMessage sMessage = "Reset password email has been sent." />
+              :
+                null
+            }
+            { this.state.success ? null :
+                <div className="form-group">
+                  <button type="submit" className="big-button"> Send Reset Email </button>
+                </div>
+            }
+        </form>
+    )
+  }
+}
+
+class ResetPasswordForm extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      password: "",
+      repeatPassword: "",
+      error: "",
+      success: false
+    }
+  }
+  handleChange = (e) => {
+    let returnObj = {};
+    returnObj[e.target.name] = e.target.value;
+    this.setState(returnObj);
+  }
+  performResetPassword = (e) => {
+    e.preventDefault();
+    e.currentTarget.reset();
+    if (this.state.password && this.state.repeatPassword) {
+      if (this.state.password === this.state.repeatPassword) {
+        axios.post(`http://localhost:3000/resetPassword/${this.props.token}`, {
+          password: this.state.password
+        })
+        .then((response) => {
+          // save in localstorage first
+
+          this.setState({
+            success: true,
+            password: "",
+            repeatPassword: ""
+          })
+        })
+        .catch((error) => {
+          var eMessage = error.response.data.error.message;
+          this.setState({
+            error: eMessage
+          })
+        });
+      } else {
+        this.setState({
+          error: "Passwords must match."
+        })
+      }
+    } else {
+      this.setState({
+        error: "All fields required."
+      })
+    }
+  }
+  render() {
+    return (
+        <form className="form-small" onSubmit={this.performResetPassword}>
+            { this.state.success ? null :
+            <div className="form-group">
+              <input type="password" className="big-input" placeholder="New Password" name="password" value = {this.state.password} onChange = {this.handleChange} />
+            </div>
+            }
+            { this.state.success ? null :
+            <div className="form-group">
+              <input type="password" className="big-input" placeholder="Repeat New Password" name="repeatPassword" value = {this.state.repeatPassword} onChange = {this.handleChange} />
+            </div>
+            }
+            {
+              this.state.error !== "" ?
+                <ErrorMessage eMessage = {this.state.error}/>
+              :
+                null
+            }
+            {
+              this.state.success ?
+                <SuccessMessage sMessage = "Password has been reset." />
+              :
+                null
+            }
+            <div className="form-group">
+              { this.state.success ? null :
+                  <button type="submit" className="big-button"> Reset Password </button>
+              }
+            </div>
         </form>
     )
   }
@@ -1005,7 +1121,8 @@ class ContactForm extends React.Component {
     this.state = {
       email: "",
       message: "",
-      error: ""
+      error: "",
+      redirect: false
     }
   }
   handleChange = (e) => {
@@ -1017,7 +1134,21 @@ class ContactForm extends React.Component {
     e.preventDefault();
     e.currentTarget.reset();
     if (this.state.email !== "" && this.state.message !== "") {
-
+      axios.post('http://localhost:3000/contact', {
+        email: this.state.email.toLowerCase(),
+        message: this.state.message
+      })
+      .then((response) => {
+        this.setState({
+          redirect: true
+        })
+      })
+      .catch((error) => {
+        var eMessage = error.response.data.error.message;
+        this.setState({
+          error: eMessage
+        })
+      });
     } else {
       this.setState({
         error: "All fields required."
@@ -1026,6 +1157,7 @@ class ContactForm extends React.Component {
   }
   render() {
     return (
+      this.state.redirect === false ?
         <form className="form-small" onSubmit={this.performContact}>
           <div className="form-group">
             <input type="email" id="email" placeholder="Your Email Address" name="email" className="big-input" value={this.state.email} onChange={this.handleChange} />
@@ -1043,6 +1175,7 @@ class ContactForm extends React.Component {
             <button type="submit" className="big-button"> Send Message </button>
           </div>
         </form>
+      : <Redirect to="/contactSent"/>
     );
   }
 }
@@ -1201,6 +1334,7 @@ module.exports = {
   ModifyWebsiteForm: ModifyWebsiteForm,
   ReportWebsiteForm: ReportWebsiteForm,
   ForgotPasswordForm: ForgotPasswordForm,
+  ResetPasswordForm: ResetPasswordForm,
   LoginForm: LoginForm,
   ContactForm: ContactForm,
   RegisterForm: RegisterForm,

@@ -23,7 +23,7 @@ function NoneMonitoredBrowse() {
   return (
     <div id="monitored-websites">
       <div className="right-sidebar-title">
-        <p> You haven't selected any career page yet! Check out our <Link to='/support/subscribing'>support section</Link> if you're not sure how to. </p>
+        <p> You haven't selected any career page yet! Read our <Link to='/support/subscribing'>support section</Link> if you're unsure how to. </p>
       </div>
     </div>
   )
@@ -149,8 +149,12 @@ function Subscribed(props) {
           props.monitored && props.monitored.length > 0 ?
             <div id="monitored-websites">
               <div className="right-sidebar-title">
-                <h2>subscribed career pages</h2>
+                <h2>Subscribed Career Pages</h2>
               </div>
+              <div className="right-sidebar-text">
+                <p> By default, you will receive an email when a vacancy appears on the career page of one of the companies below. You can change your email settings in your <Link to='/profile'>profile</Link>. </p>
+              </div>
+
               {
                 props.monitored.map(function(website){
                   return (
@@ -205,6 +209,7 @@ function Available(props) {
                       <h3> new opportunity </h3>
                     </div>
                     <div className="website-monitor">
+                      <h3> toggle </h3>
                     </div>
                   </div>
                 </div>
@@ -274,7 +279,7 @@ class Search extends React.Component {
     return (
       <div id="search-website">
         <div id="search-upper" style={{"padding": "34px 5%"}}>
-          <h2> browse career pages </h2>
+          <h2> Browse Career Pages </h2>
           <div className="search-div">
             <form className="search-form">
               <div className="search-bar">

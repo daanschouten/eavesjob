@@ -4,7 +4,9 @@ import PropTypes from 'prop-types';
 const {
   RegisterForm,
   LoginForm,
-  ForgotPasswordForm } = require('../Forms');
+  ForgotPasswordForm,
+  ResetPasswordForm
+ } = require('../Forms');
 
 const { Link } = require('react-router-dom');
 
@@ -23,6 +25,9 @@ function Login(props) {
               <h2> Not member yet? </h2>
               <button className="big-button"><Link to='/register'>Register</Link> </button>
             </div>
+        </div>
+        <div className="form-group">
+          <Link to="/forgotPassword"> forgot password? </Link>
         </div>
       </div>
     </div>
@@ -73,8 +78,42 @@ function ForgotPassword(props) {
   )
 }
 
+class ResetPassword extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      token: ""
+    }
+  }
+  componentDidMount() {
+    const pathLength = this.props.match.path.length;
+    const fullPath = this.props.location.pathname;
+    let token = fullPath.substring(pathLength + 1);
+    // include the slash at the end of the path
+    this.setState({
+      token: token
+    })
+  }
+  render() {
+    return (
+      <div className="container-single">
+        <div className="container-center">
+          <div className="single">
+            <div className="form-title">
+              <h1> Reset your Password </h1>
+            </div>
+            <ResetPasswordForm token = {this.state.token} />
+          </div>
+        </div>
+      </div>
+    )
+  }
+}
+
+
 module.exports = {
   ForgotPassword: ForgotPassword,
+  ResetPassword: ResetPassword,
   Register: Register,
   Login: Login
 }
