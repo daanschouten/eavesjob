@@ -11,6 +11,12 @@ import {
     withRouter
 } from 'react-router-dom';
 
+function CollectionItem(props) {
+  return (
+    <option value={props.title}> {props.title} </option>
+  )
+}
+
 class AdminForm extends React.Component {
   constructor(props) {
     super(props);
@@ -19,7 +25,26 @@ class AdminForm extends React.Component {
       objectName: "",
       objectType: "Website",
       error: "",
-      returnObj: {}
+      returnObj: {},
+      collections: []
+    }
+  }
+  componentWillReceiveProps(nextProps) {
+    if (this.props.user !== nextProps.user) {
+      axios.get(`http://localhost:3000/adminDB/${nextProps.user.token}`)
+        .then((response) => {
+          if (response.data.collections) {
+            this.setState({
+              collections: response.data.collections
+            });
+          }
+        })
+        .catch((error) => {
+          var eMessage = error.response.data.error.message;
+          this.setState({
+            error: eMessage
+          })
+        })
     }
   }
   handleChange = (e) => {
@@ -36,9 +61,9 @@ class AdminForm extends React.Component {
       objectType: this.state.objectType
     })
     .then((response) => {
-      console.log(response);
       this.setState({
-        returnObj: response.data
+        returnObj: response.data,
+        error: ""
       });
     })
     .catch((error) => {
@@ -59,12 +84,11 @@ class AdminForm extends React.Component {
         </div>
         <div className="form-group">
           <select htmlFor="language" name="objectType" onChange = {this.handleChange} value = {this.state.objectType }>
-            <option value="Website">Stored Website</option>
-            <option value="RequestedWebsite">Requested Website</option>
-            <option value="ReportedWebsite">Reported Website</option>
-            <option value="Keyword">Keyword</option>
-            <option value="User">User</option>
-            <option value="RequestedModify">Requested Modify</option>
+            {
+              this.state.collections.map(function(collection) {
+                return <CollectionItem key={collection} title={collection} />
+              })
+            }
           </select>
         </div>
         {

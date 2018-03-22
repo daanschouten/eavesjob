@@ -15,6 +15,7 @@ import Support from './Support';
 import Conditions from './Conditions';
 import Business from './Business';
 import About from './About';
+import Premium from './Premium';
 
 const { Browse } = require('./Browse');
 
@@ -81,6 +82,8 @@ class App extends React.Component {
             <Route path="/conditions" component={Conditions} />
             <Route path="/business" component={Business} />
             <Route path="/about" component={About} />
+            <Route path="/premium" component={Premium} />
+
             <Route path="/forgotpassword" component={ForgotPassword} />
             <Route path="/resetpassword" component={ResetPassword} />
 
