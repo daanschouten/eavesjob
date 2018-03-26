@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import axios from 'axios';
 var jsonMarkup = require('json-markup')
 
+import API_FULL from '../../../api_info';
+
 const { Link } = require('react-router-dom');
 import {
     Redirect,
@@ -31,7 +33,7 @@ class AdminForm extends React.Component {
   }
   componentWillReceiveProps(nextProps) {
     if (this.props.user !== nextProps.user) {
-      axios.get(`http://localhost:3000/adminDB/${nextProps.user.token}`)
+      axios.get(`${API_FULL}/adminDB/${nextProps.user.token}`)
         .then((response) => {
           if (response.data.collections) {
             this.setState({
@@ -55,7 +57,7 @@ class AdminForm extends React.Component {
   retrieveObject = (e) => {
     e.preventDefault();
     e.currentTarget.reset();
-    axios.post(`http://localhost:3000/adminDB/${this.props.user.token}`, {
+    axios.post(`${API_FULL}/adminDB/${this.props.user.token}`, {
       objectID: this.state.objectID,
       objectName: this.state.objectName,
       objectType: this.state.objectType
@@ -171,7 +173,7 @@ class AddModifyForm extends React.Component {
     }
   }
   retrieveRequestedModify = (user) => {
-    axios.get(`http://localhost:3000/addModify/${user.token}`)
+    axios.get(`${API_FULL}/addModify/${user.token}`)
       .then((response) => {
         if (response.data.newLink) {
           let responseObj = {
@@ -199,7 +201,7 @@ class AddModifyForm extends React.Component {
   performAddModify = (e) => {
     e.preventDefault();
     e.currentTarget.reset();
-    axios.post(`http://localhost:3000/addModify/${this.props.user.token}`, {
+    axios.post(`${API_FULL}/addModify/${this.props.user.token}`, {
       requestID: this.state.requestID,
       websiteID: this.state.websiteID,
       newLink: this.state.newLink
@@ -225,7 +227,7 @@ class AddModifyForm extends React.Component {
     });
   }
   performRemoveRequest = (e) => {
-    axios.post(`http://localhost:3000/removeModify/${this.props.user.token}`, {
+    axios.post(`${API_FULL}/removeModify/${this.props.user.token}`, {
       requestID: this.state.requestID
     })
     .then((response) => {
@@ -324,7 +326,7 @@ class IssueForm extends React.Component {
     }
   }
   retrieveIssue = (user) => {
-    axios.get(`http://localhost:3000/retrieveIssue/${user.token}`)
+    axios.get(`${API_FULL}/retrieveIssue/${user.token}`)
       .then((response) => {
         if (response.data.issueID) {
           let responseObj = {
@@ -345,7 +347,7 @@ class IssueForm extends React.Component {
   performRemoveIssue = (e) => {
     e.preventDefault();
     e.currentTarget.reset();
-    axios.post(`http://localhost:3000/removeIssue/${this.props.user.token}`, {
+    axios.post(`${API_FULL}/removeIssue/${this.props.user.token}`, {
       issueID: this.state.issueID
     })
     .then((response) => {
@@ -449,7 +451,7 @@ class AddWebsiteForm extends React.Component {
     })
   }
   retrieveRequestedWebsite = (user) => {
-    axios.get(`http://localhost:3000/addWebsite/${user.token}`)
+    axios.get(`${API_FULL}/addWebsite/${user.token}`)
       .then((response) => {
         if (response.data.name) {
           let links = response.data.links;
@@ -493,7 +495,7 @@ class AddWebsiteForm extends React.Component {
   performAddWebsite = (e) => {
     e.preventDefault();
     e.currentTarget.reset();
-    axios.post(`http://localhost:3000/addWebsite/${this.props.user.token}`, {
+    axios.post(`${API_FULL}/addWebsite/${this.props.user.token}`, {
       name: this.state.name,
       requestedBy: this.state.requestedBy,
       websiteID: this.state.websiteID,
@@ -521,7 +523,7 @@ class AddWebsiteForm extends React.Component {
     });
   }
   performRemoveRequest = (e) => {
-    axios.post(`http://localhost:3000/removeRequest/${this.props.user.token}`, {
+    axios.post(`${API_FULL}/removeRequest/${this.props.user.token}`, {
       websiteID: this.state.websiteID
     })
     .then((response) => {
@@ -631,7 +633,7 @@ class ReportWebsiteForm extends React.Component {
   performReportWebsite = (e) => {
     e.preventDefault();
     e.currentTarget.reset();
-    axios.post(`http://localhost:3000/reportWebsite/${this.props.user.token}`, {
+    axios.post(`${API_FULL}/reportWebsite/${this.props.user.token}`, {
       websiteID: this.props.website._id,
       comments: this.state.comments
     })
@@ -716,7 +718,7 @@ class ForgotPasswordForm extends React.Component {
     e.preventDefault();
     e.currentTarget.reset();
     if (this.state.email !== "") {
-      axios.post('http://localhost:3000/forgotPassword', {
+      axios.post(`${API_FULL}/forgotPassword`, {
         email: this.state.email.toLowerCase()
       })
       .then((response) => {
@@ -741,7 +743,7 @@ class ForgotPasswordForm extends React.Component {
     return (
         <form className="form-small" onSubmit={this.performForgotPassword}>
             <div className="form-group">
-              <input type="text" className="big-input" placeholder="Your Email Address" name="email" value = {this.state.email} onChange = {this.handleChange} />
+              <input type="email" className="big-input" placeholder="Your Email Address" name="email" value = {this.state.email} onChange = {this.handleChange} />
             </div>
             {
               this.state.error !== "" ?
@@ -785,7 +787,7 @@ class ResetPasswordForm extends React.Component {
     e.currentTarget.reset();
     if (this.state.password && this.state.repeatPassword) {
       if (this.state.password === this.state.repeatPassword) {
-        axios.post(`http://localhost:3000/resetPassword/${this.props.token}`, {
+        axios.post(`${API_FULL}/resetPassword/${this.props.token}`, {
           password: this.state.password
         })
         .then((response) => {
@@ -866,7 +868,7 @@ class ModifyWebsiteForm extends React.Component {
   performModifyWebsite = (e) => {
     e.preventDefault();
     e.currentTarget.reset();
-    axios.post(`http://localhost:3000/requestModify/${this.props.user.token}`, {
+    axios.post(`${API_FULL}/requestModify/${this.props.user.token}`, {
       websiteID: this.state.websiteID,
       newLink: this.state.newLink
     })
@@ -983,7 +985,7 @@ class RequestWebsiteForm extends React.Component {
     e.preventDefault();
     e.currentTarget.reset();
     if (this.state.name !== "") {
-      axios.post(`http://localhost:3000/requestWebsite/${this.props.user.token}`, {
+      axios.post(`${API_FULL}/requestWebsite/${this.props.user.token}`, {
         name: this.state.name,
         links: this.state.links
       })
@@ -1088,7 +1090,7 @@ class RegisterForm extends React.Component {
   performRegister = (e) => {
     e.preventDefault();
     e.currentTarget.reset();
-    axios.post('http://localhost:3000/register', {
+    axios.post(`${API_FULL}/register`, {
       email: this.state.email.toLowerCase(),
       password: this.state.password
     })
@@ -1158,7 +1160,7 @@ class ContactForm extends React.Component {
     e.preventDefault();
     e.currentTarget.reset();
     if (this.state.email !== "" && this.state.message !== "") {
-      axios.post('http://localhost:3000/contact', {
+      axios.post(`${API_FULL}/contact`, {
         email: this.state.email.toLowerCase(),
         message: this.state.message
       })
@@ -1225,7 +1227,7 @@ class LoginForm extends React.Component {
   performLogin = (e) => {
     e.preventDefault();
     e.currentTarget.reset();
-    axios.post('http://localhost:3000/login', {
+    axios.post(`${API_FULL}/login`, {
       email: this.state.email.toLowerCase(),
       password: this.state.password
     })
@@ -1291,7 +1293,7 @@ class KeywordForm extends React.Component {
   performAddKeyword = (e) => {
     e.preventDefault();
     e.currentTarget.reset();
-    axios.post(`http://localhost:3000/addKeyword/${this.props.user.token}`, {
+    axios.post(`${API_FULL}/addKeyword/${this.props.user.token}`, {
       name: this.state.name,
       language: this.state.language,
       category: this.state.category

@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import axios from 'axios';
 const { Link } = require('react-router-dom');
 
+import API_FULL from '../../../api_info';
+
 function ErrorMessage(props) {
   return (
     <div className="form-group">
@@ -43,7 +45,7 @@ class VerifyEmail extends React.Component {
   }
   verifyAccount = (token) => {
     // somehow retrieve token from url
-    axios.get(`http://localhost:3000/verifyEmail/${token}`)
+    axios.get(`${API_FULL}/verifyEmail/${token}`)
       .then((response) => {
         console.log(response);
         if (response.data.token) {

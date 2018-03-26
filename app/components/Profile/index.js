@@ -6,6 +6,8 @@ const { Link } = require('react-router-dom');
 const { Available } = require('../Browse');
 import Toggle from '../Toggle';
 
+import API_FULL from '../../../api_info';
+
 function ProfileOption(props) {
   function onToggle() {
     props.onChange(props.name);
@@ -50,7 +52,7 @@ class ProfileSide extends React.Component {
     }
   }
   onChange = (name) => {
-    axios.post(`http://localhost:3000/changeEmail/${this.props.user.token}`, {
+    axios.post(`${API_FULL}/changeEmail/${this.props.user.token}`, {
       emailChange: [name, this.state.user[name]]
     })
     .then((response) => {
@@ -61,7 +63,7 @@ class ProfileSide extends React.Component {
     })
   }
   retrieveUser = (token) => {
-    axios.get(`http://localhost:3000/profile/${token}`)
+    axios.get(`${API_FULL}/profile/${token}`)
       .then((response) => {
         if (response.data.user) {
           this.setState({
@@ -132,7 +134,7 @@ export default class Profile extends React.Component {
     for (var i = 0; i < this.state.monitored.length; i++) {
       if (this.state.monitored[i]._id === site) {
         // remove from monitor
-        axios.post(`http://localhost:3000/removeSubscribe/${this.props.user.token}`, {
+        axios.post(`${API_FULL}/removeSubscribe/${this.props.user.token}`, {
           id: site
         })
         .then((response) => {
@@ -147,7 +149,7 @@ export default class Profile extends React.Component {
   }
   searchMonitored = () => {
     // refresh both monitored & available
-    axios.post(`http://localhost:3000/updateMonitored/${this.state.user.token}`, {
+    axios.post(`${API_FULL}/updateMonitored/${this.state.user.token}`, {
       query: this.state.query
     })
     .then((response) => {

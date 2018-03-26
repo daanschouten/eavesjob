@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import axios from 'axios';
 const { NavLink } = require('react-router-dom');
 
+import API_FULL from '../../../api_info';
+
 export default function Header(props) {
   return (
     <header>
@@ -40,7 +42,7 @@ class Verified extends React.Component {
     this.setState({
       emailSent: true
     }, function() {
-      axios.get(`http://localhost:3000/sendVerification/${this.props.user.token}`)
+      axios.get(`${API_FULL}/sendVerification/${this.props.user.token}`)
         .then((response) => {
           if (response.data.email) {
             this.setState({

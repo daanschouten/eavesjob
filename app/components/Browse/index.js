@@ -7,6 +7,8 @@ const { Link } = require('react-router-dom');
 const { RequestWebsiteForm } = require('../Forms');
 import Toggle from '../Toggle';
 
+import API_FULL from '../../../api_info';
+
 function SuccessRequest(props) {
   return (
     <div id="search-lower">
@@ -357,7 +359,7 @@ class Browse extends React.Component {
       if (this.state.monitored[i]._id === site) {
         isMonitored = true;
         // remove from monitor
-        axios.post(`http://localhost:3000/removeSubscribe/${this.props.user.token}`, {
+        axios.post(`${API_FULL}/removeSubscribe/${this.props.user.token}`, {
           id: site
         })
         .then((response) => {
@@ -371,7 +373,7 @@ class Browse extends React.Component {
     }
     if (!isMonitored) {
       // add site to monitor
-      axios.post(`http://localhost:3000/addSubscribe/${this.props.user.token}`, {
+      axios.post(`${API_FULL}/addSubscribe/${this.props.user.token}`, {
         id: site
       })
       .then((response) => {
@@ -385,7 +387,7 @@ class Browse extends React.Component {
   }
   searchAvailable = () => {
     // refresh only available
-    axios.post(`http://localhost:3000/search/${this.state.user.token}`, {
+    axios.post(`${API_FULL}/search/${this.state.user.token}`, {
       query: this.state.query
     })
     .then((response) => {
@@ -400,7 +402,7 @@ class Browse extends React.Component {
   }
   searchFull = () => {
     // refresh both monitored & available
-    axios.post(`http://localhost:3000/browse/${this.state.user.token}`, {
+    axios.post(`${API_FULL}/browse/${this.state.user.token}`, {
       query: this.state.query
     })
     .then((response) => {
