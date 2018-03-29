@@ -21,6 +21,14 @@ function SuccessRequest(props) {
   )
 }
 
+function SearchGuidance(props) {
+  return (
+    <div id="search-middle">
+      <p> Start typing to find career pages. <span> <Link to="/about" style={{"textDecoration": "underline"}}> Why is Eavesjob search-based? </Link></span></p>
+    </div>
+  )
+}
+
 function NoneMonitoredBrowse() {
   return (
     <div id="monitored-websites">
@@ -279,8 +287,8 @@ class Search extends React.Component {
   }
   render() {
     return (
-      <div id="search-website">
-        <div id="search-upper" style={{"padding": "34px 5%"}}>
+      <div id="search-website" style={{"border": "1px solid #619B8A"}}>
+        <div id="search-upper" style={{"padding": "34px 5% 10px 5%"}}>
           <h2> Browse Career Pages </h2>
           <div className="search-div">
             <form className="search-form">
@@ -293,6 +301,7 @@ class Search extends React.Component {
             </form>
           </div>
         </div>
+        <SearchGuidance />
         <SuccessRequest madeRequest = {this.state.madeRequest} />
       </div>
     )

@@ -1017,13 +1017,13 @@ class RequestWebsiteForm extends React.Component {
       <div className="single" style={{width: '100%'}}>
         <form className="form-small" onSubmit={this.performRequestWebsite}>
           <div className="form-group">
-            <p> It appears {this.props.query} is not in the database yet. Want to add it? </p>
+            <p> It appears {this.props.query} is not in our database yet. Want to add it? For every company you add, we thank you with a permanent extra slot in your subscribes. <span><Link to="/support/requesting" style={{"text-decoration": "underline"}}> Read more. </Link></span></p>
           </div>
           <div className="form-group">
             <input type="text" placeholder="Website Name" className="big-input" name="name" value={this.state.name} onChange={this.handleChange} />
           </div>
           <div className="form-group">
-            <p> It's easiest to copy the URL from your address bar. Make sure to include the http:// or https:// part. </p>
+            <p> Most companies will have their career page at /careers, /opportunities, or something similar. Make sure to select the careers overview page, and not a specific vacancy. It's easiest to copy the URL from your address bar. Please include the http:// or https:// part. </p>
           </div>
           <div className="form-group request">
             <input type="url" placeholder="Career Page URL (1)" name= "0" className="big-input" value={this.state.links[0]} onChange={this.handleArrayChange}/>
@@ -1050,10 +1050,10 @@ class RequestWebsiteForm extends React.Component {
               null
           }
           <div className="form-group">
-            <p> Once the the request comes through, we'll add the company to your subscribes automatically. Keep in mind this might take up to 24 hours. </p>
+            <p> Once the the request comes through, we will add the company to your subscribes automatically. Keep in mind this might take up to 24 hours. </p>
           </div>
           <div className="form-group">
-            <button type="submit" className="big-button">Submit Website</button>
+            <button type="submit" className="big-button"> Submit '{this.state.name}'</button>
           </div>
         </form>
       </div>

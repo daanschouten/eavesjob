@@ -58,7 +58,7 @@ function Verifying() {
   return (
     <div className="paragraph">
       <p> If we need to tell you about a new career opportunity, or if you ever want to reset your password, we need to know your email address is correct. </p>
-      <p> Also, make sure to add us to your contacts so that our emails don't end up in the wrong folder. </p>
+      <p> Also, make sure to add us to your trusted email contacts so that our emails don't end up in the wrong folder. </p>
     </div>
   )
 }
@@ -85,7 +85,20 @@ function Emails() {
 function Requesting() {
   return (
     <div className="paragraph">
-      <p> If you want us to monitor a career page not yet in our database, you can request it in a matter of seconds. Try searching for the company first. If no results are returned, the form to request a new one will appear. Once we have added the website to the database, it will automatically appear among your subscribed websites. </p>
+      <p> If you want us to monitor a career page not yet in our database, you can request it. Try searching for the company first. If no results are returned, the form to request a new one will appear.  </p>
+      <ul>
+        <li> We appreciate it if you capitalize all words in the company name. </li>
+        <li> Career pages URL's shoud have the http:// or https:// part included. </li>
+        <li> You can add multiple career pages if necessary, for example if there is an /internships page and a /vacancies page. </li>
+        <li>
+          <h4> For every company you add, we thank you with a permanent extra slot. </h4>
+          <ul>
+            <li> We will automatically add the new company to your subscribes. This means that your extra slot will initially be taken up by this particular career page. </li>
+            <li> However, you can unsubscribe to the career page you added, and the free slot will become available to use as you want. </li>
+          </ul>
+        </li>
+      </ul>
+      <p> Once we have added the website to the database, it will automatically appear among your subscribed websites. </p>
     </div>
   )
 }
@@ -111,7 +124,7 @@ function Premium() {
 function Robots() {
   return (
     <div className="paragraph">
-      <p> Websites can indicate that they would rather not have us monitor their career pages, which we respect. </p>
+      <p> Companies can indicate that they would rather not have us monitor their career pages, which we respect. </p>
       <p> We would recommend not subscribing to such a page, as we won't be able to keep you updated. </p>
     </div>
   )
