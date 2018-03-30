@@ -1,13 +1,13 @@
-const React = require('react');
-const PropTypes = require('prop-types');
+import React from 'react';
+import PropTypes from 'prop-types';
 
 // set checked value of checkbox and attach onchange handler or sth
 
-function Toggle(props) {
+export default function Toggle(props) {
   function handleChange() {
     props.onToggle()
   }
-  return(
+  return (
     <label className="switch" role="switch">
       <input className="switch__toggle" type="checkbox" checked={props.monitored} onChange={handleChange}/>
       <span className="switch__label"></span>
@@ -15,6 +15,7 @@ function Toggle(props) {
   )
 }
 
-module.exports = {
-  Toggle: Toggle
+Toggle.propTypes = {
+  monitored: PropTypes.bool.isRequired,
+  onToggle: PropTypes.func.isRequired
 }

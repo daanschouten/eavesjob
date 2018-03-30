@@ -15,23 +15,37 @@ import Support from './Support';
 import Conditions from './Conditions';
 import Business from './Business';
 import About from './About';
-
-const { Contact } = require('./Contact');
-const { ModifyWebsite } = require('./Contact');
-const { ReportWebsite } = require('./Contact');
+import Premium from './Premium';
 
 const { Browse } = require('./Browse');
 
-const { Login } = require('./Auth');
-const { Register } = require('./Auth');
-const { ForgotPassword } = require('./Auth');
+const {
+  Contact,
+  ModifyWebsite,
+  ReportWebsite
+} = require('./Contact');
 
-const { AddWebsite } = require('./Admin');
-const { AddKeyword } = require('./Admin');
+const {
+  Login,
+  Register,
+  ForgotPassword,
+  ResetPassword
+} = require('./Auth');
+
+const {
+  AddWebsite,
+  AddKeyword,
+  AddModify,
+  ReadIssues,
+  AdminDB
+} = require('./Admin');
+
+const {
+  VerifyEmail,
+  ContactSent
+} = require('./Email');
 
 const { PrivateRoute } = require('./RestrictedRoutes');
-const { StrangerRoute } = require('./RestrictedRoutes');
-const { AdminRoute } = require('./RestrictedRoutes');
 
 class App extends React.Component {
     constructor(props) {
@@ -68,18 +82,31 @@ class App extends React.Component {
             <Route path="/conditions" component={Conditions} />
             <Route path="/business" component={Business} />
             <Route path="/about" component={About} />
+            <Route path="/premium" component={Premium} />
+
             <Route path="/forgotpassword" component={ForgotPassword} />
+            <Route path="/resetpassword" component={ResetPassword} />
 
-            <StrangerRoute path="/login" component = {Login} onLogin = {this.onLogin} />
-            <StrangerRoute path="/register" component= {Register} onRegister = {this.onRegister} />
+            <Route path="/register" render={props => <Register
+              onRegister = {this.onRegister} />} />
 
-            <PrivateRoute path='/browse' component={Browse} user={this.state.user}/>
+            <Route path="/login" render={props => <Login
+              onLogin = {this.onLogin} />} />
+
+            <PrivateRoute path='/browse' component={Browse} user = {this.state.user}/>
             <PrivateRoute path="/profile" component={Profile} user = {this.state.user} handleLogout = {this.onLogout} />
-            <PrivateRoute path="/modify" component={ModifyWebsite} />
-            <PrivateRoute path="/report" component={ReportWebsite} />
+            <PrivateRoute path="/modify" component={ModifyWebsite} user = {this.state.user} />
+            <PrivateRoute path="/report" component={ReportWebsite} user = {this.state.user} />
 
-            <AdminRoute path="/addWebsite" component = {AddWebsite} />
-            <AdminRoute path="/addKeyword" component = { AddKeyword } />
+            <PrivateRoute path="/verifyEmail" component={VerifyEmail} user = {this.state.user} onLogin = {this.onLogin} />
+            <PrivateRoute path="/contactSent" component={ContactSent} />
+            <PrivateRoute path="/forgotPassword" component={ForgotPassword} />
+
+            <PrivateRoute path="/addWebsite" component = { AddWebsite } user = {this.state.user} />
+            <PrivateRoute path="/addKeyword" component = { AddKeyword } user = {this.state.user} />
+            <PrivateRoute path="/addModify" component = { AddModify } user = {this.state.user} />
+            <PrivateRoute path="/readIssues" component = { ReadIssues } user = {this.state.user} />
+            <PrivateRoute path="/adminDB" component = { AdminDB } user = {this.state.user} />
 
             <Route component = { NotFound }/>
           </Switch>
@@ -94,19 +121,16 @@ class App extends React.Component {
           user: {}
         });
       }
-      this.redirectUser('/');
     }
     onRegister = (user) => {
       this.setState({
         user: user
       });
-      this.redirectUser('/browse');
     }
     onLogin = (user) => {
       this.setState({
         user: user
       });
-      this.redirectUser('/browse');
     }
 };
 

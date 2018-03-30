@@ -1,16 +1,39 @@
-const React = require('react');
-const PropTypes = require('prop-types');
+import React from 'react';
+import PropTypes from 'prop-types';
 import axios from 'axios';
-const { Link } = require('react-router-dom');
+import moment from 'moment';
 
+const { Link } = require('react-router-dom');
 const { RequestWebsiteForm } = require('../Forms');
-const { Toggle } = require('../Toggle');
+import Toggle from '../Toggle';
+
+import API_FULL from '../../../api_info';
+
+function SuccessRequest(props) {
+  return (
+    <div id="search-lower">
+    {
+      props.madeRequest ?
+        <p> You have successfully requested a career page. Once verified, it will be added to your subscribes automatically. </p>
+      : null
+    }
+    </div>
+  )
+}
+
+function SearchGuidance(props) {
+  return (
+    <div id="search-middle">
+      <p> Start typing to find career pages. <span> <Link to="/about" style={{"textDecoration": "underline"}}> Why is Eavesjob search-based? </Link></span></p>
+    </div>
+  )
+}
 
 function NoneMonitoredBrowse() {
   return (
     <div id="monitored-websites">
       <div className="right-sidebar-title">
-        <p> You haven't selected any career page yet! Check out our <Link to='/support/subscribing'>support section</Link> if you're not sure how to. </p>
+        <p> You haven't selected any career page yet! Read our <Link to='/support/subscribing'>support section</Link> if you're unsure how to. </p>
       </div>
     </div>
   )
@@ -18,7 +41,7 @@ function NoneMonitoredBrowse() {
 
 function NoneMonitoredProfile() {
   return (
-      <p> You haven't selected any career pages yet. </p>
+      <p> No career pages to display. </p>
   )
 }
 
@@ -34,7 +57,7 @@ function SingleWebsiteExpanded(props) {
       {
         props.website.links.map(function(link) {
           return (
-            <SingleWebsiteLink link = {link} key= {link.origin} />
+            <SingleWebsiteLink link = {link} key= {link.href} />
           )
         })
       }
@@ -46,12 +69,32 @@ function SingleWebsiteExpanded(props) {
   : null
 }
 
+SingleWebsiteExpanded.propTypes = {
+  expand: PropTypes.bool.isRequired,
+  website: PropTypes.shape({
+    _id: PropTypes.string.isRequired,
+    links: PropTypes.arrayOf(PropTypes.shape({
+         href: PropTypes.string.isRequired
+    })).isRequired
+  })
+}
+
 class SingleWebsite extends React.Component {
   constructor() {
     super();
     this.state = {
       expand: false
     }
+  }
+  getMostRecent = (updates) => {
+    let mostRecent = "";
+    updates.map(function(update){
+      if (update.date > mostRecent && update.relevant === true || mostRecent === "" && update.relevant === true) {
+        mostRecent = update.date;
+      }
+    })
+    mostRecent === "" ? mostRecent = "new arrival" : mostRecent = moment(mostRecent).fromNow();
+    return mostRecent;
   }
   onToggle = () => {
     this.props.onChangeSubscribe(this.props.website._id);
@@ -72,13 +115,17 @@ class SingleWebsite extends React.Component {
           <div className="website-details">
             {
               this.state.expand === true ?
-                  <button onClick= {this.expandWebsite} ><img src="../../img/up-arrow.svg" alt="arrow down" /></button>
+                  <button onClick= {this.expandWebsite} ><img src="../../img/up-arrow.svg" alt="arrow up" /></button>
               : <button onClick= {this.expandWebsite} ><img src="../../img/down-arrow.svg" alt="arrow down" /></button>
             }
 
           </div>
           <div className="website-date">
-            <p>{this.props.website.storedPage.date}</p>
+            {
+              this.props.website.robotsAllow !== false && this.props.website.issue === 0 ?
+                <p> {this.getMostRecent(this.props.website.pageUpdates)}</p>
+              : <Link to='/support/robots' style={{fontSize: "15px", textDecoration: "underline"}}> monitoring impossible </Link>
+            }
           </div>
           <div className="website-monitor ">
             <Toggle
@@ -92,6 +139,19 @@ class SingleWebsite extends React.Component {
   }
 }
 
+SingleWebsite.propTypes = {
+  onChangeSubscribe: PropTypes.func.isRequired,
+  website: PropTypes.shape({
+    _id: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+    monitored: PropTypes.bool.isRequired,
+    pageUpdates: PropTypes.array,
+    links: PropTypes.arrayOf(PropTypes.shape({
+         href: PropTypes.string
+    })).isRequired
+  })
+}
+
 function Subscribed(props) {
   return (
     <div className="right-sidebar">
@@ -99,22 +159,43 @@ function Subscribed(props) {
           props.monitored && props.monitored.length > 0 ?
             <div id="monitored-websites">
               <div className="right-sidebar-title">
-                <h2>subscribed career pages</h2>
+                <h2>Subscribed Career Pages</h2>
               </div>
-            {
-              props.monitored.map(function(website){
-                return (
-                  <SingleWebsite
-                   onChangeSubscribe = {props.onChangeSubscribe}
-                   website= {website}
-                   key= {website._id} /> )
-              })
-            }
+              <div className="right-sidebar-text">
+                <p> By default, you will receive an email when a vacancy appears on the career page of one of the companies below. You can change your email settings in your <Link to='/profile'>profile</Link>. </p>
+              </div>
+
+              {
+                props.monitored.map(function(website){
+                  return (
+                    <SingleWebsite
+                     onChangeSubscribe = {props.onChangeSubscribe}
+                     website= {website}
+                     key= {website._id} /> )
+                })
+              }
+              <div className="right-sidebar-title">
+                <h3> {`${props.limit - props.monitored.length} empty slot(s) remaining`}</h3>
+              </div>
             </div>
           : <NoneMonitoredBrowse/>
         }
     </div>
   )
+}
+
+Subscribed.propTypes = {
+  onChangeSubscribe: PropTypes.func.isRequired,
+  limit: PropTypes.number.isRequired,
+  monitored: PropTypes.arrayOf(PropTypes.shape({
+    _id: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+    monitored: PropTypes.bool.isRequired,
+    pageUpdates: PropTypes.array,
+    links: PropTypes.arrayOf(PropTypes.shape({
+         href: PropTypes.string
+    })).isRequired
+  }))
 }
 
 function Available(props) {
@@ -138,6 +219,7 @@ function Available(props) {
                       <h3> new opportunity </h3>
                     </div>
                     <div className="website-monitor">
+                      <h3> toggle </h3>
                     </div>
                   </div>
                 </div>
@@ -152,18 +234,48 @@ function Available(props) {
                 }
               </div>
           : props.query ?
-              <RequestWebsiteForm query = {props.query} />
+              <RequestWebsiteForm query = {props.query} user = {props.user} onRequest = {props.onRequest}/>
             : <NoneMonitoredProfile/>
         }
     </div>
   )
 }
 
+Available.propTypes = {
+  onChangeSubscribe: PropTypes.func.isRequired,
+  available: PropTypes.arrayOf(PropTypes.shape({
+    _id: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+    monitored: PropTypes.bool.isRequired,
+    pageUpdates: PropTypes.array,
+    links: PropTypes.arrayOf(PropTypes.shape({
+         href: PropTypes.string
+    })).isRequired
+  }))
+}
+
 class Search extends React.Component {
   constructor() {
     super();
     this.state = {
-      query: ""
+      query: "",
+      madeRequest: false
+    }
+  }
+  componentWillReceiveProps = (nextProps) => {
+    if (nextProps.madeRequest !== this.props.madeRequest ) {
+      let newState = {};
+      nextProps.madeRequest === false ?
+        newState = {
+          madeRequest: nextProps.madeRequest
+        }
+      : newState = {
+          madeRequest: nextProps.madeRequest,
+          query: ""
+      };
+      this.setState(newState, function() {
+        this.props.onQueryChange(this.state.query);
+      });
     }
   }
   handleChange = (e) => {
@@ -175,21 +287,29 @@ class Search extends React.Component {
   }
   render() {
     return (
-      <div id="search-website">
-        <h2> browse career pages </h2>
-        <div className="search-div">
-          <form className="search-form">
-            <div className="search-bar">
-              <input id="search-input" type="text" placeholder="organisation / company name" name="query" value={this.state.query}  onChange={this.handleChange}/>
-              <button disabled="disabled">
-                <img src="../../img/searchIcon.svg"/>
-              </button>
-            </div>
-          </form>
+      <div id="search-website" style={{"border": "1px solid #619B8A"}}>
+        <div id="search-upper" style={{"padding": "34px 5% 10px 5%"}}>
+          <h2> Browse Career Pages </h2>
+          <div className="search-div">
+            <form className="search-form">
+              <div className="search-bar">
+                <input id="search-input" type="text" placeholder="organisation / company name" name="query" value={this.state.query}  onChange={this.handleChange}/>
+                <button disabled="disabled">
+                  <img src="../../img/searchIcon.svg"/>
+                </button>
+              </div>
+            </form>
+          </div>
         </div>
+        <SearchGuidance />
+        <SuccessRequest madeRequest = {this.state.madeRequest} />
       </div>
     )
   }
+}
+
+Search.propTypes = {
+  onQueryChange: PropTypes.func.isRequired,
 }
 
 class Browse extends React.Component {
@@ -199,11 +319,13 @@ class Browse extends React.Component {
       user: {},
       query: "",
       available: [],
-      monitored: []
+      monitored: [],
+      limit: 0,
+      madeRequest: false
     };
   }
   componentDidMount = () => {
-    if (this.props.user) {
+    if (this.props.user.token) {
       this.setState({
         user: this.props.user
       }, function() {
@@ -220,14 +342,25 @@ class Browse extends React.Component {
       })
     }
   }
-  onQueryChange = (query) => {
+  onRequest = () => {
     this.setState({
-      query: query
-    },
+      madeRequest: true
+    });
+  }
+  onQueryChange = (query) => {
+    let newState = {};
+    query === "" ?
+      newState = {
+        query: query
+      }
+    : newState = {
+      query: query,
+      madeRequest: false
+    };
+    this.setState(newState,
     function() {
       this.searchAvailable();
-    }
-    );
+    });
   }
   onChangeSubscribe = (site) => {
     let isMonitored = false;
@@ -235,7 +368,7 @@ class Browse extends React.Component {
       if (this.state.monitored[i]._id === site) {
         isMonitored = true;
         // remove from monitor
-        axios.post(`http://localhost:3000/removeSubscribe/${this.props.user.token}`, {
+        axios.post(`${API_FULL}/removeSubscribe/${this.props.user.token}`, {
           id: site
         })
         .then((response) => {
@@ -249,7 +382,7 @@ class Browse extends React.Component {
     }
     if (!isMonitored) {
       // add site to monitor
-      axios.post(`http://localhost:3000/addSubscribe/${this.props.user.token}`, {
+      axios.post(`${API_FULL}/addSubscribe/${this.props.user.token}`, {
         id: site
       })
       .then((response) => {
@@ -263,7 +396,7 @@ class Browse extends React.Component {
   }
   searchAvailable = () => {
     // refresh only available
-    axios.post(`http://localhost:3000/search/${this.state.user.token}`, {
+    axios.post(`${API_FULL}/search/${this.state.user.token}`, {
       query: this.state.query
     })
     .then((response) => {
@@ -278,12 +411,13 @@ class Browse extends React.Component {
   }
   searchFull = () => {
     // refresh both monitored & available
-    axios.post(`http://localhost:3000/browse/${this.state.user.token}`, {
+    axios.post(`${API_FULL}/browse/${this.state.user.token}`, {
       query: this.state.query
     })
     .then((response) => {
       let data = response.data;
       this.setState({
+        limit: data.limit,
         available: data.available,
         monitored: data.monitored
       })
@@ -296,18 +430,27 @@ class Browse extends React.Component {
     return (
       <div id="two-thirds-page">
         <div id="two-thirds-left">
-          <Search onQueryChange = {this.onQueryChange} />
+          <Search onQueryChange = {this.onQueryChange} madeRequest = {this.state.madeRequest} />
           <Available
           onChangeSubscribe = {this.onChangeSubscribe}
+          onRequest = {this.onRequest}
+          user = {this.state.user}
           available = {this.state.available}
           query = {this.state.query} />
         </div>
         <Subscribed
         onChangeSubscribe = {this.onChangeSubscribe}
-        monitored = {this.state.monitored} />
+        monitored = {this.state.monitored}
+        limit = {this.state.limit} />
       </div>
     )
   }
+}
+
+Browse.propTypes = {
+  user: PropTypes.shape({
+    token: PropTypes.string
+  })
 }
 
 module.exports = {

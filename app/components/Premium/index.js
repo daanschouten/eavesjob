@@ -1,16 +1,16 @@
 import React from 'react';
 const { Link } = require('react-router-dom');
 
-export default function NotFound(props) {
+export default function Premium (props) {
     return (
       <div className="container-single">
         <div className="container-center">
           <div className="single">
             <div className="form-title">
-              <h1>404: Page not Found</h1>
+              <h1> Premium </h1>
             </div>
             <div className="single-text">
-              <p> The page you're attempting to visit doesn't exist. Are you sure you should be here? </p>
+              <p> This feature will become available soon. </p>
             </div>
           </div>
           <div className="single">

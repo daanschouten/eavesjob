@@ -1,5 +1,4 @@
-const React = require('react');
-const PropTypes = require('prop-types');
+import React from 'react';
 const { NavLink } = require('react-router-dom');
 
 export default function Footer(props) {
@@ -7,7 +6,7 @@ export default function Footer(props) {
     <footer>
 
         <div className="footer-column">
-          <h1> EAVESJOB </h1>
+          <h1> Eavesjob </h1>
         </div>
 
         <div className="footer-column">

@@ -1,7 +1,7 @@
 const path = require('path');
 const webpack = require('webpack');
-var HtmlWebpackPlugin = require('html-webpack-plugin');
 var BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+const CompressionPlugin = require("compression-webpack-plugin")
 
 module.exports = {
     devtool: 'source-map',
@@ -10,7 +10,9 @@ module.exports = {
       vendor: [
         'react',
         'react-dom',
-        'prop-types'
+        'prop-types',
+        'moment',
+        'axios'
       ],
       style: './app/style.js'
     },
@@ -18,19 +20,6 @@ module.exports = {
         path: path.join(__dirname, 'build'),
         filename: '[name].bundle.js'
     },
-    plugins: [
-        new webpack.optimize.CommonsChunkPlugin({
-          name: 'vendor',
-          filename: 'vendor.bundle.js',
-          minChunks: Infinity}),
-        new webpack.optimize.UglifyJsPlugin({
-          minimize: true,
-          compress: {
-              warnings: false
-            }
-          }),
-        new BundleAnalyzerPlugin()
-    ],
     module: {
       loaders: [
           {
@@ -39,7 +28,7 @@ module.exports = {
               include: path.join(__dirname, 'app'),
               exclude: /node_modules/,
               query: {
-                  presets: ['es2015', 'react']
+                  presets: ['es2015', 'stage-1', 'react']
               }
           },
           { test: /\.(otf|ttf|eot|svg|woff(2)?)(\?[a-z0-9=&.]+)?$/,
@@ -61,5 +50,31 @@ module.exports = {
             loaders: ["style-loader", "css-loader", "less-loader"]
           }
       ]
-    }
+    },
+    plugins: [
+        new webpack.DefinePlugin({
+          'process.env': {
+            'NODE_ENV': JSON.stringify('production')
+          }
+        }),
+        new webpack.optimize.CommonsChunkPlugin({
+          name: 'vendor',
+          filename: 'vendor.bundle.js',
+          minChunks: Infinity}),
+        new webpack.optimize.UglifyJsPlugin({
+          minimize: true,
+          compress: {
+              warnings: false
+            }
+          }),
+        new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
+        new CompressionPlugin({
+          asset: "[path].gz[query]",
+          algorithm: "gzip",
+          test: /\.js$|\.css$|\.html$/,
+          threshold: 10240,
+          minRatio: 0
+        }),
+        new BundleAnalyzerPlugin()
+    ]
 };
