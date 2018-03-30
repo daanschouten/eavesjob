@@ -3,14 +3,18 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
+    "start": "pm2 start app.js",
+    "restart": "pm2 restart all"
+  },
+  "scripts": {
     "build": "babel ./app -d build",
     "build:watch": "babel ./app -d build --watch",
     "build:client": "webpack --config ./webpack.prod.config.js/",
     "build:watch:client": "webpack --config ./webpack.config.js/ --watch",
     "build:prod": "npm run build && npm run build:client",
-    "start": "npm run build:prod && NODE_ENV=production node ./build/server/index.js",
-    "start:dev": "parallelshell 'npm run build:watch' 'npm run build:watch:client' 'nodemon ./build/server/index.js'",
-    "test": "mocha"
+    "start": "npm run build:prod && NODE_ENV=production pm2 start ./build/server/index.js",
+    "restart": "pm2 restart all",
+    "start:dev": "parallelshell 'npm run build:watch' 'npm run build:watch:client' 'nodemon ./build/server/index.js'"
   },
   "author": "Daan_Schouten",
   "license": "ISC",
