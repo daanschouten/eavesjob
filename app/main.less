@@ -8,8 +8,6 @@
 @warningYellow: #F5DD90;
 @successBlue: #324376;
 
-// This applies from 0px to 600px
-
 body {
   background-color: @background;
 }
@@ -30,12 +28,12 @@ p a {
 }
 
 h1, h2, h3, h4, h5 {
-  font-family: RobotoCondensed;
+  font-family: Roboto Condensed;
   color: @black;
 }
 
 p, li, input, a, button, select {
-  font-family: RobotoRegular;
+  font-family: Roboto;
   font-size: 1em;
   text-decoration: none;
   color: @black;
@@ -51,15 +49,9 @@ p {
   color: @black !important;
 }
 
-@font-face {
-    font-family: RobotoCondensed;
-    src: url(./fonts/RobotoCondensed-Bold.ttf) format('truetype');
-}
-
-@font-face {
-    font-family: RobotoRegular;
-    src: url(./fonts/Roboto-Regular.ttf) format('truetype');
-}
+////////////////////////
+//// MOBILE SCREENS ////
+////////////////////////
 
 #main {
   width: 100%;
@@ -185,12 +177,10 @@ header {
         h1.title {
           font-size: 3em;
           margin: 0;
-          font-family: RobotoCondensed;
           text-align: center;
         }
 
         p  {
-          font-family: RobotoRegular;
           text-align: justify;
           line-height: normal;
           font-size: 1.2em;
@@ -825,7 +815,9 @@ footer {
   }
 }
 
-/* Desktop Size */
+////////////////////////
+///// DESKTOP SIZE /////
+////////////////////////
 
 @media (min-width: 1000px) {
 

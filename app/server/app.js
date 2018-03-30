@@ -12,6 +12,12 @@ const assets = express.static(path.join(__dirname, '../'));
 app.use(cors());
 app.use(assets);
 
+app.get('*.min.js', function (req, res, next) {
+  req.url = req.url + '.gz';
+  res.set('Content-Encoding', 'gzip');
+  next();
+});
+
 app.get('*', router);
 // redirect all GET requests to REACT router imported above
 

@@ -2,6 +2,7 @@ const path = require('path');
 const webpack = require('webpack');
 var BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 const CompressionPlugin = require("compression-webpack-plugin")
+const UglifyJSPlugin = require("uglifyjs-webpack-plugin");
 
 module.exports = {
     devtool: 'source-map',
@@ -60,21 +61,23 @@ module.exports = {
         new webpack.optimize.CommonsChunkPlugin({
           name: 'vendor',
           filename: 'vendor.bundle.js',
-          minChunks: Infinity}),
-        new webpack.optimize.UglifyJsPlugin({
-          minimize: true,
-          compress: {
-              warnings: false
-            }
-          }),
+          minChunks: Infinity
+        }),
+        new UglifyJSPlugin({
+          uglifyOptions: {
+            beautify: false,
+            ecma: 6,
+            compress: true,
+            comments: false
+          }
+        }),
         new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
         new CompressionPlugin({
           asset: "[path].gz[query]",
           algorithm: "gzip",
           test: /\.js$|\.css$|\.html$/,
           threshold: 10240,
-          minRatio: 0
-        }),
-        new BundleAnalyzerPlugin()
+          minRatio: 0.8
+        })
     ]
 };
