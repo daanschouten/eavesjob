@@ -1,5 +1,4 @@
-import eavesjobFind from './find-hd-compressed.gif';
-import eavesjobSubscribed from './subscribed-hd-compressed.gif';
+import eavesjobFind from './find-hd-zoom-compressed.gif';
 import eavesjobSearch from './search-hd-compressed.gif';
 
 import searchIcon from './searchIcon.svg';

@@ -14,7 +14,7 @@ export default function Business(props) {
         <div id="monitored-websites">
           <div id="sidebar-nav">
             <h2> For Businesses </h2>
-            <NavLink to="/business" exact > What We Mean for You </NavLink>
+            <NavLink to="/business" exact > Our impact </NavLink>
           </div>
         </div>
       </div>

@@ -12,7 +12,7 @@ function HowItWorks(props) {
 
         <div className="explain-single">
           <div className="explain-text">
-            <img src="../../img/one.svg"></img>
+            <img src="../../img/one.svg" alt="how to search for career pages"></img>
             <p> Start typing to find the career pages you want monitored. </p>
           </div>
           <img src="../../img/search-hd-compressed.gif" alt="search career pages" />
@@ -20,18 +20,17 @@ function HowItWorks(props) {
 
         <div className="explain-single">
           <div className="explain-text">
-            <img src="../../img/two.svg"></img>
-            <p> To subscribe to a company's career page, toggle it the button on. </p>
+            <img src="../../img/two.svg" alt="how to find career pages"></img>
+            <p> Toggle the button to subscribe to a company's career page(s). </p>
           </div>
-          <img src="../../img/find-hd-compressed.gif" alt="find career pages" />
+          <img src="../../img/find-hd-zoom-compressed.gif" alt="find career pages" />
         </div>
 
         <div className="explain-single">
           <div className="explain-text">
-            <img src="../../img/three.svg"></img>
-            <p> Whenever a vacancy appears on of the pages you are subscribed to, we will send you an email. </p>
+            <img src="../../img/three.svg" alt="how to subscribe to career pages"></img>
+            <p> Whenever a vacancy appears on one of your subscribed pages, we will send you an email. Easy, no? </p>
           </div>
-          <img src="../../img/subscribed-hd-compressed.gif" alt="subscribe to career pages" />
         </div>
 
       </div>

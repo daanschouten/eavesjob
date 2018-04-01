@@ -92,7 +92,6 @@ class ProfileSide extends React.Component {
               }
             </div>
             <ProfileOption onChange = {this.onChange} name="wantsDailyEmail" title = "Receive email when career page updates." monitored = {this.state.user.wantsDailyEmail} />
-            <ProfileOption onChange = {this.onChange} name="wantsWeeklyEmail" title = "Receive weekly email with summary of updates." monitored = {this.state.user.wantsWeeklyEmail} />
             <div className="right-sidebar-title">
               <p> Want to monitor more than 10 pages? </p>
             </div>
@@ -101,8 +100,9 @@ class ProfileSide extends React.Component {
       </div>
     )
   }
-
 }
+
+// <ProfileOption onChange = {this.onChange} name="wantsWeeklyEmail" title = "Receive weekly email with summary of updates." monitored = {this.state.user.wantsWeeklyEmail} />
 
 export default class Profile extends React.Component {
   constructor(props) {
