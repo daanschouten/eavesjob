@@ -72,7 +72,7 @@ class App extends React.Component {
     render() {
       return (
         <div id="main">
-          <Header user={ this.state.user } />
+          <Header user={ this.state.user } onLogin = {this.onLogin} />
           <Switch>
 
             <Route path="/" exact render={props => <RegisterHome
@@ -89,18 +89,18 @@ class App extends React.Component {
 
             <Route path="/register" render={props => <Register
               onRegister = {this.onRegister} />} />
-
             <Route path="/login" render={props => <Login
               onLogin = {this.onLogin} />} />
+
+            <Route path="/verifyEmail" render={props => <VerifyEmail
+              onLogin = {this.onLogin} />} />
+            <Route path="/contactSent" component={ContactSent} />
+            <Route path="/forgotPassword" component={ForgotPassword} />
 
             <PrivateRoute path='/browse' component={Browse} user = {this.state.user}/>
             <PrivateRoute path="/profile" component={Profile} user = {this.state.user} handleLogout = {this.onLogout} />
             <PrivateRoute path="/modify" component={ModifyWebsite} user = {this.state.user} />
             <PrivateRoute path="/report" component={ReportWebsite} user = {this.state.user} />
-
-            <PrivateRoute path="/verifyEmail" component={VerifyEmail} user = {this.state.user} onLogin = {this.onLogin} />
-            <PrivateRoute path="/contactSent" component={ContactSent} />
-            <PrivateRoute path="/forgotPassword" component={ForgotPassword} />
 
             <PrivateRoute path="/addWebsite" component = { AddWebsite } user = {this.state.user} />
             <PrivateRoute path="/addKeyword" component = { AddKeyword } user = {this.state.user} />

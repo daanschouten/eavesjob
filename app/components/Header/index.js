@@ -23,7 +23,7 @@ export default function Header(props) {
           <NavLink to="/profile">Profile</NavLink>
         </div>
       </div>
-      <Verified user = {props.user}/>
+      <Verified user = {props.user} onLogin = {props.onLogin}/>
     </header>
   )
 }
@@ -46,6 +46,14 @@ class Verified extends React.Component {
           if (response.data.email) {
             this.setState({
               sentTo: response.data.email
+            }, function() {
+              // set localstorage and app state user to true, suboptimal but hey, only way to make this permanent
+              const updatedUser = {
+                "token": this.props.user.token,
+                "verified": true
+              };
+              localStorage.setItem("user", JSON.stringify(updatedUser));
+              this.props.onLogin(updatedUser);
             });
           }
         })
