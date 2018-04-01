@@ -17,6 +17,7 @@ export default function renderFullPage(html, preloadedState) {
           <!-- General Website Info -->
           <title> Eavesjob </title>
           <link rel="shortcut icon" href="#" type="image/x-icon">
+          <meta name="viewport" content="width=device-width, initial-scale=1">
           <meta charset="utf-8">
           <meta name="author" content="Daan Schouten">
           <meta name="description" content="Checking for new vacancies can be a hassle. With Eavesjob, you only need to indicate which career pages you're interested in. When job opportunities appear, we'll send you an email.">
