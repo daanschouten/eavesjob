@@ -67,7 +67,7 @@ function Subscribing() {
   return (
     <div className="paragraph">
       <p> Click the toggle on the right side of the website bar so that it turns green. The website you are subscribed to will now also appear in the top right of your screen, as well as on your profile page. </p>
-      <p><span> Want to monitor more than five career pages? For the price of a cappucino, you can go </span><Link to='/support/premium'>premium</Link><span>.</span></p>
+      <p><span> Want to monitor more than 10 career pages? You can go </span><Link to='/support/premium'>premium</Link><span>.</span></p>
       <p><span> Facing an issue trying to subscribe to a career page? </span><Link to='/contact'>Contact</Link><span> us.</span></p>
     </div>
   )
