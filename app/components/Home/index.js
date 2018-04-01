@@ -13,25 +13,25 @@ function HowItWorks(props) {
         <div className="explain-single">
           <div className="explain-text">
             <img src="../../img/one.svg"></img>
-            <p> Find the career pages you want monitored. </p>
+            <p> Start typing to find the career pages you want monitored. </p>
           </div>
-          <img src="../../img/searchWebsite.png"/>
+          <img src="../../img/search-hd-compressed.gif" alt="search career pages" />
         </div>
 
         <div className="explain-single">
           <div className="explain-text">
             <img src="../../img/two.svg"></img>
-            <p> Select up to five pages, or go premium. </p>
+            <p> To subscribe to a company's career page, toggle it the button on. </p>
           </div>
-          <img src="../../img/clickWebsite.png"/>
+          <img src="../../img/find-hd-compressed.gif" alt="find career pages" />
         </div>
 
         <div className="explain-single">
           <div className="explain-text">
             <img src="../../img/three.svg"></img>
-            <p> Sit back, and keep an eye on your inbox. </p>
+            <p> Whenever a vacancy appears on of the pages you are subscribed to, we will send you an email. </p>
           </div>
-          <img src="../../img/monitorWebsite.png"/>
+          <img src="../../img/subscribed-hd-compressed.gif" alt="subscribe to career pages" />
         </div>
 
       </div>

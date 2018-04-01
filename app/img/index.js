@@ -1,6 +1,7 @@
-import monitorWebsite from './monitorWebsite.png';
-import clickWebsite from './clickWebsite.png';
-import searchWebsite from './searchWebsite.png';
+import eavesjobFind from './find-hd-compressed.gif';
+import eavesjobSubscribed from './subscribed-hd-compressed.gif';
+import eavesjobSearch from './search-hd-compressed.gif';
+
 import searchIcon from './searchIcon.svg';
 import one from './one.svg';
 import two from './two.svg';
