@@ -54,7 +54,7 @@ export default function RegisterHome(props) {
       <div className="container-double">
         <div className="container-left">
           <h1 className="title">We monitor career pages,<br/> so you don't have to. </h1>
-          <p className="subtitle"> Checking for new vacancies can be a hassle. With Eavesjob, you only need to indicate which career pages you're interested in. When job opportunities appear, we'll send you an email.  </p>
+          <p className="subtitle"> Checking for new vacancies can be a hassle. With Eavesjob, you only need to indicate which companies you're interested in. When job opportunities appear, we'll send you an email. </p>
         </div>
         <div className="container-right">
           <div className ="single">

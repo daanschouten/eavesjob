@@ -18,8 +18,7 @@ export default function Header(props) {
           <NavLink to="/profile">My Profile</NavLink>
         </div>
         <div id="menu-mobile">
-          <NavLink exact to="/"><h2> Eavesjob </h2></NavLink>
-          <NavLink to="/support">Support</NavLink>
+          <NavLink exact to="/"><h3> Home </h3></NavLink>
           <NavLink to="/browse">Browse</NavLink>
           <NavLink to="/profile">Profile</NavLink>
         </div>
