@@ -34,10 +34,19 @@ class VerifyEmail extends React.Component {
     }
   }
   componentDidMount() {
-    const pathLength = this.props.path.length;
-    const fullPath = this.props.location.pathname;
-    let token = fullPath.substring(pathLength + 1);
-    // include the slash at the end of the path
+    console.log(this.props.parentProps);
+    let pathname = this.props.parentProps;
+    let slashes = 0;
+    let token = "";
+    for (var i = 0; i < pathname.length; i++) {
+      if (pathname[i] === "/") {
+        slashes = slashes + 1;
+        if (slashes === 2) {
+          token = pathname.substring(i + 1);
+          break;
+        }
+      }
+    }
     this.verifyAccount(token);
   }
   saveSession = (user) => {

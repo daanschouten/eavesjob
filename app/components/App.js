@@ -93,7 +93,8 @@ class App extends React.Component {
               onLogin = {this.onLogin} />} />
 
             <Route path="/verifyEmail" render={props => <VerifyEmail
-              onLogin = {this.onLogin} />} />
+              onLogin = {this.onLogin}
+              parentProps = {this.props.location.pathname} />} />
             <Route path="/contactSent" component={ContactSent} />
             <Route path="/forgotPassword" component={ForgotPassword} />
 
