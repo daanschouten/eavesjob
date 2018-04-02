@@ -38,7 +38,7 @@ class VerifyEmail extends React.Component {
     const fullPath = this.props.location.pathname;
     let token = fullPath.substring(pathLength + 1);
     // include the slash at the end of the path
-    return this.verifyAccount(token);
+    this.verifyAccount(token);
   }
   saveSession = (user) => {
     localStorage.setItem("user", JSON.stringify(user));
@@ -47,7 +47,6 @@ class VerifyEmail extends React.Component {
     // somehow retrieve token from url
     axios.get(`${API_FULL}/verifyEmail/${token}`)
       .then((response) => {
-        console.log(response);
         if (response.data.token) {
           this.setState({
             success: true,
