@@ -2,16 +2,26 @@ import path from 'path';
 import express from 'express';
 import cors from 'cors';
 
+require('dotenv').config()
+
 import router from './router';
 // use react router for all GET requests
 
 const app = express();
 
-app.get('*.bundle.js', function (req, res, next) {
-  req.url = req.url + '.gz';
-  res.set('Content-Encoding', 'gzip');
-  next();
-});
+/// check for environment before serving gzip
+// otherwise development webpack doesnt work because npm prod:build gzip files are still served
+const environment = process.env.ENVIRONMENT || "local";
+
+if (environment === "live") {
+  app.get('*.bundle.js', function (req, res, next) {
+    req.url = req.url + '.gz';
+    res.set('Content-Encoding', 'gzip');
+    next();
+  });
+} else {
+  console.log("environment is local; not serving gzip");
+}
 
 const assets = express.static(path.join(__dirname, '../'));
 
