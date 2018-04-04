@@ -7,11 +7,11 @@ import router from './router';
 
 const app = express();
 
-app.get('*.bundle.js', function (req, res, next) {
-  req.url = req.url + '.gz';
-  res.set('Content-Encoding', 'gzip');
-  next();
-});
+// app.get('*.bundle.js', function (req, res, next) {
+//   req.url = req.url + '.gz';
+//   res.set('Content-Encoding', 'gzip');
+//   next();
+// });
 
 const assets = express.static(path.join(__dirname, '../'));
 
