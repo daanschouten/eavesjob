@@ -16,8 +16,7 @@ import Conditions from './Conditions';
 import Business from './Business';
 import About from './About';
 import Premium from './Premium';
-
-const { Browse } = require('./Browse');
+import Browse from './Browse';
 
 const {
   Contact,

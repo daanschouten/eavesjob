@@ -303,7 +303,7 @@ Search.propTypes = {
   onQueryChange: PropTypes.func.isRequired,
 }
 
-class Browse extends React.Component {
+export default class Browse extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -461,9 +461,4 @@ Browse.propTypes = {
   user: PropTypes.shape({
     token: PropTypes.string
   })
-}
-
-module.exports = {
-  Browse: Browse,
-  Available: Available
 }
