@@ -1,12 +1,181 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
+import moment from 'moment';
 
 const { Link } = require('react-router-dom');
-const { Available } = require('../Browse');
 import Toggle from '../Toggle';
 
 import API_FULL from '../../../api_info';
+
+function Monitored(props) {
+  return (
+    <div className="single" style={{
+      width: "100%",
+      background: "none",
+      border: "none" }}>
+        {
+          props.available && props.available.length > 0 ?
+              <div id="large-list">
+                <div className="website-full">
+                  <div className="website-single">
+                    <div className="website-name">
+                      <h3> name </h3>
+                    </div>
+                    <div className="website-details">
+                      <h3> links </h3>
+                    </div>
+                    <div className="website-date">
+                      <h3> new opportunity </h3>
+                    </div>
+                    <div className="website-monitor">
+                      <h3> toggle </h3>
+                    </div>
+                  </div>
+                </div>
+                {
+                  props.available.map(function(website){
+                    return (
+                      <SingleWebsite
+                       onChangeSubscribe = {props.onChangeSubscribe}
+                       website= {website}
+                       key= {website._id} /> )
+                  })
+                }
+              </div>
+          : props.query ?
+              <RequestWebsiteForm query = {props.query} user = {props.user} onRequest = {props.onRequest}/>
+            : <NoneMonitoredProfile/>
+        }
+    </div>
+  )
+}
+
+Monitored.propTypes = {
+  onChangeSubscribe: PropTypes.func.isRequired,
+  available: PropTypes.arrayOf(PropTypes.shape({
+    _id: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+    monitored: PropTypes.bool.isRequired,
+    pageUpdates: PropTypes.array,
+    links: PropTypes.arrayOf(PropTypes.shape({
+         href: PropTypes.string
+    })).isRequired
+  }))
+}
+
+function SingleWebsiteLink(props) {
+  return (
+    <Link to={props.link.href} target= "_blank"> {props.link.pathname} </Link>
+  )
+}
+
+function SingleWebsiteExpanded(props) {
+  return props.expand === true ?
+    <div className="website-expanded">
+      {
+        props.website.links.map(function(link) {
+          return (
+            <SingleWebsiteLink link = {link} key= {link.href} />
+          )
+        })
+      }
+      <div>
+        <button className="small-button"><Link to={{ pathname: '/modify', query: { website: props.website } }}> Add Link </Link></button>
+        <button className="small-button"><Link to={{ pathname: '/report', query: { website: props.website } }}> Report Issue </Link></button>
+      </div>
+    </div>
+  : null
+}
+
+SingleWebsiteExpanded.propTypes = {
+  expand: PropTypes.bool.isRequired,
+  website: PropTypes.shape({
+    _id: PropTypes.string.isRequired,
+    links: PropTypes.arrayOf(PropTypes.shape({
+         href: PropTypes.string.isRequired
+    })).isRequired
+  })
+}
+
+class SingleWebsite extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      expand: false
+    }
+  }
+  getMostRecent = (updates) => {
+    let mostRecent = "";
+    updates.map(function(update){
+      if (update.date > mostRecent && update.relevant === true || mostRecent === "" && update.relevant === true) {
+        mostRecent = update.date;
+      }
+    })
+    mostRecent === "" ? mostRecent = "new arrival" : mostRecent = moment(mostRecent).fromNow();
+    return mostRecent;
+  }
+  onToggle = () => {
+    this.props.onChangeSubscribe(this.props.website._id);
+  }
+  expandWebsite = () => {
+    // change icon as well
+    this.setState(prevState => ({
+      expand: !prevState.expand
+    }));
+  }
+  render() {
+    return (
+      <div className="website-full">
+        <div className="website-single">
+          <div className="website-name">
+            <p>{this.props.website.name}</p>
+          </div>
+          <div className="website-details">
+            {
+              this.state.expand === true ?
+                  <button onClick= {this.expandWebsite} ><img src="../../img/up-arrow.svg" alt="arrow up" /></button>
+              : <button onClick= {this.expandWebsite} ><img src="../../img/down-arrow.svg" alt="arrow down" /></button>
+            }
+
+          </div>
+          <div className="website-date">
+            {
+              this.props.website.robotsAllow !== false && this.props.website.issue === 0 ?
+                <p> {this.getMostRecent(this.props.website.pageUpdates)}</p>
+              : <Link to='/support/robots' style={{fontSize: "15px", textDecoration: "underline"}}> monitoring impossible </Link>
+            }
+          </div>
+          <div className="website-monitor ">
+            <Toggle
+            monitored = {this.props.website.monitored}
+            onToggle = {this.onToggle}/>
+          </div>
+        </div>
+        <SingleWebsiteExpanded expand = {this.state.expand} website = {this.props.website} />
+      </div>
+    )
+  }
+}
+
+SingleWebsite.propTypes = {
+  onChangeSubscribe: PropTypes.func.isRequired,
+  website: PropTypes.shape({
+    _id: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+    monitored: PropTypes.bool.isRequired,
+    pageUpdates: PropTypes.array,
+    links: PropTypes.arrayOf(PropTypes.shape({
+         href: PropTypes.string
+    })).isRequired
+  })
+}
+
+function NoneMonitoredProfile() {
+  return (
+      <p> No career pages to display. </p>
+  )
+}
 
 function ProfileOption(props) {
   function onToggle() {
@@ -148,10 +317,7 @@ export default class Profile extends React.Component {
     }
   }
   searchMonitored = () => {
-    // refresh both monitored & available
-    axios.post(`${API_FULL}/updateMonitored/${this.state.user.token}`, {
-      query: this.state.query
-    })
+    axios.get(`${API_FULL}/updateMonitored/${this.state.user.token}`)
     .then((response) => {
       let data = response.data;
       this.setState({
@@ -175,7 +341,7 @@ export default class Profile extends React.Component {
                 </div>
               </div>
             </div>
-            <Available
+            <Monitored
             onChangeSubscribe = {this.onChangeSubscribe}
             available = {this.state.monitored} />
           </div>

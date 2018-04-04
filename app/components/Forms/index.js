@@ -1017,7 +1017,7 @@ class RequestWebsiteForm extends React.Component {
       <div className="single" style={{width: '100%'}}>
         <form className="form-small" onSubmit={this.performRequestWebsite}>
           <div className="form-group">
-            <p> It appears {this.props.query} is not in our database yet. Want to add it? For every company you add, we thank you with a permanent extra slot in your subscribes. <span><Link to="/support/requesting" style={{"text-decoration": "underline"}}> Read more. </Link></span></p>
+            <p> It appears {this.props.query} is not in our database yet. Want to add it? For every company you add, we thank you with a permanent extra slot in your subscribes. <span><Link to="/support/requesting" style={{"textDecoration": "underline"}}> Read more. </Link></span></p>
           </div>
           <div className="form-group">
             <input type="text" placeholder="Website Name" className="big-input" name="name" value={this.state.name} onChange={this.handleChange} />
