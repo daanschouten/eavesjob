@@ -316,14 +316,15 @@ export default class Browse extends React.Component {
     };
   }
   componentDidMount = () => {
-    // searching isn't strictly necessary yet because query will be empty, so actual API call won't be executed.
+    // searching isn't strictly necessary, since it will never be called as query will be empty, so actual API call won't be executed.
     // but for a 2.0 version where there is an EJ button, a query could come in the url.
     if (this.props.user.token) {
       this.setState({
         user: this.props.user
       }, function() {
         this.state.query === "" ?
-            this.searchMonitored() :
+            this.searchMonitored()
+          :
             this.searchFull();
       });
     }
@@ -335,7 +336,8 @@ export default class Browse extends React.Component {
         user: nextProps.user
       }, function() {
         this.state.query === "" ?
-            this.searchMonitored() :
+            this.searchMonitored()
+          :
             this.searchFull();
       });
     }
@@ -371,7 +373,10 @@ export default class Browse extends React.Component {
         })
         .then((response) => {
           // perform an entire search, reload all of it
-          this.searchFull();
+          // this.searchFull();
+          // not ideal to double, but hard to check whether there is input otherwise
+          this.searchAvailable();
+          this.searchMonitored();
         })
         .catch((error) => {
           console.log("error fetching and parsing data", error);
@@ -384,7 +389,8 @@ export default class Browse extends React.Component {
         id: site
       })
       .then((response) => {
-        this.searchFull();
+        this.searchAvailable();
+        this.searchMonitored();
         // perform an entire search, reload all);
       })
       .catch((error) => {
@@ -398,7 +404,8 @@ export default class Browse extends React.Component {
     .then((response) => {
       let data = response.data;
       this.setState({
-        monitored: data.monitored
+        monitored: data.monitored,
+        limit: data.limit
       })
     })
     .catch((error) => {
