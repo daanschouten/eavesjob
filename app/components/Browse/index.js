@@ -21,14 +21,6 @@ function SuccessRequest(props) {
   )
 }
 
-function SearchGuidance(props) {
-  return (
-    <div id="search-middle">
-      <p> Start typing to find career pages. <span> <Link to="/about" style={{"textDecoration": "underline"}}> Why is Eavesjob search-based? </Link></span></p>
-    </div>
-  )
-}
-
 function NoneMonitoredBrowse() {
   return (
     <div id="monitored-websites">
@@ -39,9 +31,9 @@ function NoneMonitoredBrowse() {
   )
 }
 
-function NoneMonitoredProfile() {
+function SearchGuidance() {
   return (
-      <p> No career pages to display. </p>
+      <p> Start typing to find career pages. <span> <Link to="/about" style={{"textDecoration": "underline"}}> Why is Eavesjob search-based? </Link></span></p>
   )
 }
 
@@ -235,7 +227,7 @@ function Available(props) {
               </div>
           : props.query ?
               <RequestWebsiteForm query = {props.query} user = {props.user} onRequest = {props.onRequest}/>
-            : <NoneMonitoredProfile/>
+            : <SearchGuidance/>
         }
     </div>
   )
@@ -288,7 +280,7 @@ class Search extends React.Component {
   render() {
     return (
       <div id="search-website" style={{"border": "1px solid #619B8A"}}>
-        <div id="search-upper" style={{"padding": "34px 5% 10px 5%"}}>
+        <div id="search-upper" style={{"padding": "34px 5%"}}>
           <h2> Browse Career Pages </h2>
           <div className="search-div">
             <form className="search-form">
@@ -301,7 +293,6 @@ class Search extends React.Component {
             </form>
           </div>
         </div>
-        <SearchGuidance />
         <SuccessRequest madeRequest = {this.state.madeRequest} />
       </div>
     )
@@ -325,6 +316,8 @@ class Browse extends React.Component {
     };
   }
   componentDidMount = () => {
+    // searching isn't strictly necessary yet because query will be empty, so actual API call won't be executed.
+    // but for a 2.0 version where there is an EJ button, a query could come in the url.
     if (this.props.user.token) {
       this.setState({
         user: this.props.user
@@ -334,6 +327,7 @@ class Browse extends React.Component {
     }
   }
   componentWillReceiveProps = (nextProps) => {
+    // see explanation in DidMount
     if (nextProps.user !== this.props.user ) {
       this.setState({
         user: nextProps.user
@@ -395,36 +389,52 @@ class Browse extends React.Component {
     }
   }
   searchAvailable = () => {
-    // refresh only available
-    axios.post(`${API_FULL}/search/${this.state.user.token}`, {
-      query: this.state.query
-    })
-    .then((response) => {
-      let data = response.data;
-      this.setState({
-        available: data.available
+    // refresh only available, and only if someone has typed something.
+    if (this.state.query !== "") {
+      axios.post(`${API_FULL}/search/${this.state.user.token}`, {
+        query: this.state.query
       })
-    })
-    .catch((error) => {
-      console.log("error fetching and parsing data", error);
-    })
+      .then((response) => {
+        let data = response.data;
+        this.setState({
+          available: data.available
+        })
+      })
+      .catch((error) => {
+        console.log("error fetching and parsing data", error);
+      })
+    } else {
+      if (this.state.available.length > 0) {
+        this.setState({
+          "available": []
+        })
+      }
+    }
   }
   searchFull = () => {
-    // refresh both monitored & available
-    axios.post(`${API_FULL}/browse/${this.state.user.token}`, {
-      query: this.state.query
-    })
-    .then((response) => {
-      let data = response.data;
-      this.setState({
-        limit: data.limit,
-        available: data.available,
-        monitored: data.monitored
+    // refresh both monitored & available, only if query exists yet
+    if (this.state.query !== "") {
+      axios.post(`${API_FULL}/browse/${this.state.user.token}`, {
+        query: this.state.query
       })
-    })
-    .catch((error) => {
-      console.log("error fetching and parsing data", error);
-    })
+      .then((response) => {
+        let data = response.data;
+        this.setState({
+          limit: data.limit,
+          available: data.available,
+          monitored: data.monitored
+        })
+      })
+      .catch((error) => {
+        console.log("error fetching and parsing data", error);
+      })
+    } else {
+      if (this.state.available.length > 0) {
+        this.setState({
+          "available": []
+        })
+      }
+    }
   }
   render() {
     return (
