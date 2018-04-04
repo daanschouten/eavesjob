@@ -322,8 +322,10 @@ export default class Browse extends React.Component {
       this.setState({
         user: this.props.user
       }, function() {
-        this.searchFull();
-      })
+        this.state.query === "" ?
+            this.searchMonitored() :
+            this.searchFull();
+      });
     }
   }
   componentWillReceiveProps = (nextProps) => {
@@ -332,8 +334,10 @@ export default class Browse extends React.Component {
       this.setState({
         user: nextProps.user
       }, function() {
-        this.searchFull();
-      })
+        this.state.query === "" ?
+            this.searchMonitored() :
+            this.searchFull();
+      });
     }
   }
   onRequest = () => {
@@ -387,6 +391,21 @@ export default class Browse extends React.Component {
         console.log("error fetching and parsing data", error);
       })
     }
+  }
+  searchMonitored = () => {
+    // refresh only monitored
+    axios.post(`${API_FULL}/updateMonitored/${this.state.user.token}`, {
+      query: this.state.query
+    })
+    .then((response) => {
+      let data = response.data;
+      this.setState({
+        monitored: data.monitored
+      })
+    })
+    .catch((error) => {
+      console.log("error fetching and parsing data", error);
+    })
   }
   searchAvailable = () => {
     // refresh only available, and only if someone has typed something.

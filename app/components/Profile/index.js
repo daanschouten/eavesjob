@@ -317,7 +317,6 @@ export default class Profile extends React.Component {
     }
   }
   searchMonitored = () => {
-    // refresh both monitored & available
     axios.post(`${API_FULL}/updateMonitored/${this.state.user.token}`, {
       query: this.state.query
     })
