@@ -317,9 +317,7 @@ export default class Profile extends React.Component {
     }
   }
   searchMonitored = () => {
-    axios.post(`${API_FULL}/updateMonitored/${this.state.user.token}`, {
-      query: this.state.query
-    })
+    axios.get(`${API_FULL}/updateMonitored/${this.state.user.token}`)
     .then((response) => {
       let data = response.data;
       this.setState({
