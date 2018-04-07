@@ -85,6 +85,12 @@ function Contact(props) {
             <h1> Contact us </h1>
           </div>
           <ContactForm />
+          <div className="form-title">
+            <p> If you require more editing abilities, you can also send an email to: </p>
+          </div>
+          <div className="form-title">
+            <p style={{"paddingBottom": "20px"}}> hello@eavesjob.com </p>
+          </div>
         </div>
       </div>
     </div>
