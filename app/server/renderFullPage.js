@@ -42,9 +42,9 @@ export default function renderFullPage(html, preloadedState) {
             <script>
             window.__PRELOADED_STATE__ = ${JSON.stringify(preloadedState).replace(/</g, '\\u003c')}
             </script>
-            <script type="text/javascript" src="/vendor.bundle.js"></script>
-            <script type="text/javascript" src="/app.bundle.js"></script>
-            <script type="text/javascript" src="/style.bundle.js"></script>
+            <script type="application/json" src="/vendor.bundle.js"></script>
+            <script type="application/json" src="/app.bundle.js"></script>
+            <script type="application/json" src="/style.bundle.js"></script>
         </body>
         </html>
     `
