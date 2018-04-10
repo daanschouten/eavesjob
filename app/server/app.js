@@ -17,6 +17,7 @@ if (environment === "live") {
   app.get('*.bundle.js', function (req, res, next) {
     req.url = req.url + '.gz';
     res.set('Content-Encoding', 'gzip');
+    res.set('Content-Type', 'application/json');
     next();
   });
 } else {
